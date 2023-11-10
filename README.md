@@ -81,3 +81,10 @@ The system uses Entity Framework Migrations for database versioning and manageme
 ## Contributors
 
 - [Jeet Jhaveri](https://github.com/Jhaveri-Jeet)
+- [Darshit Dudhaiya](https://github.com/darshitdudhaiya)
+- [Jay Patel](https://github.com/Jay-1703)
+- [Bhavya Rachchh](https://github.com/bhavya-raghuvanshi)
+- [Jignesh Rathod](https://github.com/Jignesh-Rathod)
+- [Om Adreja](https://github.com/Om-17)
+- [Ved Shah](https://github.com/Codex-v)
+- [Yash Bhagwani](https://github.com/yash3135)
