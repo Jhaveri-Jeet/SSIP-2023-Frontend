@@ -102,7 +102,7 @@ function App() {
             />
           }
         />
-        <Route
+        {/* <Route
           exact
           path="/dashboard/supremecourt"
           element={
@@ -112,7 +112,7 @@ function App() {
               setCurrentScreen={setCurrentScreen}
             />
           }
-        />
+        /> */}
         <Route
           exact
           path="/dashboard/courts"
