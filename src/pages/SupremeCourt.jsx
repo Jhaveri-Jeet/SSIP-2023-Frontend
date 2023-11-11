@@ -20,12 +20,12 @@ import Addcase from "../Modals/Addcase";
 const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
   validate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  // const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] =
-  //   useState(0);
-  // const [runningSupremeCourtCasesCount, setRunningSupremeCourtCasesCount] =
-  //   useState(0);
-  // const [completedSupremeCourtCasesCount, setCompletedSupremeCourtCasesCount] =
-  //   useState(0);
+  const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] =
+    useState(0);
+  const [runningSupremeCourtCasesCount, setRunningSupremeCourtCasesCount] =
+    useState(0);
+  const [completedSupremeCourtCasesCount, setCompletedSupremeCourtCasesCount] =
+    useState(0);
   const [SupremeCourtCases, setSupremeCourtCases] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
