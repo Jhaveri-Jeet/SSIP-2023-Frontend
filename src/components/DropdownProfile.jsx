@@ -5,6 +5,7 @@ import { logout } from "../utils/Auth"
 import axios from "axios";
 
 import UserAvatar from "../images/user-avatar-32.png";
+import { prefixUrl } from "../Services/Config";
 
 function DropdownProfile({ align }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,7 +19,7 @@ function DropdownProfile({ align }) {
   }, [])
   
   const getUserRole = async () => {
-    const response = await axios.get(`http://192.168.137.171:5000/roles/${localStorage.getItem("userId")}`)
+    const response = await axios.get(`${prefixUrl}/roles/${localStorage.getItem("userId")}`)
     setUserRole(response.data.name)
   }
 
