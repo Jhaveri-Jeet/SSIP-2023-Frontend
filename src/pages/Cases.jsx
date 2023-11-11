@@ -108,7 +108,6 @@ const Cases = ({ currentScreen, setCurrentScreen, validate }) => {
           addCaseOpen={addCaseOpen}
           closeAddCaseModel={closeAddCaseModel}
         />
-        {/* <Banner /> */}
       </div>
     </div>
   );

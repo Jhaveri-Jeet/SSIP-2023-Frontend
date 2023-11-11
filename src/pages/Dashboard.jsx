@@ -6,7 +6,6 @@ import FilterButton from "../components/DropdownFilter";
 import Datepicker from "../components/Datepicker";
 import CasesCard from "../common/CasesCard";
 import CasesTable from "../common/CasesTable";
-import { advocates, courts, acts } from "../constant";
 import {
   getAllHighCasesCount,
   getAllDistrictCasesCount,
@@ -17,7 +16,7 @@ import {
 } from "../Services/Api";
 
 function Dashboard({ caseData, currentScreen, setCurrentScreen, validate }) {
-  validate();
+  // validate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [addCaseOpen, setAddCaseOpen] = useState(false);

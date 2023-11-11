@@ -8,13 +8,13 @@ import Banner from "../partials/Banner";
 import CasesCard from "../common/CasesCard";
 import CasesTable from "../common/CasesTable";
 
-import {
-  getAllSupremeCasesCount,
-  getAllSupremeCourtCases,
-  getAllCompletedSupremeCasesCount,
-  getAllRunningSupremeCasesCount,
-  getAllPendingSupremeCasesCount,
-} from "../Services/Api";
+// import {
+//   getAllSupremeCasesCount,
+//   getAllSupremeCourtCases,
+//   // getAllCompletedSupremeCasesCount,
+//   getAllRunningSupremeCasesCount,
+//   getAllPendingSupremeCasesCount,
+// } from "../Services/Api";
 import Addcase from "../Modals/Addcase";
 
 const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
