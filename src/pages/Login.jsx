@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
+import { prefixUrl } from "../Services/Config";
 
 const Login = () => {
 
@@ -25,7 +26,7 @@ const Login = () => {
 
   const getAllUserRoles = async () => {
     const response = await axios
-      .get("http://172.24.0.1:5000/roles")
+      .get(`${prefixUrl}/roles`)
       .then((res) => {
         return res.data;
       });
@@ -35,7 +36,7 @@ const Login = () => {
 
   const getAllDistricts = async () => {
     const response = await axios
-      .get("http://172.24.0.1:5000/districts")
+      .get(`${prefixUrl}/districts`)
       .then((res) => {
         return res.data;
       });
@@ -50,7 +51,7 @@ const Login = () => {
   const getCourts = async () => {
     const response = await axios
       .get(
-        `http://172.24.0.1:5000/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`
+        `${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`
       )
       .then((res) => {
         return res.data;
@@ -62,7 +63,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      await axios.get(`http://172.24.0.1:5000/CheckUser/${userRoleId}/${districtId}/${courtId}/${password}`)
+      await axios.get(`${prefixUrl}/CheckUser/${userRoleId}/${districtId}/${courtId}/${password}`)
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("userId", userRoleId);
       localStorage.setItem("districtId", districtId);

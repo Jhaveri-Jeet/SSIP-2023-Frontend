@@ -1,0 +1,154 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "SSIP-2023",
+    "dateExported": "2023-11-11T09:17:57.440Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "8b7f1b53-bcae-44c9-8912-e63a1cf808e9",
+            "name": "Roles",
+            "containerId": "",
+            "created": "2023-11-11T08:42:14.403Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "8c45fe8d-93ee-48f1-a441-60ea6a1934be",
+            "name": "Users",
+            "containerId": "",
+            "created": "2023-11-11T08:49:21.288Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "de7ec355-3e7c-47c0-bc5f-feda9c16f8d2",
+            "name": "District",
+            "containerId": "",
+            "created": "2023-11-11T08:50:39.996Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "447c6c3c-9290-4f58-9ecb-fd1c6fa084c9",
+            "name": "Courts",
+            "containerId": "",
+            "created": "2023-11-11T08:56:15.148Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "a0bb698c-0f73-4e8d-ace1-b560f352fa73",
+            "name": "States",
+            "containerId": "",
+            "created": "2023-11-11T08:57:53.569Z",
+            "sortNum": 60000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "830a76d4-cb87-4e96-bd54-32b7c562182f",
+            "colId": "469cb046-5651-4543-b77e-87b9c6bc3328",
+            "containerId": "8b7f1b53-bcae-44c9-8912-e63a1cf808e9",
+            "name": "Add",
+            "url": "localhost:5000/roles",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-11-11T08:42:27.893Z",
+            "modified": "2023-11-11T08:49:06.897Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\":\"District Court\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "0db137df-4733-4042-8bb4-e2371f493183",
+            "colId": "469cb046-5651-4543-b77e-87b9c6bc3328",
+            "containerId": "8c45fe8d-93ee-48f1-a441-60ea6a1934be",
+            "name": "Add",
+            "url": "localhost:5000/users/1",
+            "method": "PUT",
+            "sortNum": 20000,
+            "created": "2023-11-11T08:49:27.316Z",
+            "modified": "2023-11-11T09:15:45.313Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"UserName\":\"Jamnagar District Court\",\n  \"PasswordHash\":\"123\",\n  \"RoleId\":4,\n  \"DistrictId\":1,\n  \"CourtId\":1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "cd986ddd-8642-420b-b2b5-5d9cada06092",
+            "colId": "469cb046-5651-4543-b77e-87b9c6bc3328",
+            "containerId": "de7ec355-3e7c-47c0-bc5f-feda9c16f8d2",
+            "name": "Add",
+            "url": "localhost:5000/districts",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-11-11T08:50:44.879Z",
+            "modified": "2023-11-11T08:51:21.411Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\":\"Jamnagar\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "1672dcea-b64f-4a1a-add3-70ae5cb3b2eb",
+            "colId": "469cb046-5651-4543-b77e-87b9c6bc3328",
+            "containerId": "8b7f1b53-bcae-44c9-8912-e63a1cf808e9",
+            "name": "getAll",
+            "url": "localhost:5000/roles",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-11-11T08:51:46.724Z",
+            "modified": "2023-11-11T08:51:53.633Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "95f55d39-5857-4cfd-a7c9-6c1b67868d73",
+            "colId": "469cb046-5651-4543-b77e-87b9c6bc3328",
+            "containerId": "447c6c3c-9290-4f58-9ecb-fd1c6fa084c9",
+            "name": "Add",
+            "url": "localhost:5000/Courts/1/1/4",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-11-11T08:56:20.477Z",
+            "modified": "2023-11-11T09:01:17.923Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\":\"Jamnagar District Court\",\n  \"IdentificationNumber\":\"123456789\",\n  \"FullAddress\":\"Jamnagar\"  \n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "94d61a53-64cf-42ec-b100-9b6f2184a0d6",
+            "colId": "469cb046-5651-4543-b77e-87b9c6bc3328",
+            "containerId": "a0bb698c-0f73-4e8d-ace1-b560f352fa73",
+            "name": "Add",
+            "url": "localhost:5000/States",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-11-11T08:58:01.243Z",
+            "modified": "2023-11-11T08:58:31.313Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\":\"Gujarat\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
