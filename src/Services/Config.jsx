@@ -1,1 +1,1 @@
-export const prefixUrl = 'http://192.168.137.171:5000'
+export const prefixUrl = 'http://localhost:5000'
