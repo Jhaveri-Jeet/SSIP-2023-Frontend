@@ -1,0 +1,27 @@
+1 : Upar Profile ma nam nathi avtu j bhi user login thayo hoi ne enu ka to eno role print karo ka pachi enu nam [ Darshit ]
+
+2 : Admin sivai koi ne advocates, Acts, CaseType, States, Districts, Sections kai na dekhavu joi ane Court Add karvano option j nathi 
+
+3 : Update Password nu baki che 
+
+4 : Navi court add thai eni sathe sathe eno user bhi add thai j jase atle eni ek tension pate
+
+5 : Edit no option tiya j avo joi jiya store kareli roleId and TransferToId jiya sarkhi joi ne tiya j edit no option avo joi
+
+6 : Update Case Baki che 
+
+7 : Hearing nu vevestit display baki che 
+
+8 : Hearing nu update baki che 
+
+9 : Court no page nathi baino eno page banavi ane enu CRUD patavanu che ane aa page bhi admin sivai koi na mate nai 
+
+10 : ShowCase Detail nu page change karvanu che view wise 
+
+11 : Login ma changes ghana che ane thai to login ni design change karo thodu professional lage evu kaik
+
+12 : Search ne working karvanu che 
+
+13 : Badha sidebar ma avta pages na table atle k high court na page nu table supreme court na page ma avtu table ane district ma avta table ma searching nakhvanu che ane pagination bhi 
+
+14 : Badhi vastu add ane update pachi refresh karvu pade che enu solution ka tame refresh kai j nakho code through to bhi chalse
