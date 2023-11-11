@@ -20,12 +20,12 @@ import Addcase from "../Modals/Addcase";
 const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
   validate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  // const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] =
-  //   useState(0);
-  // const [runningSupremeCourtCasesCount, setRunningSupremeCourtCasesCount] =
-  //   useState(0);
-  // const [completedSupremeCourtCasesCount, setCompletedSupremeCourtCasesCount] =
-  //   useState(0);
+  const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] =
+    useState(0);
+  const [runningSupremeCourtCasesCount, setRunningSupremeCourtCasesCount] =
+    useState(0);
+  const [completedSupremeCourtCasesCount, setCompletedSupremeCourtCasesCount] =
+    useState(0);
   const [SupremeCourtCases, setSupremeCourtCases] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -43,7 +43,9 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
   }, []);
 
   const getAllCasesCountFunction = async () => {
-    setCompletedSupremeCourtCasesCount(await getAllCompletedSupremeCasesCount());
+    setCompletedSupremeCourtCasesCount(
+      await getAllCompletedSupremeCasesCount()
+    );
     setRunningSupremeCourtCasesCount(await getAllRunningSupremeCasesCount());
     setPendingSupremeCourtCasesCount(await getAllPendingSupremeCasesCount());
   };
@@ -51,7 +53,7 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
   const getAllSupremeCourtCasesFunction = async () => {
     const res = await getAllSupremeCourtCases();
     setSupremeCourtCases(res);
-    console.log("res",res)
+    console.log("res", res);
   };
 
   return (
@@ -129,7 +131,6 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
                 cases={cases}
                 tableName={"Supreme Court Current Cases"}
               />
-       
             </div>
           </div>
         </main>
