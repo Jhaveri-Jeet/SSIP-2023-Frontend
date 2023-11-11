@@ -20,7 +20,7 @@ import Cases from "./pages/Cases";
 import States from "./pages/States";
 import Sections from "./pages/Sections";
 import Districts from "./pages/Districts";
-import AddWitness from "./Modals/AddWitness";
+import AddWitness from "./Modals/InsertWitness";
 import Demo from './pages/Demo';
 import { validate } from "./utils/Auth";
 
