@@ -53,6 +53,21 @@ export const getAllSupremeCasesCount = async () => {
   const data = await axios.get(`${prefixUrl}/TotalCasesCount/4`);
   return data.data;
 };
+export const getAllPendingSupremeCasesCount = async () => {
+  const data = await axios.get(`${prefixUrl}/TotalPendingCases/4`);
+  console.log("pending",data.data)
+  return data.data;
+};
+export const getAllRunningSupremeCasesCount = async () => {
+  const data = await axios.get(`${prefixUrl}/TotalRunningCases/4`);
+  console.log(data.data)
+  return data.data;
+};
+export const getAllCompletedSupremeCasesCount = async () => {
+  const data = await axios.get(`${prefixUrl}/TotalCompletedCases/4`);
+  console.log(data.data)
+  return data.data;
+};
 export const getAllCases = async () => {
   const data = await axios.get(`${prefixUrl}/cases`);
   return data;
