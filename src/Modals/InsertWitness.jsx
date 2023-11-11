@@ -3,7 +3,7 @@ import { addEvidence, addHearing, addWitness, updateEvidence, updateHearing } fr
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
 
-function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
+function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
 //   const [form, setForm] = useState({
 //     caseId: caseId,
 //     WitnessName: "",
@@ -73,9 +73,9 @@ const formData = new FormData()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
+    // console.log(formData)
     if (e.target.textContent == "Add") {
-      const response = await axios.post(`${prefixUrl}/Evidences/${caseId}`, formData);
+      const response = await axios.post(`${prefixUrl}/Witness/${caseId}`, formData);
       console.log("Add response: " + response.data);
     } else if (e.target.textContent == "Update") {
       const res = await updateEvidence(updateform);
@@ -96,13 +96,13 @@ const formData = new FormData()
               <div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                   <label htmlFor="state" className="block font-semibold mb-2">
-                  Evidence Name:
+                    Witness Name:
                   </label>
                   <input
-                    defaultValue={updateform.EvidenceDescription}
-                    onChange={(e) => formData.append("EvidenceDescription",e.target.value)}
+                    defaultValue={updateform.WitnessName}
+                    onChange={(e) => formData.append("witnessName",e.target.value)}
                     type="text"
-                    name="EvidenceDescription"
+                    name="WitnessName"
                     placeholder="Witness name"
                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
@@ -112,7 +112,7 @@ const formData = new FormData()
                     htmlFor="witnessImage"
                     className="block font-semibold mb-2"
                   >
-                    Upload Evidence Image:
+                    Upload Witness Image:
                   </label>
                   <input
                     type="file"
@@ -156,13 +156,13 @@ const formData = new FormData()
             <div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                 <label htmlFor="state" className="block font-semibold mb-2">
-                  Evidence Description:
+                  Witness Name:
                 </label>
                 <input
-                  onChange={(e) => formData.append("EvidenceDescription",e.target.value)}
+                  onChange={(e) => formData.append("witnessName",e.target.value)}
                   type="text"
-                  name="EvidenceDescription"
-                  placeholder="Evidence Description"
+                  name="WitnessName"
+                  placeholder="Witness name"
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
@@ -171,7 +171,7 @@ const formData = new FormData()
                   htmlFor="witnessImage"
                   className="block font-semibold mb-2"
                 >
-                  Upload Evidence Image:
+                  Upload Witness Image:
                 </label>
                 <input
                   type="file"
@@ -203,4 +203,4 @@ const formData = new FormData()
   );
 }
 
-export default InsertEvidence;
+export default InsertWitness;
