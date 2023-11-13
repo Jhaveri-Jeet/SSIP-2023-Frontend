@@ -60,9 +60,7 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen, validate }) {
     setSupremeCourtCases(res);
   };
 
-  console.log(highCourtCases)
-  console.log(districtCourtCases)
-  console.log(supremeCourtCases)
+ 
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}

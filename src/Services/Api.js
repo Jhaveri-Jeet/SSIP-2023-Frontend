@@ -86,26 +86,17 @@ export const getAllHighCourtCases = async () => {
 };
 export const getCase = async (caseId) => {
   const res = await axios.get(`${prefixUrl}/cases/${caseId}`);
-  // console.log("res ,",res);
   return res.data;
 };
 export const deleteCase = async (deleteCaseId) => {
   const data = await axios.delete(`${prefixUrl}/cases/${deleteCaseId}`);
   return data;
 };
-export const updateCase = async (
-  caseTypeId,
-  courtId,
-  actId,
-  advocateId,
-  attorneyId,
-  roleId,
-  data
-) => {
+export const updateCase = async (data) => {
   console.log("Data :", data);
   try {
     let id = data.id;
-    const response = await axios.put(`${prefixUrl}/CaseType/${id}`, data);
+    const response = await axios.put(`${prefixUrl}/cases/${id}`, data);
     return response.data;
   } catch (error) {
     console.log(error);

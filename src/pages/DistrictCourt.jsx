@@ -22,7 +22,7 @@ const DistrictCourt = ({
   setCurrentScreen,
   validate,
 }) => {
-  validate();
+  // validate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [districtCourtCases, setDistrictCourtCases] = useState("");
@@ -62,10 +62,10 @@ const DistrictCourt = ({
     setCurrentScreen("District Court");
     getAllDistrictCourtCasesFunction();
     getAllDistrictPendingCourtCasesFunction();
-    getAllDistrictCompletedCasesCount();
+    getAllDistrictCompletedCourtCasesFunction();
     getAllDistrictRunningCourtCasesFunction();
   }, []);
-  console.log("districtCompletedCourtCases :", districtCompletedCourtCases);
+  // console.log("districtCompletedCourtCases :", districtCompletedCourtCases);
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -88,21 +88,10 @@ const DistrictCourt = ({
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            {/* Welcome banner */}
-            {/* <WelcomeBanner /> */}
-
-            {/* Dashboard actions */}
             <div className="sm:flex sm:justify-end sm:items-center mb-8">
-              {/* Left: Avatars */}
-              {/* <DashboardAvatars /> */}
-
-              {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                {/* Filter button */}
                 <FilterButton />
-                {/* Datepicker built with flatpickr */}
                 <Datepicker />
-                {/* Add view button */}
                 {localStorage.getItem("userId") == 1 && (
                   <button
                     className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
@@ -119,8 +108,6 @@ const DistrictCourt = ({
                 )}
               </div>
             </div>
-
-            {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
               <CasesCard
                 mainTitle={"District Court Pending Cases"}
@@ -142,14 +129,12 @@ const DistrictCourt = ({
                 caseData={caseData}
                 tableName={"District Court Cases"}
                 cases={districtCourtCases}
-                validate={() => {}}
+                validate={() => { }}
               />
             </div>
           </div>
         </main>
         <Addcase isOpen={isFormOpen} onClose={closeForm} />
-
-        {/* <Banner /> */}
       </div>
     </div>
   );

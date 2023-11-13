@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import DashboardCard07 from "../partials/dashboard/DashboardCard07";
 import FilterButton from "../components/DropdownFilter";
 import Datepicker from "../components/Datepicker";
-import Banner from "../partials/Banner";
 import CasesCard from "../common/CasesCard";
 import CasesTable from "../common/CasesTable";
-import { cases } from "../constant";
 import Addcase from "../Modals/Addcase";
 
 import {
@@ -19,7 +16,7 @@ import {
 } from "../Services/Api";
 
 const HighCourt = ({ currentScreen, setCurrentScreen, validate }) => {
-  validate();
+  // validate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pendingHighCourtCasesCount, setPendingHighCourtCasesCount] =
@@ -77,21 +74,10 @@ const HighCourt = ({ currentScreen, setCurrentScreen, validate }) => {
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            {/* Welcome banner */}
-            {/* <WelcomeBanner /> */}
-
-            {/* Dashboard actions */}
             <div className="sm:flex sm:justify-end sm:items-center mb-8">
-              {/* Left: Avatars */}
-              {/* <DashboardAvatars /> */}
-
-              {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                {/* Filter button */}
                 <FilterButton />
-                {/* Datepicker built with flatpickr */}
                 <Datepicker />
-                {/* Add view button */}
                 {localStorage.getItem("userId") == 3 && (
                   <button
                     className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
@@ -108,8 +94,6 @@ const HighCourt = ({ currentScreen, setCurrentScreen, validate }) => {
                 )}
               </div>
             </div>
-
-            {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
               <CasesCard
                 mainTitle={"High Court Pending Cases"}
@@ -131,7 +115,7 @@ const HighCourt = ({ currentScreen, setCurrentScreen, validate }) => {
                 cases={highCourtCases}
                 tableName={"High Court Current Cases"}
               />
-             
+
             </div>
           </div>
         </main>

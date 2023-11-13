@@ -46,6 +46,7 @@ function AddCaseType({ isOpen, onClose, editCaseTypeData }) {
       [name]: value,
     });
   };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (e.target.textContent === "Add") {
@@ -57,6 +58,8 @@ function AddCaseType({ isOpen, onClose, editCaseTypeData }) {
     }
     onClose();
   };
+
+
   if (editCaseTypeData) {
     return (
       <>

@@ -7,7 +7,7 @@ import { getAllAdvocates } from "../Services/Api";
 
 const Advocates = ({ currentScreen, setCurrentScreen, validate}) => {
 
-  validate()
+  // validate()
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [advocates,setAdvocate] = useState([]);

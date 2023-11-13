@@ -5,7 +5,6 @@ import { districts } from "../constant";
 // import InsertState from "../Modals/InsertState";
 // import { getAllStates } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
-import Banner from "../partials/Banner";
 
 const Districts = ({ currentScreen, setCurrentScreen }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

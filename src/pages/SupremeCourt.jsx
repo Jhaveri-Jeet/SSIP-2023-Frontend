@@ -8,17 +8,17 @@ import Banner from "../partials/Banner";
 import CasesCard from "../common/CasesCard";
 import CasesTable from "../common/CasesTable";
 
-// import {
-//   getAllSupremeCasesCount,
-//   getAllSupremeCourtCases,
-//   // getAllCompletedSupremeCasesCount,
-//   getAllRunningSupremeCasesCount,
-//   getAllPendingSupremeCasesCount,
-// } from "../Services/Api";
+import {
+  getAllSupremeCasesCount,
+  getAllSupremeCourtCases,
+  getAllCompletedSupremeCasesCount,
+  getAllRunningSupremeCasesCount,
+  getAllPendingSupremeCasesCount,
+} from "../Services/Api";
 import Addcase from "../Modals/Addcase";
 
 const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
-  validate();
+  // validate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] =
     useState(0);
@@ -26,7 +26,7 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
     useState(0);
   const [completedSupremeCourtCasesCount, setCompletedSupremeCourtCasesCount] =
     useState(0);
-  const [SupremeCourtCases, setSupremeCourtCases] = useState([]);
+  const [supremeCourtCases, setSupremeCourtCases] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const openForm = () => {
@@ -39,7 +39,7 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
   useEffect(() => {
     setCurrentScreen("Supreme Court");
     getAllSupremeCourtCasesFunction();
-    // getAllCasesCountFunction();
+    getAllCasesCountFunction();
   }, []);
 
   const getAllCasesCountFunction = async () => {
@@ -51,7 +51,7 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
   const getAllSupremeCourtCasesFunction = async () => {
     const res = await getAllSupremeCourtCases();
     setSupremeCourtCases(res);
-    console.log("res",res)
+    console.log("res", res)
   };
 
   return (
@@ -76,19 +76,9 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            {/* Welcome banner */}
-            {/* <WelcomeBanner /> */}
-
-            {/* Dashboard actions */}
             <div className="sm:flex sm:justify-end sm:items-center mb-8">
-              {/* Left: Avatars */}
-              {/* <DashboardAvatars /> */}
-
-              {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                {/* Filter button */}
                 <FilterButton />
-                {/* Datepicker built with flatpickr */}
                 <Datepicker />
                 {localStorage.getItem("userId") == 4 && (
                   <button
@@ -106,36 +96,32 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
                 )}
               </div>
             </div>
-
-            {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
               <CasesCard
                 mainTitle={"Supreme Court Pending Cases"}
-                casesNumber={"20,485"}
+                casesNumber={pendingSupremeCourtCasesCount}
                 options={[{ name: "Option 1" }, { name: "Option 2" }]}
               />
               <CasesCard
                 mainTitle={"Supreme Court Current Cases"}
-                casesNumber={"20,485"}
+                casesNumber={runningSupremeCourtCasesCount}
                 options={[{ name: "Option 1" }, { name: "Option 2" }]}
               />
               <CasesCard
                 mainTitle={"Supreme Court Completed Cases"}
-                casesNumber={"20,485"}
+                casesNumber={completedSupremeCourtCasesCount}
                 options={[{ name: "Option 1" }, { name: "Option 2" }]}
               />
 
               <CasesTable
-                cases={cases}
+                cases={supremeCourtCases}
                 tableName={"Supreme Court Current Cases"}
               />
-       
+
             </div>
           </div>
         </main>
         <Addcase isOpen={isFormOpen} onClose={closeForm} />
-
-        {/* <Banner /> */}
       </div>
     </div>
   );
