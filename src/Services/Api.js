@@ -93,19 +93,11 @@ export const deleteCase = async (deleteCaseId) => {
   const data = await axios.delete(`${prefixUrl}/cases/${deleteCaseId}`);
   return data;
 };
-export const updateCase = async (
-  caseTypeId,
-  courtId,
-  actId,
-  advocateId,
-  attorneyId,
-  roleId,
-  data
-) => {
+export const updateCase = async (data) => {
   console.log("Data :", data);
   try {
     let id = data.id;
-    const response = await axios.put(`${prefixUrl}/CaseType/${id}`, data);
+    const response = await axios.put(`${prefixUrl}/cases/${id}`, data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -224,13 +216,19 @@ export const getCourt = async (courtId) => {
   const data = await axios.post(`${prefixUrl}/courts/${courtId}`);
   return data;
 };
-export const deleteCourt = async (deleteCourtId) => {
-  const data = await axios.delete(`${prefixUrl}/courts?id=${deleteCourtId}`);
-  return data;
-};
+
 export const addCourt = async (data) => {
   try {
     const response = await axios.post(`${prefixUrl}/courts`, data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateCourt = async (courtId,data) => {
+  try {
+    const response = await axios.put(`${prefixUrl}/courts/${courtId}/`, data);
     return response.data;
   } catch (error) {
     console.log(error);
