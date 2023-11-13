@@ -25,7 +25,7 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
     Petitioner: "",
     Defendant: "",
     JudgeName: "",
-    Description: "",
+    Description: "",  
     CaseStatus: "",
     Judgment: "",
     Comments: "",

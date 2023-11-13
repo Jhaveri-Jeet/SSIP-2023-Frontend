@@ -25,7 +25,7 @@ import InsertActs from "../Modals/InsertActs";
 import { useNavigate } from "react-router-dom";
 
 function CasesTable({
-  userId,
+  //userId,
   tableName,
   cases,
   HearingDetail,
@@ -47,7 +47,6 @@ function CasesTable({
   const [isOpen, setIsOpen] = useState(false);
 
   const navigate = useNavigate();
-
   const [witnessData, setWitnessData] = useState({
     witnessName: "",
   });
@@ -158,11 +157,6 @@ function CasesTable({
   };
 
 
-  const [selectedCaseId, setSelectedCaseId] = useState(null);
-  const hadndleSendId = (id) => {
-
-    setSelectedCaseId(id);
-  }
 
 
 
@@ -291,7 +285,9 @@ function CasesTable({
                             <button
                               className="flex justify-center text-center"
                               style={{ width: "100%" }}
-                              onClick={() => hadndleSendId(singleCase.id)
+                              onClick={() => navigate(
+                                `/dashboard/showCaseDetail/${singleCase.id}`
+                              )
                               }
                             >
                               <svg
@@ -340,7 +336,7 @@ function CasesTable({
       </>
     );
   }
-  
+
   if (HearingDetail) {
     return (
       <>

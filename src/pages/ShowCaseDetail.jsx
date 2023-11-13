@@ -9,7 +9,7 @@ import InsertHearing from "../Modals/InsertHearing";
 
 import { getHearing, getallHearing } from "../Services/Api"
 const ShowCaseDetail = () => {
-  const { caseid } = useParams();
+  const selectedCaseId = 123
   const [caseData, setCaseData] = useState([]);
   const [hearing, setHearing] = useState([])
 
@@ -34,6 +34,7 @@ const ShowCaseDetail = () => {
   return (
     <>
       {/* component */}
+      <p>ID: {selectedItemId}</p> {/* Display the ID */}
 
       <div className="flex justify-center py-6 min-h-screen h-full md:mx-4">
         <div className="relative rounded-xl shadow-lg p-3 w-screen mx-3 md:mx-0 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100">
