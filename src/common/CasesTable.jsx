@@ -4,6 +4,7 @@ import InsertAdvocate from "../Modals/InsertAdvocate";
 import Addcase from "../Modals/Addcase";
 import AddSections from "../Modals/AddSections";
 import InsertHearing from "../Modals/InsertHearing";
+import InsertCourt from "../Modals/InsertCourt";
 
 import {
   deleteCaseType,
@@ -22,6 +23,7 @@ import {
   getSingleHearing,
   getSingleEvidence,
   getSingleWitness,
+  getCourt
 } from "../Services/Api";
 import { addWitness } from "../Services/Api";
 import AddCaseType from "../Modals/AddCaseType";
@@ -46,6 +48,7 @@ function CasesTable({
   Districts,
   validate,
   sections,
+  getAllCourtsData
 }) {
   // alert(localStorage.getItem('isLoggedIn'));
   // validate()
@@ -146,6 +149,21 @@ const [isOpen,setIsOpen] = useState(false);
       const res = await deleteWitness(deleteWitnessId);
     }
   };
+
+  // ------------------ operations for Court ---------------------
+
+  const editSingleCourt = async (e) => {
+    const res = await getCourt(e);
+    setEditSingleCourtData(res);
+    setIsOpen(true);
+  };
+
+  const [editsingleCourtData, setEditSingleCourtData] = useState([]);
+
+  const closeSingleCourtTypeModel = () => {
+    setIsOpen(false);
+  };
+
 
   //---------------operation for Advocate ----------------------
   const [editAdvocate, setEditAdvocate] = useState([]);
@@ -742,6 +760,9 @@ const [isOpen,setIsOpen] = useState(false);
                     <th className="p-2">
                       <div className="font-semibold text-center">Address</div>
                     </th>
+                    <th className="p-2">
+                      <div className="font-semibold text-center">Actions</div>
+                    </th>
                   </tr>
                 </thead>
                 {/* Table body */}
@@ -768,6 +789,17 @@ const [isOpen,setIsOpen] = useState(false);
                                 {singleCourt.fullAddress}
                               </div>
                             </td>
+                            <td className="p-2">
+                              <div className="inline-flex items-center">
+                                <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                  <button
+                                    onClick={() => editSingleCourt(singleCourt.id)}
+                                  >
+                                    Edit
+                                  </button>
+                                </div>
+                              </div>
+                            </td>
                           </tr>
                         );
                       })
@@ -777,6 +809,12 @@ const [isOpen,setIsOpen] = useState(false);
             </div>
           </div>
         </div>
+        <InsertCourt
+          editSingleCourt={editsingleCourtData}
+          isOpen={isOpen}
+          onClose={closeSingleCourtTypeModel}
+          getAllCourtsData={getAllCourtsData}
+        />
       </>
     );
   }

@@ -8,7 +8,7 @@ import { getAllCourts } from "../Services/Api";
 
 const Courts = ({ currentScreen, setCurrentScreen, validate}) => {
 
-  validate()
+  // validate()
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
@@ -91,9 +91,10 @@ const Courts = ({ currentScreen, setCurrentScreen, validate}) => {
               isOpen={isFormOpen}
               onClose={closeForm}
               onSubmitForm={onSubmitForm}
+              getAllCourtsData={getAllCourtsData}
             />
             <div className="grid grid-cols-12 gap-6">
-              <CasesTable Courts={courts} tableName={"Courts Lists"} />
+              <CasesTable getAllCourtsData={getAllCourtsData} Courts={courts} tableName={"Courts Lists"} />
             </div>
           </div>
         </main>

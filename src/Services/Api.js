@@ -221,16 +221,22 @@ export const getAllCourts = async () => {
   }
 };
 export const getCourt = async (courtId) => {
-  const data = await axios.post(`${prefixUrl}/courts/${courtId}`);
+  const data = await axios.get(`${prefixUrl}/courts/${courtId}`);
   return data;
 };
-export const deleteCourt = async (deleteCourtId) => {
-  const data = await axios.delete(`${prefixUrl}/courts?id=${deleteCourtId}`);
-  return data;
-};
+
 export const addCourt = async (data) => {
   try {
     const response = await axios.post(`${prefixUrl}/courts`, data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateCourt = async (courtId,data) => {
+  try {
+    const response = await axios.put(`${prefixUrl}/courts/${courtId}/`, data);
     return response.data;
   } catch (error) {
     console.log(error);
