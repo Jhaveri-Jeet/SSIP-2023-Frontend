@@ -389,20 +389,28 @@ export const getAllDistrict = async () => {
   }
 };
 
-export const addDistrict = async (data) => {
+export const getDistrict = async (districtId) => {
   try {
-    const response = await axios.post("${prefixUrl}/Districts", data);
+    const response = await axios.get(`${prefixUrl}/Districts/${districtId}`);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const deleteDistrict = async (deleteDistrictId) => {
+export const addDistrict = async (data) => {
   try {
-    const response = await axios.delete(
-      `${prefixUrl}/Districts/${deleteDistrictId}`
-    );
+    const response = await axios.post(`${prefixUrl}/Districts`, data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateDistrict = async (data) => {
+  try {
+    let id = data.id;
+    const response = await axios.put(`${prefixUrl}/Districts/${id}`, data);
     return response.data;
   } catch (error) {
     console.log(error);

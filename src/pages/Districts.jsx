@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import { districts } from "../constant";
-// import InsertState from "../Modals/InsertState";
-// import { getAllStates } from "../Services/Api";
+import InsertDistrict from "../Modals/InsertDistrict";
+import { getAllDistrict } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
 
-const Districts = ({ currentScreen, setCurrentScreen }) => {
+const Districts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
+  
+  // if(!isLoggedIn)
+  //   window.location.href="/";
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
-  // const [states,setStates] = useState([]);
+  const [districts,setDistricts] = useState([]);
 
 
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -24,7 +27,7 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
   };
 
   const onSubmitForm = (data) => {
-    setFormData(data);
+    // setFormData(data);
 
     if (Object.values(data).some((value) => !value)) {
       setBannerOpen(true);
@@ -34,12 +37,14 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
       }, 5000);
     }
   };
-  // const getAllStatesData = async () => {
-  //   const data = await getAllStates();
-  //   setStates(data);
-  // };
+  const getAllDistrictsData = async () => {
+    const data = await getAllDistrict();
+    setDistricts(data);
+  };
+  
   useEffect(() => {
     setCurrentScreen("Districts");
+    getAllDistrictsData();
   }, []);
 
   return (
@@ -80,12 +85,13 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
                 </button>
               </div>
             </div>
-            {/* <InsertState
+            <InsertDistrict
               isOpen={isFormOpen}
               onClose={closeForm}
-            /> */}
+              getAllDistrictsData={getAllDistrictsData}
+            />
             <div className="grid grid-cols-12 gap-6">
-              <CasesTable Districts = {districts} tableName={"Districts Lists"} />
+              <CasesTable getAllDistrictsData={getAllDistrictsData} Districts={districts} tableName={"Districts Lists"} />
             </div>
           </div>
         </main>
