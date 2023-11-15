@@ -195,14 +195,12 @@ export const updateAct = async (data) => {
 // ------------------ All Apis for Court ------------------
 export const getCourts = async (userRoleId, districtId) => {
   try {
-    const response = await axios.get(
-      `${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`
-    );
+    const response = await axios.get(`${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`);
     return response.data;
   } catch (error) {
     console.log(error);
   }
-};
+}
 
 export const getAllCourts = async () => {
   try {
@@ -213,19 +211,18 @@ export const getAllCourts = async () => {
   }
 };
 export const getCourt = async (courtId) => {
-  const data = await axios.post(`${prefixUrl}/courts/${courtId}`);
-  return data;
+  const response = await axios.get(`${prefixUrl}/courts/${courtId}`);
+  return response.data;
 };
 
-export const addCourt = async (data) => {
+export const addCourt = async (RoleId,StateId,DistrictId,data) => {
   try {
-    const response = await axios.post(`${prefixUrl}/courts`, data);
+    const response = await axios.post(`${prefixUrl}/courts/${RoleId}/${StateId}/${DistrictId}`, data);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
-
 export const updateCourt = async (courtId,data) => {
   try {
     const response = await axios.put(`${prefixUrl}/courts/${courtId}/`, data);

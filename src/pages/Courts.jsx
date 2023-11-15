@@ -8,8 +8,8 @@ import { getAllCourts } from "../Services/Api";
 
 const Courts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
 
-  if(!isLoggedIn)
-    window.location.href="/";
+  // if(!isLoggedIn)
+  //   window.location.href="/";
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);

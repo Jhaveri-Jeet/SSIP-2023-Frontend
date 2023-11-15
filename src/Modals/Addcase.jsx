@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from "react";
 import {
   addCase,
+  updateCase,
+  getAllRoles,
   getAllCourts,
   getAllCaseType,
   getAllAdvocates,
@@ -8,7 +10,7 @@ import {
 } from "../Services/Api";
 
 const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
-  console.log("c", editCaseData);
+
   const [selectedValues, setSelectedValues] = useState({
     AttorneyId: "",
     AdvocateId: "",
@@ -29,23 +31,31 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
     Comments: "",
   });
 
+
   const [courts, setCourts] = useState([]);
   const [caseTypes, setCaseType] = useState([]);
   const [advocates, setAdvocate] = useState([]);
   const [acts, setActs] = useState([]);
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  // const [isFormOpen, setIsFormOpen] = useState(false);
   const [updateform, setUpdateForm] = useState({
-    id: editCaseData ? (editCaseData.id ? editCaseData.id : "") : "",
-    CnrNumber: editCaseData
-      ? editCaseData.CnrNumber
-        ? editCaseData.CnrNumber
-        : ""
-      : "",
-    Petitioner: editCaseData
-      ? editCaseData.Petitioner
-        ? editCaseData.Petitioner
-        : ""
-      : "",
+    id: "",
+    dateFiled: "",
+    cnrNumber: "",
+    petitioner: "",
+    defendant: "",
+    judgeName: "",
+    description: "",
+    caseStatus: "",
+    judgment: "",
+    comments: "",
+    caseTypeId: "",
+    courtId: 1,
+    actId: "",
+    advocateId: "",
+    attorneyId: "",
+    roleId: 1,
+    transferFromId: "",
+    transferToId: "",
   });
   const getAllCourtsData = async () => {
     const allCourtsData = await getAllCourts();
@@ -68,23 +78,6 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
   };
 
   useEffect(() => {
-    if (editCaseData) {
-      setUpdateForm({
-        id: editCaseData.id || "",
-        name: editCaseData.CnrNumber || "",
-        Description: editCaseData.Petitioner || "",
-      });
-    } else {
-      // Clear the updateform when there's no editCaseTypeData
-      setUpdateForm({
-        id: "",
-        name: "",
-        Description: "",
-      });
-    }
-  }, [editCaseData]);
-
-  useEffect(() => {
     getAllCourtsData();
     getAllCaseTypeData();
     getAllAdvocatesData();
@@ -95,18 +88,50 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
     if (editCaseData) {
       setUpdateForm({
         id: editCaseData.id || "",
-        name: editCaseData.CnrNumber || "",
-        Description: editCaseData.Petitioner || "",
+        dateFiled: editCaseData.dateFiled || "",
+        cnrNumber: editCaseData.cnrNumber || "",
+        petitioner: editCaseData.petitioner || "",
+        defendant: editCaseData.defendant || "",
+        judgeName: editCaseData.judgeName || "",
+        description: editCaseData.description || "",
+        caseStatus: editCaseData.caseStatus || "",
+        judgment: editCaseData.judgment || "",
+        comments: editCaseData.comments || "",
+        caseTypeId: editCaseData.caseTypeId || "",
+        courtId: editCaseData.courtId || "",
+        actId: editCaseData.actId || "",
+        advocateId: editCaseData.advocateId || "",
+        attorneyId: editCaseData.attorneyId || "",
+        roleId: editCaseData.roleId || "",
+        transferFromId: editCaseData.transferFromId || "",
+        transferToId: editCaseData.transferToId || ""
       });
-    } else {
+    }
+    else {
       // Clear the updateform when there's no editCaseTypeData
       setUpdateForm({
         id: "",
-        name: "",
-        Description: "",
+        dateFiled: "",
+        cnrNumber: "",
+        petitioner: "",
+        defendant: "",
+        judgeName: "",
+        description: "",
+        caseStatus: "",
+        judgment: "",
+        comments: "",
+        caseTypeId: "",
+        courtId: "",
+        actId: "",
+        advocateId: "",
+        attorneyId: "",
+        roleId: "",
+        transferFromId: "",
+        transferToId: ""
       });
     }
   }, [editCaseData]);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -115,12 +140,21 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
       [name]: value,
     });
   };
+
+  const updatehandleInputChange = (name, value) => {
+    setUpdateForm({
+      ...updateform,
+      [name]: value,
+    });
+  };
+
   const handleSelectChange = (name, value) => {
     setSelectedValues({
       ...selectedValues,
       [name]: value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await addCase(
@@ -132,34 +166,25 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
       parseInt(selectedValues.RoleId),
       form
     );
-    closeAddCaseModel();
+    onClose();
   };
 
-  useEffect(() => {
-    if (editCaseData) {
-      setUpdateForm({
-        id: editCaseData.id || "",
-        name: editCaseData.CnrNumber || "",
-        Description: editCaseData.Petitioner || "",
-      });
-    } else {
-      // Clear the updateform when there's no editCaseTypeData
-      setUpdateForm({
-        id: "",
-        name: "",
-        Description: "",
-      });
-    }
-  }, [editCaseData]);
- console.log("editCaseData",editCaseData)
+  const updatehandleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(updateform);
+    const res = await updateCase(updateform);
+    onClose();
+
+  }
+
   if (editCaseData) {
     return (
       <>
         <div>
           <div
-            className={`fixed z-50 left-0 top-0 flex h-screen w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
-              isOpen ? "block" : "hidden"
-            }`}
+            className={`fixed z-50 left-0 top-0 flex h-screen w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
+              }`}
           >
             <div className="w-full">
               <div className=" flex justify-center">
@@ -174,18 +199,20 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
                       <div>
                         <label>DateFiled</label>
                         <input
-                          defaultValue={form.DateFiled}
-                          onChange={handleInputChange}
+                          onChange={(e) =>
+                            updatehandleInputChange("dateFiled", e.target.value)}
+                          value={updateform.dateFiled || editCaseData.dateFiled}
                           type="date"
-                          name="DateFiled"
+                          name="dateFiled"
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         />
                       </div>
                       <div>
                         <label>CnrNumber</label>
                         <input
-                          defaultValue={form.CnrNumber}
-                          onChange={handleInputChange}
+                          value={updateform.cnrNumber || editCaseData.cnrNumber}
+                          onChange={(e) =>
+                            updatehandleInputChange("cnrNumber", e.target.value)}
                           type="text"
                           name="CnrNumber"
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -195,11 +222,9 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
                         <label>CaseType</label>
                         <select
                           id="caseType"
-                          name="CaseTypeId"
-                          defaultValue={form.CaseTypeId}
-                          onChange={(e) =>
-                            handleSelectChange("CaseTypeId", e.target.value)
-                          }
+                          name="caseTypeId"
+                          value={updateform.caseTypeId || editCaseData.caseType.id}
+                          onChange={(e) => updatehandleInputChange("caseTypeId", parseInt(e.target.value))}
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         >
                           <option value="">Select a Case Type</option>
@@ -210,62 +235,58 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
                           ))}
                         </select>
                       </div>
-                      {/* <div>
-                    <label>Court Name</label>
-                    <select
-                      id="court"
-                      name="CourtId"
-                      defaultValue={form.CourtId}
-                      onChange={(e) =>
-                        handleSelectChange("CourtId", e.target.value)
-                      }
-                      className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
-                    >
-                      <option value="">Select a Court</option>
-                      {courts.map((court) => (
-                        <option key={court.id} value={court.id}>
-                          {court.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div> */}
                       <div>
                         <label>Petitioner</label>
                         <input
-                          defaultValue={form.Petitioner}
-                          onChange={handleInputChange}
+                          value={updateform.petitioner || editCaseData.petitioner}
+                          onChange={(e) =>
+                            updatehandleInputChange("petitioner", e.target.value)}
                           type="text"
-                          name="Petitioner"
+                          name="petitioner"
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         />
                       </div>
                       <div>
                         <label>Defendant</label>
                         <input
-                          defaultValue={form.Defendant}
-                          onChange={handleInputChange}
+                          onChange={(e) =>
+                            updatehandleInputChange("defendant", e.target.value)}
+                          value={updateform.defendant || editCaseData.defendant}
                           type="text"
-                          name="Defendant"
+                          name="defendant"
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         />
                       </div>
                       <div>
                         <label>JudgeName</label>
                         <input
-                          defaultValue={form.JudgeName}
-                          onChange={handleInputChange}
+                          value={updateform.judgeName || editCaseData.judgeName}
+                          onChange={(e) =>
+                            updatehandleInputChange("judgeName", e.target.value)}
                           type="text"
-                          name="JudgeName"
+                          name="judgeName"
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         />
                       </div>
                       <div>
                         <label>Description</label>
                         <input
-                          defaultValue={form.Description}
-                          onChange={handleInputChange}
+                          value={updateform.description || editCaseData.description}
+                          onChange={(e) =>
+                            updatehandleInputChange("description", e.target.value)}
                           type="text"
-                          name="Description"
+                          name="description"
+                          className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
+                        />
+                      </div>
+                      <div>
+                        <label>	Judgment</label>
+                        <input
+                          defaultValue={updateform.judgment || editCaseData.judgment}
+                          onChange={(e) =>
+                            updatehandleInputChange("judgment", e.target.value)}
+                          type="text"
+                          name="judgment"
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         />
                       </div>
@@ -273,10 +294,10 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
                         <label>Act Name</label>
                         <select
                           id="act"
-                          name="ActId"
-                          defaultValue={form.ActId}
+                          name="actId"
+                          value={updateform.actId || editCaseData.act.id}
                           onChange={(e) =>
-                            handleSelectChange("ActId", e.target.value)
+                            updatehandleInputChange("actId", parseInt(e.target.value))
                           }
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         >
@@ -292,10 +313,10 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
                         <label>Advocate Name</label>
                         <select
                           id="advocate"
-                          name="AdvocateId"
-                          defaultValue={form.AdvocateId}
+                          name="advocateId"
+                          value={updateform.advocateId || editCaseData.advocate.id}
                           onChange={(e) =>
-                            handleSelectChange("AdvocateId", e.target.value)
+                            updatehandleInputChange("advocateId", parseInt(e.target.value))
                           }
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         >
@@ -311,10 +332,10 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
                         <label>Attorney Name</label>
                         <select
                           id="attorney"
-                          name="AttorneyId"
-                          defaultValue={form.AttorneyId}
+                          name="attorneyId"
+                          value={updateform.attorneyId || editCaseData.attorney.id}
                           onChange={(e) =>
-                            handleSelectChange("AttorneyId", e.target.value)
+                            updatehandleInputChange("attorneyId", parseInt(e.target.value))
                           }
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         >
@@ -330,28 +351,55 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
                         <label>CaseStatus</label>
                         <select
                           id="caseStatus"
-                          name="CaseStatus"
-                          defaultValue={form.CaseStatus}
-                          onChange={handleInputChange}
+                          name="caseStatus"
+                          value={updateform.caseStatus || editCaseData.caseStatus}
+                          onChange={(e) =>
+                            updatehandleInputChange("caseStatus", e.target.value)}
                           className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                         >
-                          <option value="Pending" selected>
+                          <option value="Pending">
                             Pending
                           </option>
                           <option value="Running">Running</option>
                           <option value="Completed">Completed</option>
                         </select>
                       </div>
+                      <div>
+                        <label>Transfer From:</label>
+                        <select
+                          id="transferFromId"
+                          name="transferFromId"
+                          value={updateform.transferFromId || editCaseData.transferFromId}
+                          onChange={(e) =>
+                            updatehandleInputChange("transferFromId", parseInt(e.target.value))}
+                          className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
+                        >
+
+                        </select>
+                      </div>
+                      <div>
+                        <label>Transfer To:</label>
+                        <select
+                          id="transferTo"
+                          name="transferTo"
+                          value={updateform.transferToId || editCaseData.roleId.id}
+                          onChange={(e) =>
+                            updatehandleInputChange("transferToId", parseInt(e.target.value))}
+                          className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
+                        >
+                          <option value={editCaseData.roleId.id}>{editCaseData.roleId.name}</option>
+                        </select>
+                      </div>
                     </div>
                     <div className="mt-4 flex gap-x-3">
                       <button
-                        onClick={handleSubmit}
+                        onClick={updatehandleSubmit}
                         className="uppercase text-sm font-bold tracking-wide bg-indigo-500 hover:bg-indigo-600 text-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                       >
-                        Add case
+                        Edit case
                       </button>
                       <button
-                        onClick={closeAddCaseModel}
+                        onClick={onClose}
                         className="uppercase text-sm font-bold tracking-wide border border-indigo-600 text-indigo-600 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                       >
                         Cancel
@@ -366,12 +414,12 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
       </>
     );
   }
+
   return (
     <div>
       <div
-        className={`fixed z-50 left-0 top-0 flex h-screen w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
-          isOpen ? "block" : "hidden"
-        }`}
+        className={`fixed z-50 left-0 top-0 flex h-screen w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
+          }`}
       >
         <div className="w-full">
           <div className=" flex justify-center">
@@ -478,6 +526,16 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
                       onChange={handleInputChange}
                       type="text"
                       name="Description"
+                      className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
+                    />
+                  </div>
+                  <div>
+                    <label>	Judgment</label>
+                    <input
+                      defaultValue={form.Judgment}
+                      onChange={handleInputChange}
+                      type="text"
+                      name="Judgment"
                       className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                     />
                   </div>

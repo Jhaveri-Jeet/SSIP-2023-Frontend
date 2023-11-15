@@ -4,6 +4,7 @@ import InsertAdvocate from "../Modals/InsertAdvocate";
 import Addcase from "../Modals/Addcase";
 import AddSections from "../Modals/AddSections";
 import InsertHearing from "../Modals/InsertHearing";
+import InsertCourt from "../Modals/InsertCourt";
 
 import {
   deleteCaseType,
@@ -631,7 +632,7 @@ function CasesTable({
         <InsertCourt
           editSingleCourt={editsingleCourtData}
           isOpen={isOpen}
-          onClose={closeSingleStateTypeModel}
+          onClose={closeSingleCourtTypeModel}
           getAllCourtsData={getAllCourtsData}
         />
       </>
