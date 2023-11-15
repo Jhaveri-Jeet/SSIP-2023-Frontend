@@ -5,6 +5,8 @@ import Addcase from "../Modals/Addcase";
 import AddSections from "../Modals/AddSections";
 import InsertHearing from "../Modals/InsertHearing";
 import InsertCourt from "../Modals/InsertCourt";
+import InsertState from "../Modals/InsertState";
+
 
 import {
   deleteCaseType,
@@ -17,10 +19,10 @@ import {
   getHearing,
   deleteHearing,
   getAdvocate,
-  deleteState,
   deleteAdvocate,
   getSection,
-  getCourt
+  getCourt,
+  getState
 } from "../Services/Api";
 import { addWitness } from "../Services/Api";
 import AddCaseType from "../Modals/AddCaseType";
@@ -42,7 +44,8 @@ function CasesTable({
   Districts,
   validate,
   sections,
-  getAllCourtsData
+  getAllCourtsData,
+  getAllStatesData,
 }) {
   // alert(localStorage.getItem('isLoggedIn'));
   // validate()
@@ -151,10 +154,16 @@ function CasesTable({
   };
   //--------------- operation for State ----------------------
 
-  const deleteStates = async (e) => {
-    const deleteStateId = e;
-    const res = await deleteState(deleteStateId);
-    console.log(res);
+  const [editsingleStateData, setEditSingleStateData] = useState([]);
+
+  const closeSingleStateTypeModel = () => {
+    setIsOpen(false);
+  };
+
+  const editSingleState = async (e) => {
+    const res = await getState(e);
+    setEditSingleStateData(res);
+    setIsOpen(true);
   };
 
   // ------------------ operations for singleAct ------------------
@@ -931,13 +940,13 @@ function CasesTable({
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                   {States
-                    ? States.map((singleState) => {
+                    ? States.map((singleState,index) => {
                         return (
                           <tr key={singleState.id}>
                             <td className="p-2">
                               <div className="flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100">
-                                  {singleState.id}
+                                  {index+1}
                                 </div>
                               </div>
                             </td>
@@ -952,16 +961,9 @@ function CasesTable({
                               <div className="inline-flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100 ml-5">
                                   <button
-                                    onClick={() => editState(singleState.id)}
+                                    onClick={() => editSingleState(singleState.id)}
                                   >
                                     Edit
-                                  </button>
-                                </div>
-                                <div className="text-slate-800 dark:text-slate-100 ml-5">
-                                  <button
-                                    onClick={() => deleteStates(singleState.id)}
-                                  >
-                                    Delete
                                   </button>
                                 </div>
                               </div>
@@ -975,9 +977,16 @@ function CasesTable({
             </div>
           </div>
         </div>
+        <InsertState
+          editSingleState={editsingleStateData}
+          isOpen={isOpen}
+          onClose={closeSingleStateTypeModel}
+          getAllStatesData={getAllStatesData}
+        />
       </>
     );
   }
+
   if (Districts) {
     return (
       <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">

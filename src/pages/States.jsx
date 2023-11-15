@@ -9,7 +9,7 @@ import Banner from "../partials/Banner";
 const States = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
   
   // if(!isLoggedIn)
-    // window.location.href="/";
+  //   window.location.href="/";
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
@@ -88,9 +88,10 @@ const States = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
             <InsertState
               isOpen={isFormOpen}
               onClose={closeForm}
+              getAllStatesData={getAllStatesData}
             />
             <div className="grid grid-cols-12 gap-6">
-              <CasesTable States={states} tableName={"States Lists"} />
+              <CasesTable getAllStatesData={getAllStatesData} States={states} tableName={"States Lists"} />
             </div>
           </div>
         </main>

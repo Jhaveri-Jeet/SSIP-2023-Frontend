@@ -348,6 +348,16 @@ export const getAllStates = async () => {
   }
 };
 
+export const getState = async (stateId) => {
+  try {
+    const response = await axios.get(`${prefixUrl}/states/${stateId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 export const addState = async (data) => {
   try {
     const response = await axios.post(`${prefixUrl}/States`, data);
@@ -357,9 +367,11 @@ export const addState = async (data) => {
   }
 };
 
-export const deleteState = async (deleteStateId) => {
+export const updateState = async (data) => {
   try {
-    const response = await axios.delete(`${prefixUrl}/States/${deleteStateId}`);
+    let id = data.id;
+    console.log(data);
+    const response = await axios.put(`${prefixUrl}/states/${id}`, data);
     return response.data;
   } catch (error) {
     console.log(error);
