@@ -98,15 +98,9 @@ useEffect(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(e.target.textContent === "Edit") {
-      console.log(editSingleCourt.id,updateform);
       const res = await updateCourt(editSingleCourt.id,updateform);
-      
     }
     else if(e.target.textContent === "Add") {
-      console.log(parseInt(selectedValues.RoleId),
-      parseInt(selectedValues.StateId),
-      parseInt(selectedValues.DistrictId),
-      form)
       const res = await addCourt(parseInt(selectedValues.RoleId),
       parseInt(selectedValues.StateId),
       parseInt(selectedValues.DistrictId),
@@ -134,7 +128,6 @@ useEffect(() => {
         prev = data;
         return [...prev];
       })
-      console.log(stateDataList)
     }).catch((error) => {
       console.error(error);
     });
@@ -236,7 +229,7 @@ useEffect(() => {
                   name="stateId"
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
-                  <option value="" disabled selected>select state</option>
+                  <option value="" disabled>select state</option>
                   {stateDataList.map((state) => (
                     <option key={state.id} value={state.id} id={state.name}>
                       {state.name}
@@ -379,8 +372,12 @@ useEffect(() => {
                   name="stateId"
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
-                  <option value="" selected disabled>select state</option>
-                  <option value="1">Gujarat</option>
+                  <option value="" disabled selected>select state</option>
+                  {stateDataList.map((state) => (
+                    <option key={state.id} value={state.id} id={state.name}>
+                      {state.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">

@@ -2,8 +2,8 @@ import axios from "axios";
 import { prefixUrl } from "./Config";
 
 // ------------------ All Apis for User ------------------
-export const createUser = async (roleId,districtId,courtId) => {
-  const response = await axios.post(`${prefixUrl}/users/${roleId}/${districtId}/${courtId}`)
+export const createUser = async (roleId,districtId,courtId,data) => {
+  const response = await axios.post(`${prefixUrl}/users/${roleId}/${districtId}/${courtId}`,data)
   console.log(response);
   return response;
 };
@@ -224,9 +224,15 @@ export const getCourt = async (courtId) => {
 
 export const addCourt = async (RoleId,StateId,DistrictId,data) => {
   try {
+    console.log(data);
     const response = await axios.post(`${prefixUrl}/courts/${RoleId}/${StateId}/${DistrictId}`, data);
     if(response.status === 200) {
-      createUser
+      var courtId = response.data;
+      var courtData = {
+        "UserName" : data.name,
+        "PasswordHash" : "123"
+      };
+      await createUser(RoleId,DistrictId,courtId,courtData);
     }
     return response.data;
   } catch (error) {
