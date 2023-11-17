@@ -151,9 +151,9 @@ useEffect(() => {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
+        <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-2xl">
           <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
-            <div>
+            <div className="grid grid-cols-1 gap-1 md:gap-5 md:grid-cols-3">
             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                 <label htmlFor="district" className="block font-semibold mb-2">
                   Select Court Type:
