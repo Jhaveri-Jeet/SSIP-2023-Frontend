@@ -4,72 +4,72 @@ import axios from "axios";
 import { prefixUrl } from "../Services/Config";
 
 function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
-//   const [form, setForm] = useState({
-//     caseId: caseId,
-//     WitnessName: "",
-//     Image: "",
-//   });
- 
+  //   const [form, setForm] = useState({
+  //     caseId: caseId,
+  //     WitnessName: "",
+  //     Image: "",
+  //   });
 
-//   useEffect(() => {
-//     console.log("editeEvidence", editeEvidence);
-//     if (editeEvidence) {
-//       setUpdateForm({
-//         id: editeEvidence.id || "",
-//         caseId: editeEvidence.caseId || "",
-//         WitnessName: editeEvidence.WitnessName || "",
-//         Image: editeEvidence.Image || "",
-//       });
-//       console.log(updateform);
-//     } else {
-//       setForm({
-//         caseId: caseId,
-//         WitnessName: "",
-//         Image: "",
-//       });
 
-//       // Clear the updateform when there's no editAdvocateData
-//       setUpdateForm({
-//         caseId: "",
-//         WitnessName: "",
-//         Image: "",
-//       });
-//     }
-//   }, [editeEvidence]);
+  //   useEffect(() => {
+  //     console.log("editeEvidence", editeEvidence);
+  //     if (editeEvidence) {
+  //       setUpdateForm({
+  //         id: editeEvidence.id || "",
+  //         caseId: editeEvidence.caseId || "",
+  //         WitnessName: editeEvidence.WitnessName || "",
+  //         Image: editeEvidence.Image || "",
+  //       });
+  //       console.log(updateform);
+  //     } else {
+  //       setForm({
+  //         caseId: caseId,
+  //         WitnessName: "",
+  //         Image: "",
+  //       });
 
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
+  //       // Clear the updateform when there's no editAdvocateData
+  //       setUpdateForm({
+  //         caseId: "",
+  //         WitnessName: "",
+  //         Image: "",
+  //       });
+  //     }
+  //   }, [editeEvidence]);
 
-//     if (editeEvidence) {
-//       setUpdateForm({
-//         ...updateform,
-//         [name]: value,
-//       });
-//     }
-//     setForm({
-//       ...form,
-//       [name]: value,
-//     });
-//     console.log(form);
-//   };
+  //   const handleInputChange = (e) => {
+  //     const { name, value } = e.target;
 
-//   const handleFileChange = (e) => {
-//     const { name, value, files } = e.target;
+  //     if (editeEvidence) {
+  //       setUpdateForm({
+  //         ...updateform,
+  //         [name]: value,
+  //       });
+  //     }
+  //     setForm({
+  //       ...form,
+  //       [name]: value,
+  //     });
+  //     console.log(form);
+  //   };
 
-//     if (editeEvidence) {
-//       setUpdateForm({
-//         ...updateform,
-//         [name]: value,
-//       });
-//     }
-//     setForm({
-//       ...form,
-//       [name]: files[0],
-//     });
-//     console.log(form);
-//   };
+  //   const handleFileChange = (e) => {
+  //     const { name, value, files } = e.target;
 
-const formData = new FormData()
+  //     if (editeEvidence) {
+  //       setUpdateForm({
+  //         ...updateform,
+  //         [name]: value,
+  //       });
+  //     }
+  //     setForm({
+  //       ...form,
+  //       [name]: files[0],
+  //     });
+  //     console.log(form);
+  //   };
+
+  const formData = new FormData()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -87,20 +87,19 @@ const formData = new FormData()
     return (
       <>
         <div
-          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
-            isOpen ? "block" : "hidden"
-          }`}
+          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
+            }`}
         >
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
             <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
               <div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                   <label htmlFor="state" className="block font-semibold mb-2">
-                  Evidence Name:
+                    Evidence Name:
                   </label>
                   <input
                     defaultValue={updateform.EvidenceDescription}
-                    onChange={(e) => formData.append("EvidenceDescription",e.target.value)}
+                    onChange={(e) => formData.append("EvidenceDescription", e.target.value)}
                     type="text"
                     name="EvidenceDescription"
                     placeholder="Witness name"
@@ -119,7 +118,7 @@ const formData = new FormData()
                     defaultValue={updateform.Image}
                     name="WitnessImage"
                     accept="image/*" // Allow only image files
-                    onChange={(e) => formData.append("file",e.target.files[0])}
+                    onChange={(e) => formData.append("file", e.target.files[0])}
                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
@@ -147,9 +146,8 @@ const formData = new FormData()
   return (
     <>
       <div
-        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
-          isOpen ? "block" : "hidden"
-        }`}
+        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
+          }`}
       >
         <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
           <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
@@ -159,7 +157,7 @@ const formData = new FormData()
                   Evidence Description:
                 </label>
                 <input
-                  onChange={(e) => formData.append("EvidenceDescription",e.target.value)}
+                  onChange={(e) => formData.append("EvidenceDescription", e.target.value)}
                   type="text"
                   name="EvidenceDescription"
                   placeholder="Evidence Description"
@@ -177,7 +175,7 @@ const formData = new FormData()
                   type="file"
                   name="WitnessImage"
                   accept="image/*" // Allow only image files
-                  onChange={(e) => formData.append("file",e.target.files[0])}
+                  onChange={(e) => formData.append("file", e.target.files[0])}
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AddWitness from "../Modals/InsertWitness";
 import InsertAdvocate from "../Modals/InsertAdvocate";
 import Addcase from "../Modals/Addcase";
 import AddSections from "../Modals/AddSections";
@@ -226,20 +225,20 @@ function CasesTable({
                 <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                   <tr>
                     <th className="p-2">
-                      <div className="font-semibold text-left">Case Number</div>
+                      <div className="font-semibold text-left">Number</div>
                     </th>
                     <th className="p-2">
-                      <div className="font-semibold text-center">Date File</div>
+                      <div className="font-semibold text-center">File</div>
                     </th>
                     <th className="p-2">
-                      <div className="font-semibold text-center">Case type</div>
+                      <div className="font-semibold text-center">Type</div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">Advocate</div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">
-                        Attorney Advocate
+                        Attorney
                       </div>
                     </th>
                     <th className="p-2">
@@ -257,12 +256,12 @@ function CasesTable({
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">
-                        Case Status
+                        Status
                       </div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">
-                        Case Report
+                        Report
                       </div>
                     </th>
                     <th className="p-2">
@@ -275,88 +274,87 @@ function CasesTable({
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                   {cases
                     ? cases.map((singleCase) => {
-                        console.log(
-                          "edit",
-                          localStorage.getItem("userId"),
-                          singleCase.roleId,
-                          singleCase.transferToId
-                        );
-                        return (
-                          <tr key={singleCase.id}>
-                            <td className="p-2">
-                              <div className="flex items-center">
-                                <div className="text-slate-800 dark:text-slate-100">
-                                  {singleCase.cnrNumber}
-                                </div>
+                      // console.log(
+                      //   "edit",
+                      //   localStorage.getItem("userId"),
+                      //   singleCase.roleId,
+                      //   singleCase.transferToId
+                      // );
+                      return (
+                        <tr key={singleCase.id}>
+                          <td className="p-2">
+                            <div className="flex items-center">
+                              <div className="text-slate-800 dark:text-slate-100">
+                                {singleCase.cnrNumber}
                               </div>
-                            </td>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {singleCase.dateFiled}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <div className="text-center text-emerald-500">
-                                {singleCase.caseType.name}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {singleCase.advocate.name}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <div className="text-center text-sky-500">
-                                {singleCase.attorney.name}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {singleCase.defendant}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {singleCase.petitioner}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {singleCase.transferTo.name}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <div className="text-center text-emerald-500">
-                                {singleCase.caseStatus}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <button
-                                className="flex justify-center text-center"
-                                style={{ width: "100%" }}
-                                onClick={() =>
-                                  navigate(
-                                    `/dashboard/showCaseDetail/${singleCase.id}`
-                                  )
-                                }
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center">
+                              {singleCase.dateFiled}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center text-emerald-500">
+                              {singleCase.caseType.name}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center">
+                              {singleCase.advocate.name}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center text-sky-500">
+                              {singleCase.attorney.name}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center">
+                              {singleCase.defendant}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center">
+                              {singleCase.petitioner}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center">
+                              {singleCase.transferTo.name}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <div className="text-center text-emerald-500">
+                              {singleCase.caseStatus}
+                            </div>
+                          </td>
+                          <td className="p-2">
+                            <button
+                              className="flex justify-center text-center"
+                              style={{ width: "100%" }}
+                              onClick={() => navigate(
+                                `/dashboard/showCaseDetail/${singleCase.id}`
+                              )
+                              }
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width={20}
+                                fill="currentColor"
+                                className="bi bi-eye"
+                                viewBox="0 0 16 16"
                               >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width={20}
-                                  fill="currentColor"
-                                  className="bi bi-eye"
-                                  viewBox="0 0 16 16"
-                                >
-                                  {" "}
-                                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
-                                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
-                                </svg>
-                              </button>
-                            </td>
-                            {(localStorage.getItem("userId") ==
-                              singleCase.roleId ||
-                              localStorage.getItem("userId") ==
-                                singleCase.transferToId) && (
+                                {" "}
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                              </svg>
+                            </button>
+                          </td>
+                          {(localStorage.getItem("userId") ===
+                            singleCase.roleId ||
+                            localStorage.getItem("userId") ==
+                            singleCase.transferToId) && (
                               <td className="p-2">
                                 <div className="inline-flex items-center">
                                   <div className="text-slate-800 dark:text-slate-100 ml-5">
@@ -369,9 +367,9 @@ function CasesTable({
                                 </div>
                               </td>
                             )}
-                          </tr>
-                        );
-                      })
+                        </tr>
+                      );
+                    })
                     : null}
                 </tbody>
               </table>
@@ -379,7 +377,7 @@ function CasesTable({
           </div>
         </div>
         <Addcase
-          editSingleCase={editCaseData}
+          editCaseData={editCaseData}
           isOpen={isOpen}
           onClose={closeCaseModel}
         />
@@ -392,25 +390,10 @@ function CasesTable({
         <div className=" col-span-full xl:col-span-12  bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
           <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
             <h2
-              style={{ fontSize: "20px" }}
-              className="font-semibold text-slate-800 dark:text-slate-100 align-middle "
+              className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle "
             >
               {tableName}
             </h2>
-            <button
-              onClick={() => {
-                setHearingOpen(true);
-              }}
-              className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
-            >
-              <svg
-                className="w-4 h-4 fill-current opacity-50 shrink-0"
-                viewBox="0 0 16 16"
-              >
-                <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-              </svg>
-              <span className="hidden xs:block ml-2">Add Hearing</span>
-            </button>
           </header>
           <div className="p-3">
             {/* Table */}
@@ -420,16 +403,13 @@ function CasesTable({
                 <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                   <tr>
                     <th className="p-2">
-                      <div className="font-semibold text-center">Case Id</div>
-                    </th>
-                    <th className="p-2">
                       <div className="font-semibold text-center">
-                        Hearing date
+                        Date
                       </div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">
-                        HearingDetails
+                        Details
                       </div>
                     </th>
                     <th className="p-2">
@@ -444,11 +424,6 @@ function CasesTable({
                     ? HearingDetail.map((HearingDetailsData, index) => {
                         return (
                           <tr key={index}>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {HearingDetailsData.caseId}
-                              </div>
-                            </td>
                             <td className="p-2">
                               <div className="text-center text-emerald-500">
                                 {HearingDetailsData.hearingDate}
@@ -499,11 +474,11 @@ function CasesTable({
           onClose={closeHearingModel}
           caseId={CaseId}
         />
-        <InsertHearing
+        {/* <InsertHearing
           isOpen={isHearingOpen}
           onClose={closeHearingModel}
           caseId={CaseId}
-        />
+        /> */}
       </>
     );
   }
@@ -512,23 +487,9 @@ function CasesTable({
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
           <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
-            <h2 className="font-semibold text-slate-800 dark:text-slate-100 align-middle ">
+            <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
               {tableName}
             </h2>
-            <button
-              onClick={() => {
-                setEvidenceOpen(true);
-              }}
-              className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
-            >
-              <svg
-                className="w-4 h-4 fill-current opacity-50 shrink-0"
-                viewBox="0 0 16 16"
-              >
-                <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-              </svg>
-              <span className="hidden xs:block ml-2">Add view</span>
-            </button>
           </header>
           <div className="p-3">
             {/* Table */}
@@ -538,11 +499,8 @@ function CasesTable({
                 <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                   <tr>
                     <th className="p-2">
-                      <div className="font-semibold text-center">Case Id</div>
-                    </th>
-                    <th className="p-2">
                       <div className="font-semibold text-center">
-                        Evidence description
+                        Description
                       </div>
                     </th>
                     <th className="p-2">
@@ -560,11 +518,6 @@ function CasesTable({
                     ? Evidence.map((Evidencedata) => {
                         return (
                           <tr key={Evidencedata.Id}>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {Evidencedata.caseId}
-                              </div>
-                            </td>
                             <td className="p-2">
                               <div className="text-center text-emerald-500">
                                 {Evidencedata.evidenceDescription}
@@ -628,11 +581,11 @@ function CasesTable({
           onClose={closeEvidenceModel}
           caseId={CaseId}
         />
-        <InsertEvidence
+        {/* <InsertEvidence
           isOpen={isEvidenceOpen}
           onClose={closeEvidenceModel}
           caseId={CaseId}
-        />
+        /> */}
       </>
     );
   }
@@ -641,23 +594,10 @@ function CasesTable({
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
           <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
-            <h2 className="font-semibold text-slate-800 dark:text-slate-100 align-middle ">
+            <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
               {tableName}
             </h2>
-            <button
-              onClick={() => {
-                setWitnessOpen(true);
-              }}
-              className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
-            >
-              <svg
-                className="w-4 h-4 fill-current opacity-50 shrink-0"
-                viewBox="0 0 16 16"
-              >
-                <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-              </svg>
-              <span className="hidden xs:block ml-2">Add view</span>
-            </button>
+            
           </header>
           <div className="p-3">
             {/* Table */}
@@ -667,11 +607,8 @@ function CasesTable({
                 <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                   <tr>
                     <th className="p-2">
-                      <div className="font-semibold text-center">Case Id</div>
-                    </th>
-                    <th className="p-2">
                       <div className="font-semibold text-center">
-                        Witness Name
+                         Name
                       </div>
                     </th>
                     <th className="p-2">
@@ -689,11 +626,6 @@ function CasesTable({
                     ? Witness.map((singleWitness) => {
                         return (
                           <tr key={singleWitness.Id}>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {singleWitness.caseId}
-                              </div>
-                            </td>
                             <td className="p-2">
                               <div className="text-center text-emerald-500">
                                 {singleWitness.witnessName}
@@ -757,11 +689,11 @@ function CasesTable({
           onClose={closeWitnessModel}
           caseId={CaseId}
         />
-        <InsertWitness
+        {/* <InsertWitness
           isOpen={isWitnessOpen}
           onClose={closeWitnessModel}
           caseId={CaseId}
-        />
+        /> */}
       </>
     );
   }

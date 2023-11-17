@@ -62,7 +62,7 @@ const DistrictCourt = ({
     setCurrentScreen("District Court");
     getAllDistrictCourtCasesFunction();
     getAllDistrictPendingCourtCasesFunction();
-    getAllDistrictCompletedCasesCount();
+    getAllDistrictCompletedCourtCasesFunction();
     getAllDistrictRunningCourtCasesFunction();
   }, []);
   console.log("districtCompletedCourtCases :", districtCompletedCourtCases);
