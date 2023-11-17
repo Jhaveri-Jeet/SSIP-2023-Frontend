@@ -307,9 +307,9 @@ useEffect(() => {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
+        <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-2xl">
           <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
-            <div>
+            <div className="grid grid-cols-1 gap-1 md:gap-5 md:grid-cols-3">
             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                 <label htmlFor="district" className="block font-semibold mb-2">
                   Select Court Type:
@@ -414,7 +414,7 @@ useEffect(() => {
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
-              <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
+              <div className="flex justify-center items-center p-4 space-x-2  rounded-b">
                 <button
                   onClick={handleSubmit}
                   className="bg-[#10375e] hover:bg-[#185490] text-white font-semibold hover:text-white py-2 px-4 border  rounded focus:outline-none focus:ring-0"
