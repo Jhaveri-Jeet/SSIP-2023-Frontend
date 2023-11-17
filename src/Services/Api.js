@@ -43,17 +43,17 @@ export const getAllHighCasesCount = async () => {
 };
 export const getAllPendingHighCasesCount = async () => {
   const data = await axios.get(`${prefixUrl}/TotalPendingCases/3`);
-  console.log("pending",data.data)
+  console.log("pending", data.data);
   return data.data;
 };
 export const getAllRunningHighCasesCount = async () => {
   const data = await axios.get(`${prefixUrl}/TotalRunningCases/3`);
-  console.log(data.data)
+  console.log(data.data);
   return data.data;
 };
 export const getAllCompletedHighCasesCount = async () => {
   const data = await axios.get(`${prefixUrl}/TotalCompletedCases/3`);
-  console.log(data.data)
+  console.log(data.data);
   return data.data;
 };
 export const getAllSupremeCasesCount = async () => {
@@ -62,17 +62,17 @@ export const getAllSupremeCasesCount = async () => {
 };
 export const getAllPendingSupremeCasesCount = async () => {
   const data = await axios.get(`${prefixUrl}/TotalPendingCases/4`);
-  console.log("pending",data.data)
+  console.log("pending", data.data);
   return data.data;
 };
 export const getAllRunningSupremeCasesCount = async () => {
   const data = await axios.get(`${prefixUrl}/TotalRunningCases/4`);
-  console.log(data.data)
+  console.log(data.data);
   return data.data;
 };
 export const getAllCompletedSupremeCasesCount = async () => {
   const data = await axios.get(`${prefixUrl}/TotalCompletedCases/4`);
-  console.log(data.data)
+  console.log(data.data);
   return data.data;
 };
 export const getAllCases = async () => {
@@ -294,65 +294,6 @@ export const deleteCaseType = async (deleteCaseTypeId) => {
   }
 };
 
-// ------------------ All Apis for Witness ------------------
-export const getAllWitness = async () => {
-  try {
-    const response = await axios.get(`${prefixUrl}/Witness`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const addWitness = async (data, CaseId) => {
-  const formData = new FormData();
-  formData.append("Image", data.witnessImage);
-  console.log(data);
-  const response = fetch(`${prefixUrl}/Witness/${CaseId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: formData,
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log("ok ", response.data);
-        return response.data;
-      } else {
-        console.log("notok ", response.data);
-        return response.data;
-      }
-    })
-    .catch((error) => {
-      console.log("Error : ", error());
-    });
-
-  return response;
-
-  // try {
-  //   console.log("Data :", data);
-  //   const response = await axios.post(
-  //     `${prefixUrl}/Witness/${CaseId}`,
-  //     data
-  //   );
-  //   return response.data;
-  // } catch (error) {
-  //   console.log(error);
-  // }
-};
-
-export const getWitness = async (WitnessId) => {
-  const response = await axios.get(`${prefixUrl}/Witness?id=${WitnessId}`);
-  return response.data;
-};
-
-export const deleteWitness = async (deleteWitnessId) => {
-  const response = await axios.delete(
-    `${prefixUrl}/Witness?id=${deleteWitnessId}`
-  );
-  return response.data;
-};
-
 // ------------------ All Apis for State-----------
 
 export const getAllStates = async () => {
@@ -450,8 +391,10 @@ export const getSection = async (sectionId) => {
   return response.data;
 };
 export const deleteSection = async (deletesectionId) => {
-  console.log("Id:::",deletesectionId);
-  const response = await axios.delete(`${prefixUrl}/sections/${deletesectionId}`);
+  console.log("Id:::", deletesectionId);
+  const response = await axios.delete(
+    `${prefixUrl}/sections/${deletesectionId}`
+  );
   return response.data;
 };
 export const addSections = async (actId, data) => {
@@ -476,15 +419,25 @@ export const updateSection = async (data) => {
 export const getHearing = async (caseId) => {
   try {
     console.log(caseId);
+    const response = await axios.get(`${prefixUrl}/HearingAccCase/${caseId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSingleHearing = async (caseId) => {
+  try {
+    console.log(caseId);
     const response = await axios.get(`${prefixUrl}/Hearing/${caseId}`);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
+
 export const getallHearing = async () => {
   try {
-  
     const response = await axios.get(`${prefixUrl}/Hearing`);
     return response.data;
   } catch (error) {
@@ -493,31 +446,140 @@ export const getallHearing = async () => {
 };
 export const deleteHearing = async (Id) => {
   try {
-
     const response = await axios.delete(`${prefixUrl}/Hearing/${Id}`);
     return response.data;
   } catch (error) {
     console.log(error);
   }
-  
 };
 export const updateHearing = async (data) => {
   try {
-    const Id=data.id
-    const response = await axios.put(`${prefixUrl}/hearing/${Id}`,data);
+    const Id = data.id;
+    const response = await axios.put(`${prefixUrl}/hearing/${Id}`, data);
     return response.data;
   } catch (error) {
     console.log(error);
   }
-
 };
 export const addHearing = async (data) => {
   try {
-    const caseId=data.caseId
-    const response = await axios.post(`${prefixUrl}/Hearing/${caseId}`,data);
+    const caseId = data.caseId;
+    const response = await axios.post(`${prefixUrl}/Hearing/${caseId}`, data);
     return response.data;
   } catch (error) {
     console.log(error);
   }
+};
 
+// ------------------ All Apis for Evidences ------------------
+export const getEvidences = async (caseId) => {
+  try {
+    console.log(caseId);
+    const response = await axios.get(`${prefixUrl}/EvidenceAccCase/${caseId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSingleEvidence = async (caseId) => {
+  try {
+    console.log(caseId);
+    const response = await axios.get(`${prefixUrl}/Evidences/${caseId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getallEvidences = async () => {
+  try {
+    const response = await axios.get(`${prefixUrl}/Evidences`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const deleteEvidence = async (Id) => {
+  try {
+    const response = await axios.delete(`${prefixUrl}/Evidences/${Id}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const updateEvidence = async (data) => {
+  try {
+    const Id = data.id;
+    const response = await axios.put(`${prefixUrl}/Evidences/${Id}`, data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const addEvidence = async (formData) => {
+  try {
+    const caseId = data.caseId;
+    const response = await axios.post(`${prefixUrl}/Evidences/${caseId}`, data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// ------------------ All Apis for Winesses ------------------
+export const getWitnesses = async (caseId) => {
+  try {
+    console.log(caseId);
+    const response = await axios.get(`${prefixUrl}/WitnessAccCase/${caseId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSingleWitness = async (caseId) => {
+  try {
+    console.log(caseId);
+    const response = await axios.get(`${prefixUrl}/Witness/${caseId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getallWitnesses = async () => {
+  try {
+    const response = await axios.get(`${prefixUrl}/Witness`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const deleteWitness = async (Id) => {
+  try {
+    const response = await axios.delete(`${prefixUrl}/Witness/${Id}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const updateWitness = async (data) => {
+  try {
+    const Id = data.id;
+    const response = await axios.put(`${prefixUrl}/Witness/${Id}`, data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const addWitness = async (formData) => {
+  try {
+    console.log(formData)
+    const caseId = data.caseId;
+    const response = await axios.post(`${prefixUrl}/Witness/${caseId}`, formData);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };

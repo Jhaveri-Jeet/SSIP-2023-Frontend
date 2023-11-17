@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AddWitness from "../Modals/AddWitness";
 import InsertAdvocate from "../Modals/InsertAdvocate";
 import Addcase from "../Modals/Addcase";
 import AddSections from "../Modals/AddSections";
@@ -7,6 +6,7 @@ import InsertHearing from "../Modals/InsertHearing";
 import InsertCourt from "../Modals/InsertCourt";
 import InsertState from "../Modals/InsertState";
 import InsertDistrict from "../Modals/InsertDistrict";
+
 
 import {
   deleteCaseType,
@@ -24,11 +24,17 @@ import {
   getCourt,
   getState,
   getDistrict
+  getSingleHearing,
+  getSingleEvidence,
+  getSingleWitness,
 } from "../Services/Api";
 import { addWitness } from "../Services/Api";
 import AddCaseType from "../Modals/AddCaseType";
 import InsertActs from "../Modals/InsertActs";
 import { useNavigate } from "react-router-dom";
+import InsertWitness from "../Modals/InsertWitness";
+import InsertEvidence from "../Modals/InsertEvidence";
+import { prefixUrl } from "../Services/Config";
 
 function CasesTable({
   userId,
@@ -36,6 +42,7 @@ function CasesTable({
   cases,
   HearingDetail,
   Evidence,
+  Witness,
   CaseId,
   Courts,
   Advocates,
@@ -52,30 +59,17 @@ function CasesTable({
   // alert(localStorage.getItem('isLoggedIn'));
   // validate()
 
-  const [addWitnessOpen, setAddWitnessOpen] = useState(false);
+  // const [isOpenForHearing, setIsOpenForHearnig] = useState(false);
+  // const [isOpenForEvidence, setIsOpenForEvidence] = useState(false);
+  // const [isOpenForWitness, setIsOpenForWitness] = useState(false);
+
   const [isOpen, setIsOpen] = useState(false);
 
+  const openInNewTab = (url) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   const navigate = useNavigate();
-
-  const [witnessData, setWitnessData] = useState({
-    witnessName: "",
-  });
-
-  const formData = new FormData();
-
-  const onSubmitWitnessForm = async (data) => {
-    // setWitnessData(data);
-    // console.log(witnessData)
-    // formData.append("witnessName", data.witnessName);
-    formData.append("witnessImage", data.witnessImage);
-    console.log(data);
-    const res = await addWitness(data, 1);
-    console.log(res);
-  };
-
-  const closeWitness = () => {
-    setAddWitnessOpen(false);
-  };
 
   // ------------------ operations for Case ------------------
   const [editCaseData, setEditCaseData] = useState();
@@ -112,7 +106,7 @@ function CasesTable({
     setIsOpen(false);
   };
   const edit_Hearing = async (e) => {
-    const res = await getHearing(e);
+    const res = await getSingleHearing(e);
     setEditHearing(res);
     console.log("updata res", res);
     setIsOpen(true);
@@ -124,7 +118,47 @@ function CasesTable({
       const res = await deleteHearing(deleteHearingId);
     }
   };
-  
+  //---------------operation for Evidence ----------------------
+  const [editEvidence, setEditEvidence] = useState([]);
+  const [isEvidenceOpen, setEvidenceOpen] = useState(false);
+  const closeEvidenceModel = () => {
+    setEvidenceOpen(false);
+    setIsOpen(false);
+  };
+  const edit_Evidence = async (e) => {
+    const res = await getSingleEvidence(e);
+    setEditEvidence(res);
+    console.log("updata res", res);
+    setIsOpen(true);
+  };
+  const delete_Evidence = async (e) => {
+    const deleteEvidenceId = e;
+    let isdelete = confirm("Are you sure you want to delete");
+    if (isdelete) {
+      const res = await deleteEvidence(deleteEvidenceId);
+    }
+  };
+  //---------------operation for Witness ----------------------
+  const [editWitness, setEditWitness] = useState([]);
+  const [isWitnessOpen, setWitnessOpen] = useState(false);
+  const closeWitnessModel = () => {
+    setWitnessOpen(false);
+    setIsOpen(false);
+  };
+  const edit_Witness = async (e) => {
+    const res = await getSingleWitness(e);
+    setEditWitness(res);
+    console.log("updata res", res);
+    setIsOpen(true);
+  };
+  const delete_Witness = async (e) => {
+    const deleteWitnessId = e;
+    let isdelete = confirm("Are you sure you want to delete");
+    if (isdelete) {
+      const res = await deleteWitness(deleteWitnessId);
+    }
+  };
+
   // ------------------ operations for Court ---------------------
 
   const editSingleCourt = async (e) => {
@@ -325,7 +359,9 @@ function CasesTable({
                             <button
                               className="flex justify-center text-center"
                               style={{ width: "100%" }}
-                              onClick={() => hadndleSendId(singleCase.id)
+                              onClick={() => navigate(
+                                `/dashboard/showCaseDetail/${singleCase.id}`
+                              )
                               }
                             >
                               <svg
@@ -341,22 +377,22 @@ function CasesTable({
                               </svg>
                             </button>
                           </td>
-                          {/* {(localStorage.getItem("userId") ==
-                              singleCase.roleId ||
-                              localStorage.getItem("userId") ==
-                                singleCase.transferToId) && ( */}
-                          <td className="p-2">
-                            <div className="inline-flex items-center">
-                              <div className="text-slate-800 dark:text-slate-100 ml-5">
-                                <button
-                                  onClick={() => editCase(singleCase.id)}
-                                >
-                                  Edit
-                                </button>
-                              </div>
-                            </div>
-                          </td>
-                          {/* )} */}
+                          {(localStorage.getItem("userId") ===
+                            singleCase.roleId ||
+                            localStorage.getItem("userId") ==
+                            singleCase.transferToId) && (
+                              <td className="p-2">
+                                <div className="inline-flex items-center">
+                                  <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                    <button
+                                      onClick={() => editCase(singleCase.id)}
+                                    >
+                                      Edit
+                                    </button>
+                                  </div>
+                                </div>
+                              </td>
+                            )}
                         </tr>
                       );
                     })
@@ -380,25 +416,10 @@ function CasesTable({
         <div className=" col-span-full xl:col-span-12  bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
           <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
             <h2
-              style={{ fontSize: "20px" }}
-              className="font-semibold text-slate-800 dark:text-slate-100 align-middle "
+              className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle "
             >
               {tableName}
             </h2>
-            <button
-              onClick={() => {
-                setHearingOpen(true);
-              }}
-              className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
-            >
-              <svg
-                className="w-4 h-4 fill-current opacity-50 shrink-0"
-                viewBox="0 0 16 16"
-              >
-                <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-              </svg>
-              <span className="hidden xs:block ml-2">Add Hearing</span>
-            </button>
           </header>
           <div className="p-3">
             {/* Table */}
@@ -408,16 +429,13 @@ function CasesTable({
                 <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                   <tr>
                     <th className="p-2">
-                      <div className="font-semibold text-center">Case Id</div>
-                    </th>
-                    <th className="p-2">
                       <div className="font-semibold text-center">
-                        Hearing date
+                        Date
                       </div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">
-                        HearingDetails
+                        Details
                       </div>
                     </th>
                     <th className="p-2">
@@ -432,11 +450,6 @@ function CasesTable({
                     ? HearingDetail.map((HearingDetailsData, index) => {
                         return (
                           <tr key={index}>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {HearingDetailsData.caseId}
-                              </div>
-                            </td>
                             <td className="p-2">
                               <div className="text-center text-emerald-500">
                                 {HearingDetailsData.hearingDate}
@@ -459,7 +472,7 @@ function CasesTable({
                                     <i className="m-2 fa-solid fa-edit"></i>
                                   </button>
                                 </div>
-                                <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
                                   <button
                                     onClick={() =>
                                       delete_Hearing(HearingDetailsData.id)
@@ -468,7 +481,7 @@ function CasesTable({
                                   >
                                     <i className="m-2 fa-solid fa-trash"></i>
                                   </button>
-                                </div>
+                                </div> */}
                               </div>
                             </td>
                           </tr>
@@ -487,11 +500,11 @@ function CasesTable({
           onClose={closeHearingModel}
           caseId={CaseId}
         />
-        <InsertHearing
+        {/* <InsertHearing
           isOpen={isHearingOpen}
           onClose={closeHearingModel}
           caseId={CaseId}
-        />
+        /> */}
       </>
     );
   }
@@ -500,23 +513,9 @@ function CasesTable({
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
           <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
-            <h2 className="font-semibold text-slate-800 dark:text-slate-100 align-middle ">
+            <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
               {tableName}
             </h2>
-            <button
-              onClick={() => {
-                setAddWitnessOpen(true);
-              }}
-              className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
-            >
-              <svg
-                className="w-4 h-4 fill-current opacity-50 shrink-0"
-                viewBox="0 0 16 16"
-              >
-                <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-              </svg>
-              <span className="hidden xs:block ml-2">Add view</span>
-            </button>
           </header>
           <div className="p-3">
             {/* Table */}
@@ -526,15 +525,15 @@ function CasesTable({
                 <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                   <tr>
                     <th className="p-2">
-                      <div className="font-semibold text-center">Case Id</div>
-                    </th>
-                    <th className="p-2">
                       <div className="font-semibold text-center">
-                        Evidence description
+                        Description
                       </div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">Image</div>
+                    </th>
+                    <th className="p-2">
+                      <div className="font-semibold text-center">Actions</div>
                     </th>
                   </tr>
                 </thead>
@@ -546,18 +545,51 @@ function CasesTable({
                         return (
                           <tr key={Evidencedata.Id}>
                             <td className="p-2">
-                              <div className="text-center">
-                                {Evidencedata.CaseId}
-                              </div>
-                            </td>
-                            <td className="p-2">
                               <div className="text-center text-emerald-500">
-                                {Evidencedata.EvidenceDescription}
+                                {Evidencedata.evidenceDescription}
                               </div>
                             </td>
                             <td className="p-2">
-                              <div className="text-center">
-                                Image is loading...
+                              <button
+                                className="flex justify-center text-center"
+                                style={{ width: "100%" }}
+                                onClick={()=> openInNewTab(`${prefixUrl}/EvidenceImages/${Evidencedata.evidenceImageName}`)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width={20}
+                                  fill="currentColor"
+                                  className="bi bi-eye"
+                                  viewBox="0 0 16 16"
+                                >
+                                  {" "}
+                                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                                </svg>
+                              </button>
+                            </td>
+                            <td className="p-2">
+                              <div className=" flex justify-center  items-center">
+                                <div className="text-slate-800 dark:text-slate-100 ">
+                                  <button
+                                    onClick={() => {
+                                      edit_Evidence(Evidencedata.id);
+                                    }}
+                                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold  rounded"
+                                  >
+                                    <i className="m-2 fa-solid fa-edit"></i>
+                                  </button>
+                                </div>
+                                {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                  <button
+                                    onClick={() =>
+                                      delete_Hearing(Evidencedata.id)
+                                    }
+                                    className="bg-red-500 hover:bg-red-700 text-white font-bold  rounded"
+                                  >
+                                    <i className="m-2 fa-solid fa-trash"></i>
+                                  </button>
+                                </div> */}
                               </div>
                             </td>
                           </tr>
@@ -569,12 +601,125 @@ function CasesTable({
             </div>
           </div>
         </div>
-        <AddWitness
-          validate={validate}
-          isOpen={addWitnessOpen}
-          onClose={closeWitness}
-          onSubmitForm={onSubmitWitnessForm}
+        <InsertEvidence
+          editeHearing={editWitness}
+          isOpen={isOpen}
+          onClose={closeEvidenceModel}
+          caseId={CaseId}
         />
+        {/* <InsertEvidence
+          isOpen={isEvidenceOpen}
+          onClose={closeEvidenceModel}
+          caseId={CaseId}
+        /> */}
+      </>
+    );
+  }
+  if (Witness) {
+    return (
+      <>
+        <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+            <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+              {tableName}
+            </h2>
+            
+          </header>
+          <div className="p-3">
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="table-auto w-full dark:text-slate-300">
+                {/* Table header */}
+                <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                  <tr>
+                    <th className="p-2">
+                      <div className="font-semibold text-center">
+                         Name
+                      </div>
+                    </th>
+                    <th className="p-2">
+                      <div className="font-semibold text-center">Image</div>
+                    </th>
+                    <th className="p-2">
+                      <div className="font-semibold text-center">Actions</div>
+                    </th>
+                  </tr>
+                </thead>
+                {/* Table body */}
+
+                <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                  {Witness
+                    ? Witness.map((singleWitness) => {
+                        return (
+                          <tr key={singleWitness.Id}>
+                            <td className="p-2">
+                              <div className="text-center text-emerald-500">
+                                {singleWitness.witnessName}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <button
+                                className="flex justify-center text-center"
+                                style={{ width: "100%" }}
+                                onClick={()=> openInNewTab(`${prefixUrl}/WitnessImages/${singleWitness.witnessImage}`)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width={20}
+                                  fill="currentColor"
+                                  className="bi bi-eye"
+                                  viewBox="0 0 16 16"
+                                >
+                                  {" "}
+                                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                                </svg>
+                              </button>
+                            </td>
+                            <td className="p-2">
+                              <div className=" flex justify-center  items-center">
+                                <div className="text-slate-800 dark:text-slate-100 ">
+                                  <button
+                                    onClick={() => {
+                                      edit_Witness(singleWitness.id);
+                                    }}
+                                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold  rounded"
+                                  >
+                                    <i className="m-2 fa-solid fa-edit"></i>
+                                  </button>
+                                </div>
+                                {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                  <button
+                                    onClick={() =>
+                                      delete_Hearing(singleWitness.id)
+                                    }
+                                    className="bg-red-500 hover:bg-red-700 text-white font-bold  rounded"
+                                  >
+                                    <i className="m-2 fa-solid fa-trash"></i>
+                                  </button>
+                                </div> */}
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    : null}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <InsertWitness
+          editeHearing={editWitness}
+          isOpen={isOpen}
+          onClose={closeWitnessModel}
+          caseId={CaseId}
+        />
+        {/* <InsertWitness
+          isOpen={isWitnessOpen}
+          onClose={closeWitnessModel}
+          caseId={CaseId}
+        /> */}
       </>
     );
   }

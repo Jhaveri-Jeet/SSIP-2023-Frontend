@@ -9,7 +9,8 @@ import {
   getAllActs,
 } from "../Services/Api";
 
-const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
+
+const Addcase = ({ isOpen, onClose, editCaseData }) => {
 
   const [selectedValues, setSelectedValues] = useState({
     AttorneyId: "",
@@ -25,7 +26,7 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
     Petitioner: "",
     Defendant: "",
     JudgeName: "",
-    Description: "",
+    Description: "",  
     CaseStatus: "",
     Judgment: "",
     Comments: "",
@@ -621,7 +622,7 @@ const Addcase = ({ isOpen, onClose, closeAddCaseModel, editCaseData }) => {
                     Add case
                   </button>
                   <button
-                    onClick={closeAddCaseModel}
+                    onClick={onClose}
                     className="uppercase text-sm font-bold tracking-wide border border-indigo-600 text-indigo-600 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                   >
                     Cancel

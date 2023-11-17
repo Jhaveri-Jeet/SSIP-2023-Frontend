@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
 
-function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
+function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
   //   const [form, setForm] = useState({
   //     caseId: caseId,
   //     WitnessName: "",
@@ -76,17 +76,17 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
 
   const formData = new FormData();
 
-  const evidenceDescription = useRef(null);
-  const evidenceImage = useRef(null);
+  const witnessName = useRef(null);
+  const witnessImage = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    formData.append("EvidenceDescription", evidenceDescription.current.value);
-    formData.append("file", evidenceImage.current.files[0]);
+    formData.append("witnessName", witnessName.current.value);
+    formData.append("file", witnessImage.current.files[0]);
     console.log(formData);
     if (e.target.textContent == "Add") {
       const response = await axios.post(
-        `${prefixUrl}/Evidences/${caseId}`,
+        `${prefixUrl}/Witness/${caseId}`,
         formData
       );
       console.log("Add response: " + response.data);
@@ -100,22 +100,22 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
     return (
       <>
         <div
-          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
-            }`}
+          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
+            isOpen ? "block" : "hidden"
+          }`}
         >
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
             <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
               <div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                   <label htmlFor="state" className="block font-semibold mb-2">
-                    Evidence Name:
+                    Witness Name:
                   </label>
                   <input
-                    ref={evidenceDescription}
-                    defaultValue={updateform.EvidenceDescription}
-
+                    defaultValue={updateform.WitnessName}
+                    ref={witnessName}
                     type="text"
-                    name="EvidenceDescription"
+                    name="WitnessName"
                     placeholder="Witness name"
                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
@@ -125,15 +125,14 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
                     htmlFor="witnessImage"
                     className="block font-semibold mb-2"
                   >
-                    Upload Evidence Image:
+                    Upload Witness Image:
                   </label>
                   <input
-                    ref={evidenceImage}
                     type="file"
                     defaultValue={updateform.Image}
                     name="WitnessImage"
                     accept="image/*" // Allow only image files
-
+                    ref={witnessImage}
                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
@@ -161,23 +160,22 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
   return (
     <>
       <div
-        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
-          }`}
+        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
+          isOpen ? "block" : "hidden"
+        }`}
       >
         <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
           <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
             <div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                 <label htmlFor="state" className="block font-semibold mb-2">
-                  Evidence Description:
+                  Witness Name:
                 </label>
                 <input
-
-                  ref={evidenceDescription}
-
+                  ref={witnessName}
                   type="text"
-                  name="EvidenceDescription"
-                  placeholder="Evidence Description"
+                  name="WitnessName"
+                  placeholder="Witness name"
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
@@ -186,13 +184,13 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
                   htmlFor="witnessImage"
                   className="block font-semibold mb-2"
                 >
-                  Upload Evidence Image:
+                  Upload Witness Image:
                 </label>
                 <input
-                  ref={evidenceImage}
                   type="file"
                   name="WitnessImage"
                   accept="image/*" // Allow only image files
+                  ref={witnessImage}
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
@@ -218,4 +216,4 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
   );
 }
 
-export default InsertEvidence;
+export default InsertWitness;
