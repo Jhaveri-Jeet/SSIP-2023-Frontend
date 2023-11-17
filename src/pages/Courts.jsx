@@ -6,9 +6,10 @@ import InsertCourt from "../Modals/InsertCourt";
 import CasesTable from "../common/CasesTable";
 import { getAllCourts } from "../Services/Api";
 
-const Courts = ({ currentScreen, setCurrentScreen, validate}) => {
+const Courts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
 
-  // validate()
+  // if(!isLoggedIn)
+  //   window.location.href="/";
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);

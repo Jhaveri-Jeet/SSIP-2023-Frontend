@@ -1,21 +1,20 @@
 import { React, useState, useEffect } from 'react'
-import { addState, updateState } from "../Services/Api";
+import { addDistrict,updateDistrict } from "../Services/Api";
 
-function InsertState({ isOpen, onClose, editSingleState , getAllStatesData }) {
+function InsertDistrict({ isOpen, onClose, editSingleDistrict , getAllDistrictsData }) {
     const [form, setForm] = useState({
         name: "",
     });
     const [updateform, setUpdateForm] = useState({
-        id: editSingleState ? (editSingleState.id ? editSingleState.id : "") : "",
-        name: editSingleState ? (editSingleState.name ? editSingleState.name : "") : "",
+        id: editSingleDistrict ? (editSingleDistrict.id ? editSingleDistrict.id : "") : "",
+        name: editSingleDistrict ? (editSingleDistrict.name ? editSingleDistrict.name : "") : "",
     });
-    // console.log("editSingleState");
-    // console.log(editSingleState);
+
     useEffect(() => {
-        if (editSingleState) {
+        if (editSingleDistrict) {
           setUpdateForm({
-            id: editSingleState.id || "",
-            name: editSingleState.name || "",
+            id: editSingleDistrict.id || "",
+            name: editSingleDistrict.name || "",
           });
         } else {
           setUpdateForm({
@@ -23,7 +22,7 @@ function InsertState({ isOpen, onClose, editSingleState , getAllStatesData }) {
             name: "",
           });
         }
-      }, [editSingleState]);
+      }, [editSingleDistrict]);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setForm({
@@ -43,18 +42,16 @@ function InsertState({ isOpen, onClose, editSingleState , getAllStatesData }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(e.target.textContent === "Add") {
-            const res = await addState(form);
+            const res = await addDistrict(form);
         }
         else if(e.target.textContent === "Edit")
         {
-            console.log("form")   
-            console.log(form)   
-            const res = await updateState(updateform);
+            const res = await updateDistrict(updateform);
         }
-        await getAllStatesData();
+        await getAllDistrictsData();
         onClose();
     };
-    if(editSingleState)
+    if(editSingleDistrict)
     {
         return(
         <>
@@ -63,13 +60,13 @@ function InsertState({ isOpen, onClose, editSingleState , getAllStatesData }) {
                     <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
                         <div>
                             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
-                                <label htmlFor="state" className="block font-semibold mb-2">State Name:</label>
+                                <label htmlFor="district" className="block font-semibold mb-2">District Name:</label>
                                 <input
                                     defaultValue={updateform.name}
                                     onChange={updatehandleInputChange}
                                     type="text"
                                     name='name'
-                                    placeholder="State Name"
+                                    placeholder="District Name"
                                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                                 />
                             </div>
@@ -101,13 +98,13 @@ function InsertState({ isOpen, onClose, editSingleState , getAllStatesData }) {
                     <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
                         <div>
                             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
-                                <label htmlFor="state" className="block font-semibold mb-2">State Name:</label>
+                                <label htmlFor="district" className="block font-semibold mb-2">District Name:</label>
                                 <input
                                     defaultValue={form.name}
                                     onChange={handleInputChange}
                                     type="text"
                                     name='name'
-                                    placeholder="State Name"
+                                    placeholder="District Name"
                                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                                 />
                             </div>
@@ -134,4 +131,4 @@ function InsertState({ isOpen, onClose, editSingleState , getAllStatesData }) {
     )
 }
 
-export default InsertState
+export default InsertDistrict

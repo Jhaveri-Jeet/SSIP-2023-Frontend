@@ -1,6 +1,13 @@
 import axios from "axios";
 import { prefixUrl } from "./Config";
 
+// ------------------ All Apis for User ------------------
+export const createUser = async (roleId,districtId,courtId,data) => {
+  const response = await axios.post(`${prefixUrl}/users/${roleId}/${districtId}/${courtId}`,data)
+  console.log(response);
+  return response;
+};
+
 // ------------------ All Apis for Role ------------------
 export const getAllRoles = async () => {
   const response = await axios.get(`${prefixUrl}/roles`).then((res) => {
@@ -93,19 +100,11 @@ export const deleteCase = async (deleteCaseId) => {
   const data = await axios.delete(`${prefixUrl}/cases/${deleteCaseId}`);
   return data;
 };
-export const updateCase = async (
-  caseTypeId,
-  courtId,
-  actId,
-  advocateId,
-  attorneyId,
-  roleId,
-  data
-) => {
+export const updateCase = async (data) => {
   console.log("Data :", data);
   try {
     let id = data.id;
-    const response = await axios.put(`${prefixUrl}/CaseType/${id}`, data);
+    const response = await axios.put(`${prefixUrl}/cases/${id}`, data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -203,14 +202,12 @@ export const updateAct = async (data) => {
 // ------------------ All Apis for Court ------------------
 export const getCourts = async (userRoleId, districtId) => {
   try {
-    const response = await axios.get(
-      `${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`
-    );
+    const response = await axios.get(`${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`);
     return response.data;
   } catch (error) {
     console.log(error);
   }
-};
+}
 
 export const getAllCourts = async () => {
   try {
@@ -221,19 +218,27 @@ export const getAllCourts = async () => {
   }
 };
 export const getCourt = async (courtId) => {
-  const data = await axios.get(`${prefixUrl}/courts/${courtId}`);
-  return data;
+  const response = await axios.get(`${prefixUrl}/courts/${courtId}`);
+  return response.data;
 };
 
-export const addCourt = async (data) => {
+export const addCourt = async (RoleId,StateId,DistrictId,data) => {
   try {
-    const response = await axios.post(`${prefixUrl}/courts`, data);
+    console.log(data);
+    const response = await axios.post(`${prefixUrl}/courts/${RoleId}/${StateId}/${DistrictId}`, data);
+    if(response.status === 200) {
+      var courtId = response.data;
+      var courtData = {
+        "UserName" : data.name,
+        "PasswordHash" : "123"
+      };
+      await createUser(RoleId,DistrictId,courtId,courtData);
+    }
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
-
 export const updateCourt = async (courtId,data) => {
   try {
     const response = await axios.put(`${prefixUrl}/courts/${courtId}/`, data);
@@ -300,6 +305,16 @@ export const getAllStates = async () => {
   }
 };
 
+export const getState = async (stateId) => {
+  try {
+    const response = await axios.get(`${prefixUrl}/states/${stateId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 export const addState = async (data) => {
   try {
     const response = await axios.post(`${prefixUrl}/States`, data);
@@ -309,9 +324,11 @@ export const addState = async (data) => {
   }
 };
 
-export const deleteState = async (deleteStateId) => {
+export const updateState = async (data) => {
   try {
-    const response = await axios.delete(`${prefixUrl}/States/${deleteStateId}`);
+    let id = data.id;
+    console.log(data);
+    const response = await axios.put(`${prefixUrl}/states/${id}`, data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -329,20 +346,28 @@ export const getAllDistrict = async () => {
   }
 };
 
-export const addDistrict = async (data) => {
+export const getDistrict = async (districtId) => {
   try {
-    const response = await axios.post("${prefixUrl}/Districts", data);
+    const response = await axios.get(`${prefixUrl}/Districts/${districtId}`);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const deleteDistrict = async (deleteDistrictId) => {
+export const addDistrict = async (data) => {
   try {
-    const response = await axios.delete(
-      `${prefixUrl}/Districts/${deleteDistrictId}`
-    );
+    const response = await axios.post(`${prefixUrl}/Districts`, data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateDistrict = async (data) => {
+  try {
+    let id = data.id;
+    const response = await axios.put(`${prefixUrl}/Districts/${id}`, data);
     return response.data;
   } catch (error) {
     console.log(error);

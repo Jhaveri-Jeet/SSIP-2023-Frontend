@@ -4,10 +4,13 @@ import Addcase from "../Modals/Addcase";
 import AddSections from "../Modals/AddSections";
 import InsertHearing from "../Modals/InsertHearing";
 import InsertCourt from "../Modals/InsertCourt";
+import InsertState from "../Modals/InsertState";
+import InsertDistrict from "../Modals/InsertDistrict";
+
 
 import {
   deleteCaseType,
-  deleteCase,
+  updateCase,
   getCaseType,
   deleteAct,
   getAct,
@@ -16,13 +19,14 @@ import {
   getHearing,
   deleteHearing,
   getAdvocate,
-  deleteState,
   deleteAdvocate,
   getSection,
+  getCourt,
+  getState,
+  getDistrict
   getSingleHearing,
   getSingleEvidence,
   getSingleWitness,
-  getCourt,
 } from "../Services/Api";
 import { addWitness } from "../Services/Api";
 import AddCaseType from "../Modals/AddCaseType";
@@ -49,6 +53,8 @@ function CasesTable({
   validate,
   sections,
   getAllCourtsData,
+  getAllStatesData,
+  getAllDistrictsData
 }) {
   // alert(localStorage.getItem('isLoggedIn'));
   // validate()
@@ -71,7 +77,6 @@ function CasesTable({
   const editCase = async (e) => {
     const res = await getCase(e);
     setEditCaseData(res);
-    // console.log("res",res)
     setIsOpen(true);
   };
   const closeCaseModel = () => {
@@ -185,10 +190,30 @@ function CasesTable({
   };
   //--------------- operation for State ----------------------
 
-  const deleteStates = async (e) => {
-    const deleteStateId = e;
-    const res = await deleteState(deleteStateId);
-    console.log(res);
+  const [editsingleStateData, setEditSingleStateData] = useState([]);
+
+  const closeSingleStateTypeModel = () => {
+    setIsOpen(false);
+  };
+
+  const editSingleState = async (e) => {
+    const res = await getState(e);
+    setEditSingleStateData(res);
+    setIsOpen(true);
+  };
+
+  //--------------- operation for District ----------------------
+
+  const [editsingleDistrictData, setEditSingleDistrictData] = useState([]);
+
+  const closeSingleDistrictTypeModel = () => {
+    setIsOpen(false);
+  };
+
+  const editSingleDistrict = async (e) => {
+    const res = await getDistrict(e);
+    setEditSingleDistrictData(res);
+    setIsOpen(true);
   };
 
   // ------------------ operations for singleAct ------------------
@@ -208,6 +233,7 @@ function CasesTable({
     setAllActs(acts);
     setIsOpen(true);
   };
+  
   if (cases) {
     return (
       <>
@@ -757,9 +783,7 @@ function CasesTable({
                               <div className="inline-flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100 ml-5">
                                   <button
-                                    onClick={() =>
-                                      editSingleCourt(singleCourt.id)
-                                    }
+                                    onClick={() => editSingleCourt(singleCourt.id)}
                                   >
                                     Edit
                                   </button>
@@ -1077,13 +1101,13 @@ function CasesTable({
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                   {States
-                    ? States.map((singleState) => {
+                    ? States.map((singleState,index) => {
                         return (
                           <tr key={singleState.id}>
                             <td className="p-2">
                               <div className="flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100">
-                                  {singleState.id}
+                                  {index+1}
                                 </div>
                               </div>
                             </td>
@@ -1098,16 +1122,9 @@ function CasesTable({
                               <div className="inline-flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100 ml-5">
                                   <button
-                                    onClick={() => editState(singleState.id)}
+                                    onClick={() => editSingleState(singleState.id)}
                                   >
                                     Edit
-                                  </button>
-                                </div>
-                                <div className="text-slate-800 dark:text-slate-100 ml-5">
-                                  <button
-                                    onClick={() => deleteStates(singleState.id)}
-                                  >
-                                    Delete
                                   </button>
                                 </div>
                               </div>
@@ -1121,65 +1138,91 @@ function CasesTable({
             </div>
           </div>
         </div>
+        <InsertState
+          editSingleState={editsingleStateData}
+          isOpen={isOpen}
+          onClose={closeSingleStateTypeModel}
+          getAllStatesData={getAllStatesData}
+        />
       </>
     );
   }
+
   if (Districts) {
     return (
-      <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
-          <h2 className="font-semibold text-slate-800 dark:text-slate-100">
-            {tableName}
-          </h2>
-        </header>
-        <div className="p-3">
-          {/* Table */}
-          <div className="overflow-x-auto">
-            <table className="table-auto w-full dark:text-slate-300">
-              {/* Table header */}
-              <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
-                <tr>
-                  <th className="p-2">
-                    <div className="font-semibold text-left">Sr No.</div>
-                  </th>
-                  <th className="p-2">
-                    <div className="font-semibold text-left">Districts</div>
-                  </th>
-                  <th className="p-2">
-                    <div className="font-semibold text-left">Actions</div>
-                  </th>
-                </tr>
-              </thead>
-              {/* Table body */}
+      <>
+        <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+            <h2 className="font-semibold text-slate-800 dark:text-slate-100">
+              {tableName}
+            </h2>
+          </header>
+          <div className="p-3">
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="table-auto w-full dark:text-slate-300">
+                {/* Table header */}
+                <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                  <tr>
+                    <th className="p-2">
+                      <div className="font-semibold text-left">Sr No.</div>
+                    </th>
+                    <th className="p-2">
+                      <div className="font-semibold text-left">District</div>
+                    </th>
+                    <th className="p-2">
+                      <div className="font-semibold text-left">Actions</div>
+                    </th>
+                  </tr>
+                </thead>
+                {/* Table body */}
 
-              <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                {Districts
-                  ? Districts.map((singleDistricts) => {
-                      return (
-                        <tr key={singleDistricts.id}>
-                          <td className="p-2">
-                            <div className="flex items-center">
-                              <div className="text-slate-800 dark:text-slate-100">
-                                {singleDistricts.id}
+                <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                  {Districts
+                    ? Districts.map((singleDistrict,index) => {
+                        return (
+                          <tr key={singleDistrict.id}>
+                            <td className="p-2">
+                              <div className="flex items-center">
+                                <div className="text-slate-800 dark:text-slate-100">
+                                  {index+1}
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="flex items-center">
-                              <div className="text-slate-800 dark:text-slate-100">
-                                {singleDistricts.name}
+                            </td>
+                            <td className="p-2">
+                              <div className="flex items-center">
+                                <div className="text-slate-800 dark:text-slate-100">
+                                  {singleDistrict.name}
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  : null}
-              </tbody>
-            </table>
+                            </td>
+                            <td className="p-2">
+                              <div className="inline-flex items-center">
+                                <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                  <button
+                                    onClick={() => editSingleDistrict(singleDistrict.id)}
+                                  >
+                                    Edit
+                                  </button>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    : null}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
+        <InsertDistrict
+          editSingleDistrict={editsingleDistrictData}
+          isOpen={isOpen}
+          onClose={closeSingleDistrictTypeModel}
+          getAllDistrictsData={getAllDistrictsData}
+        />
+      </>
     );
   }
   if (sections) {
