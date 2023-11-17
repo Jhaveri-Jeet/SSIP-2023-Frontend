@@ -1,81 +1,94 @@
-import { React, useState, useEffect } from "react";
-import { addEvidence, addHearing, addWitness, updateEvidence, updateHearing } from "../Services/Api";
+import { React, useState, useEffect, useRef } from "react";
+import {
+  addEvidence,
+  addHearing,
+  addWitness,
+  updateEvidence,
+  updateHearing,
+} from "../Services/Api";
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
 
 function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
-//   const [form, setForm] = useState({
-//     caseId: caseId,
-//     WitnessName: "",
-//     Image: "",
-//   });
- 
+  //   const [form, setForm] = useState({
+  //     caseId: caseId,
+  //     WitnessName: "",
+  //     Image: "",
+  //   });
 
-//   useEffect(() => {
-//     console.log("editeEvidence", editeEvidence);
-//     if (editeEvidence) {
-//       setUpdateForm({
-//         id: editeEvidence.id || "",
-//         caseId: editeEvidence.caseId || "",
-//         WitnessName: editeEvidence.WitnessName || "",
-//         Image: editeEvidence.Image || "",
-//       });
-//       console.log(updateform);
-//     } else {
-//       setForm({
-//         caseId: caseId,
-//         WitnessName: "",
-//         Image: "",
-//       });
+  //   useEffect(() => {
+  //     console.log("editeEvidence", editeEvidence);
+  //     if (editeEvidence) {
+  //       setUpdateForm({
+  //         id: editeEvidence.id || "",
+  //         caseId: editeEvidence.caseId || "",
+  //         WitnessName: editeEvidence.WitnessName || "",
+  //         Image: editeEvidence.Image || "",
+  //       });
+  //       console.log(updateform);
+  //     } else {
+  //       setForm({
+  //         caseId: caseId,
+  //         WitnessName: "",
+  //         Image: "",
+  //       });
 
-//       // Clear the updateform when there's no editAdvocateData
-//       setUpdateForm({
-//         caseId: "",
-//         WitnessName: "",
-//         Image: "",
-//       });
-//     }
-//   }, [editeEvidence]);
+  //       // Clear the updateform when there's no editAdvocateData
+  //       setUpdateForm({
+  //         caseId: "",
+  //         WitnessName: "",
+  //         Image: "",
+  //       });
+  //     }
+  //   }, [editeEvidence]);
 
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
+  //   const handleInputChange = (e) => {
+  //     const { name, value } = e.target;
 
-//     if (editeEvidence) {
-//       setUpdateForm({
-//         ...updateform,
-//         [name]: value,
-//       });
-//     }
-//     setForm({
-//       ...form,
-//       [name]: value,
-//     });
-//     console.log(form);
-//   };
+  //     if (editeEvidence) {
+  //       setUpdateForm({
+  //         ...updateform,
+  //         [name]: value,
+  //       });
+  //     }
+  //     setForm({
+  //       ...form,
+  //       [name]: value,
+  //     });
+  //     console.log(form);
+  //   };
 
-//   const handleFileChange = (e) => {
-//     const { name, value, files } = e.target;
+  //   const handleFileChange = (e) => {
+  //     const { name, value, files } = e.target;
 
-//     if (editeEvidence) {
-//       setUpdateForm({
-//         ...updateform,
-//         [name]: value,
-//       });
-//     }
-//     setForm({
-//       ...form,
-//       [name]: files[0],
-//     });
-//     console.log(form);
-//   };
+  //     if (editeEvidence) {
+  //       setUpdateForm({
+  //         ...updateform,
+  //         [name]: value,
+  //       });
+  //     }
+  //     setForm({
+  //       ...form,
+  //       [name]: files[0],
+  //     });
+  //     console.log(form);
+  //   };
 
-const formData = new FormData()
+  const formData = new FormData();
+
+  const evidenceDescription = useRef(null);
+  const evidenceImage = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
+    formData.append("EvidenceDescription", evidenceDescription.current.value);
+    formData.append("file", evidenceImage.current.files[0]);
+    console.log(formData);
     if (e.target.textContent == "Add") {
-      const response = await axios.post(`${prefixUrl}/Evidences/${caseId}`, formData);
+      const response = await axios.post(
+        `${prefixUrl}/Evidences/${caseId}`,
+        formData
+      );
       console.log("Add response: " + response.data);
     } else if (e.target.textContent == "Update") {
       const res = await updateEvidence(updateform);
@@ -96,11 +109,11 @@ const formData = new FormData()
               <div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                   <label htmlFor="state" className="block font-semibold mb-2">
-                  Evidence Name:
+                    Evidence Name:
                   </label>
                   <input
+                    ref={evidenceDescription}
                     defaultValue={updateform.EvidenceDescription}
-                    onChange={(e) => formData.append("EvidenceDescription",e.target.value)}
                     type="text"
                     name="EvidenceDescription"
                     placeholder="Witness name"
@@ -115,11 +128,12 @@ const formData = new FormData()
                     Upload Evidence Image:
                   </label>
                   <input
+                    ref={evidenceImage}
                     type="file"
                     defaultValue={updateform.Image}
                     name="WitnessImage"
                     accept="image/*" // Allow only image files
-                    onChange={(e) => formData.append("file",e.target.files[0])}
+                    // onChange={(e) => formData.append("file", e.target.files[0])}
                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
@@ -159,7 +173,7 @@ const formData = new FormData()
                   Evidence Description:
                 </label>
                 <input
-                  onChange={(e) => formData.append("EvidenceDescription",e.target.value)}
+                  ref={evidenceDescription}
                   type="text"
                   name="EvidenceDescription"
                   placeholder="Evidence Description"
@@ -174,10 +188,11 @@ const formData = new FormData()
                   Upload Evidence Image:
                 </label>
                 <input
+                  ref={evidenceImage}
                   type="file"
                   name="WitnessImage"
                   accept="image/*" // Allow only image files
-                  onChange={(e) => formData.append("file",e.target.files[0])}
+                  // onChange={(e) => formData.append("file", e.target.files[0])}
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>

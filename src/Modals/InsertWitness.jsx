@@ -1,81 +1,94 @@
-import { React, useState, useEffect } from "react";
-import { addEvidence, addHearing, addWitness, updateEvidence, updateHearing } from "../Services/Api";
+import { React, useState, useEffect, useRef } from "react";
+import {
+  addEvidence,
+  addHearing,
+  addWitness,
+  updateEvidence,
+  updateHearing,
+} from "../Services/Api";
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
 
 function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
-//   const [form, setForm] = useState({
-//     caseId: caseId,
-//     WitnessName: "",
-//     Image: "",
-//   });
- 
+  //   const [form, setForm] = useState({
+  //     caseId: caseId,
+  //     WitnessName: "",
+  //     Image: "",
+  //   });
 
-//   useEffect(() => {
-//     console.log("editeEvidence", editeEvidence);
-//     if (editeEvidence) {
-//       setUpdateForm({
-//         id: editeEvidence.id || "",
-//         caseId: editeEvidence.caseId || "",
-//         WitnessName: editeEvidence.WitnessName || "",
-//         Image: editeEvidence.Image || "",
-//       });
-//       console.log(updateform);
-//     } else {
-//       setForm({
-//         caseId: caseId,
-//         WitnessName: "",
-//         Image: "",
-//       });
+  //   useEffect(() => {
+  //     console.log("editeEvidence", editeEvidence);
+  //     if (editeEvidence) {
+  //       setUpdateForm({
+  //         id: editeEvidence.id || "",
+  //         caseId: editeEvidence.caseId || "",
+  //         WitnessName: editeEvidence.WitnessName || "",
+  //         Image: editeEvidence.Image || "",
+  //       });
+  //       console.log(updateform);
+  //     } else {
+  //       setForm({
+  //         caseId: caseId,
+  //         WitnessName: "",
+  //         Image: "",
+  //       });
 
-//       // Clear the updateform when there's no editAdvocateData
-//       setUpdateForm({
-//         caseId: "",
-//         WitnessName: "",
-//         Image: "",
-//       });
-//     }
-//   }, [editeEvidence]);
+  //       // Clear the updateform when there's no editAdvocateData
+  //       setUpdateForm({
+  //         caseId: "",
+  //         WitnessName: "",
+  //         Image: "",
+  //       });
+  //     }
+  //   }, [editeEvidence]);
 
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
+  //   const handleInputChange = (e) => {
+  //     const { name, value } = e.target;
 
-//     if (editeEvidence) {
-//       setUpdateForm({
-//         ...updateform,
-//         [name]: value,
-//       });
-//     }
-//     setForm({
-//       ...form,
-//       [name]: value,
-//     });
-//     console.log(form);
-//   };
+  //     if (editeEvidence) {
+  //       setUpdateForm({
+  //         ...updateform,
+  //         [name]: value,
+  //       });
+  //     }
+  //     setForm({
+  //       ...form,
+  //       [name]: value,
+  //     });
+  //     console.log(form);
+  //   };
 
-//   const handleFileChange = (e) => {
-//     const { name, value, files } = e.target;
+  //   const handleFileChange = (e) => {
+  //     const { name, value, files } = e.target;
 
-//     if (editeEvidence) {
-//       setUpdateForm({
-//         ...updateform,
-//         [name]: value,
-//       });
-//     }
-//     setForm({
-//       ...form,
-//       [name]: files[0],
-//     });
-//     console.log(form);
-//   };
+  //     if (editeEvidence) {
+  //       setUpdateForm({
+  //         ...updateform,
+  //         [name]: value,
+  //       });
+  //     }
+  //     setForm({
+  //       ...form,
+  //       [name]: files[0],
+  //     });
+  //     console.log(form);
+  //   };
 
-const formData = new FormData()
+  const formData = new FormData();
+
+  const witnessName = useRef(null);
+  const witnessImage = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData)
+    formData.append("witnessName", witnessName.current.value);
+    formData.append("file", witnessImage.current.files[0]);
+    console.log(formData);
     if (e.target.textContent == "Add") {
-      const response = await axios.post(`${prefixUrl}/Witness/${caseId}`, formData);
+      const response = await axios.post(
+        `${prefixUrl}/Witness/${caseId}`,
+        formData
+      );
       console.log("Add response: " + response.data);
     } else if (e.target.textContent == "Update") {
       const res = await updateEvidence(updateform);
@@ -100,7 +113,7 @@ const formData = new FormData()
                   </label>
                   <input
                     defaultValue={updateform.WitnessName}
-                    onChange={(e) => formData.append("witnessName",e.target.value)}
+                    ref={witnessName}
                     type="text"
                     name="WitnessName"
                     placeholder="Witness name"
@@ -119,7 +132,7 @@ const formData = new FormData()
                     defaultValue={updateform.Image}
                     name="WitnessImage"
                     accept="image/*" // Allow only image files
-                    onChange={(e) => formData.append("file",e.target.files[0])}
+                    ref={witnessImage}
                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
@@ -159,7 +172,7 @@ const formData = new FormData()
                   Witness Name:
                 </label>
                 <input
-                  onChange={(e) => formData.append("witnessName",e.target.value)}
+                  ref={witnessName}
                   type="text"
                   name="WitnessName"
                   placeholder="Witness name"
@@ -177,7 +190,7 @@ const formData = new FormData()
                   type="file"
                   name="WitnessImage"
                   accept="image/*" // Allow only image files
-                  onChange={(e) => formData.append("file",e.target.files[0])}
+                  ref={witnessImage}
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
