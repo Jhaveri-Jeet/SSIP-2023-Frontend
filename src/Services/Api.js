@@ -1,6 +1,13 @@
 import axios from "axios";
 import { prefixUrl } from "./Config";
 
+// ------------------ All Apis for User ------------------
+export const createUser = async (roleId,districtId,courtId) => {
+  const response = await axios.post(`${prefixUrl}/users/${roleId}/${districtId}/${courtId}`)
+  console.log(response);
+  return response;
+};
+
 // ------------------ All Apis for Role ------------------
 export const getAllRoles = async () => {
   const response = await axios.get(`${prefixUrl}/roles`).then((res) => {
@@ -218,6 +225,9 @@ export const getCourt = async (courtId) => {
 export const addCourt = async (RoleId,StateId,DistrictId,data) => {
   try {
     const response = await axios.post(`${prefixUrl}/courts/${RoleId}/${StateId}/${DistrictId}`, data);
+    if(response.status === 200) {
+      createUser
+    }
     return response.data;
   } catch (error) {
     console.log(error);

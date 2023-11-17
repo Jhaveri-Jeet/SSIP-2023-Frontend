@@ -13,7 +13,7 @@ const States = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
-  const [states,setStates] = useState([]);
+  const [States,setStates] = useState([]);
 
 
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -91,7 +91,7 @@ const States = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
               getAllStatesData={getAllStatesData}
             />
             <div className="grid grid-cols-12 gap-6">
-              <CasesTable getAllStatesData={getAllStatesData} States={states} tableName={"States Lists"} />
+              <CasesTable getAllStatesData={getAllStatesData} States={States} tableName={"States Lists"} />
             </div>
           </div>
         </main>

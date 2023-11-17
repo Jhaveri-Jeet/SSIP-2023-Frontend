@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { getAllDistrict,getAllRoles,addCourt, updateCourt } from "../Services/Api";
+import { getAllDistrict,getAllStates,getAllRoles,addCourt, updateCourt } from "../Services/Api";
 
 
 function InsertCourt({ isOpen, onClose, editSingleCourt, getAllCourtsData }) {
@@ -48,7 +48,8 @@ useEffect(() => {
   }
 }, [editSingleCourt]);
 
-  const [districtDataList, setdistrictDataList] = useState([]);
+  const [districtDataList, setDistrictDataList] = useState([]);
+  const [stateDataList, setStateDataList] = useState([]);
   const [userDataList, setuserDataList] = useState([]);
 
   const [form, setForm] = useState({
@@ -119,10 +120,21 @@ useEffect(() => {
     getAllDistrict().then((response) => {
       return response;
     }).then((data) => {
-      setdistrictDataList(prev=>{
+      setDistrictDataList(prev=>{
         prev = data;
         return [...prev];
       })
+    }).catch((error) => {
+      console.error(error);
+    });
+    getAllStates().then((response) => {
+      return response;
+    }).then((data) => {
+      setStateDataList(prev=>{
+        prev = data;
+        return [...prev];
+      })
+      console.log(stateDataList)
     }).catch((error) => {
       console.error(error);
     });
@@ -224,8 +236,12 @@ useEffect(() => {
                   name="stateId"
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
-                  <option value="" disabled>select state</option>
-                  <option value="1" id="Gujarat">Gujarat</option>
+                  <option value="" disabled selected>select state</option>
+                  {stateDataList.map((state) => (
+                    <option key={state.id} value={state.id} id={state.name}>
+                      {state.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
