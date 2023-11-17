@@ -23,7 +23,7 @@ import {
   getSection,
   getCourt,
   getState,
-  getDistrict
+  getDistrict,
   getSingleHearing,
   getSingleEvidence,
   getSingleWitness,
