@@ -414,7 +414,7 @@ useEffect(() => {
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
-              <div className="flex justify-center items-center p-4 space-x-2  rounded-b">
+              <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
                 <button
                   onClick={handleSubmit}
                   className="bg-[#10375e] hover:bg-[#185490] text-white font-semibold hover:text-white py-2 px-4 border  rounded focus:outline-none focus:ring-0"
