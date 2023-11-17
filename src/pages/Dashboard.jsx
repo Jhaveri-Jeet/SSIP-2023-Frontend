@@ -89,9 +89,9 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen, validate }) {
             <div className="sm:flex sm:justify-end sm:items-center mb-8">
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 {/* Filter button */}
-                <FilterButton />
+                {/* <FilterButton /> */}
                 {/* Datepicker built with flatpickr */}
-                <Datepicker />
+                {/* <Datepicker /> */}
               </div>
             </div>
 
