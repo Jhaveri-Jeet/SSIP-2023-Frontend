@@ -1,5 +1,11 @@
-import { React, useState, useEffect } from "react";
-import { addEvidence, addHearing, addWitness, updateEvidence, updateHearing } from "../Services/Api";
+import { React, useState, useEffect, useRef } from "react";
+import {
+  addEvidence,
+  addHearing,
+  addWitness,
+  updateEvidence,
+  updateHearing,
+} from "../Services/Api";
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
 
@@ -9,7 +15,6 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
   //     WitnessName: "",
   //     Image: "",
   //   });
-
 
   //   useEffect(() => {
   //     console.log("editeEvidence", editeEvidence);
@@ -69,13 +74,21 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
   //     console.log(form);
   //   };
 
-  const formData = new FormData()
+  const formData = new FormData();
+
+  const evidenceDescription = useRef(null);
+  const evidenceImage = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
+    formData.append("EvidenceDescription", evidenceDescription.current.value);
+    formData.append("file", evidenceImage.current.files[0]);
+    console.log(formData);
     if (e.target.textContent == "Add") {
-      const response = await axios.post(`${prefixUrl}/Evidences/${caseId}`, formData);
+      const response = await axios.post(
+        `${prefixUrl}/Evidences/${caseId}`,
+        formData
+      );
       console.log("Add response: " + response.data);
     } else if (e.target.textContent == "Update") {
       const res = await updateEvidence(updateform);
@@ -98,8 +111,9 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
                     Evidence Name:
                   </label>
                   <input
+                    ref={evidenceDescription}
                     defaultValue={updateform.EvidenceDescription}
-                    onChange={(e) => formData.append("EvidenceDescription", e.target.value)}
+
                     type="text"
                     name="EvidenceDescription"
                     placeholder="Witness name"
@@ -114,11 +128,12 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
                     Upload Evidence Image:
                   </label>
                   <input
+                    ref={evidenceImage}
                     type="file"
                     defaultValue={updateform.Image}
                     name="WitnessImage"
                     accept="image/*" // Allow only image files
-                    onChange={(e) => formData.append("file", e.target.files[0])}
+
                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
@@ -157,7 +172,9 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
                   Evidence Description:
                 </label>
                 <input
-                  onChange={(e) => formData.append("EvidenceDescription", e.target.value)}
+
+                  ref={evidenceDescription}
+
                   type="text"
                   name="EvidenceDescription"
                   placeholder="Evidence Description"
@@ -172,10 +189,10 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
                   Upload Evidence Image:
                 </label>
                 <input
+                  ref={evidenceImage}
                   type="file"
                   name="WitnessImage"
                   accept="image/*" // Allow only image files
-                  onChange={(e) => formData.append("file", e.target.files[0])}
                   className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
