@@ -6,14 +6,13 @@ import InsertCourt from "../Modals/InsertCourt";
 import CasesTable from "../common/CasesTable";
 import { getAllCourts } from "../Services/Api";
 
-const Courts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
-
+const Courts = ({ currentScreen, setCurrentScreen, isLoggedIn }) => {
   // if(!isLoggedIn)
   //   window.location.href="/";
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
-  const [courts,setCourts] = useState([]);
+  const [courts, setCourts] = useState([]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -41,6 +40,7 @@ const Courts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
       }, 5000);
     }
   };
+
   const getAllCourtsData = async () => {
     const data = await getAllCourts();
     setCourts(data);
@@ -49,6 +49,11 @@ const Courts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
     setCurrentScreen("Courts");
     getAllCourtsData();
   }, []);
+
+  useEffect(() => {
+    setCurrentScreen("Courts");
+    getAllCourtsData();
+  }, [isFormOpen]);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -95,7 +100,11 @@ const Courts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
               getAllCourtsData={getAllCourtsData}
             />
             <div className="grid grid-cols-12 gap-6">
-              <CasesTable getAllCourtsData={getAllCourtsData} Courts={courts} tableName={"Courts Lists"} />
+              <CasesTable
+                getAllCourtsData={getAllCourtsData}
+                Courts={courts}
+                tableName={"Courts Lists"}
+              />
             </div>
           </div>
         </main>

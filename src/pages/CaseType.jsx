@@ -32,6 +32,11 @@ const CaseType = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
     getAllCaseTypeData();
   }, []);
 
+  useEffect(() => {
+    setCurrentScreen("CaseType");
+    getAllCaseTypeData();
+  }, [isFormOpen]);
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}

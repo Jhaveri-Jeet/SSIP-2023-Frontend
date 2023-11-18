@@ -33,6 +33,11 @@ const Cases = ({ currentScreen, setCurrentScreen, validate }) => {
     getAllHighCourtCasesFunction();
   }, []);
 
+  useEffect(() => {
+    setCurrentScreen("Cases");
+    getAllHighCourtCasesFunction();
+  }, [addCaseOpen]);
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}

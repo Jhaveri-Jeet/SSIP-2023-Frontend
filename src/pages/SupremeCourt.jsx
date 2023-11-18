@@ -32,11 +32,18 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
   const closeForm = () => {
     setIsFormOpen(false);
   };
+
   useEffect(() => {
     setCurrentScreen("Supreme Court");
     getAllSupremeCourtCasesFunction();
     getAllCasesCountFunction();
   }, []);
+
+  useEffect(() => {
+    setCurrentScreen("Supreme Court");
+    getAllSupremeCourtCasesFunction();
+    getAllCasesCountFunction();
+  }, [isFormOpen]);
 
   const getAllCasesCountFunction = async () => {
     setCompletedSupremeCourtCasesCount(await getAllCompletedSupremeCasesCount());

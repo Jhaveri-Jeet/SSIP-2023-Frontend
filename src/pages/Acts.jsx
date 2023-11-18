@@ -32,6 +32,11 @@ const Acts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
         getAllActsData();
     }, []);
 
+    useEffect(() => {
+        setCurrentScreen("Acts");
+        getAllActsData();
+    }, [acts]);
+
     return (
         <div className="flex h-screen overflow-hidden">
             {/* Sidebar */}
