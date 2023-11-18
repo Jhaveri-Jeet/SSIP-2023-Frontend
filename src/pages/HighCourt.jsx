@@ -44,6 +44,12 @@ const HighCourt = ({ currentScreen, setCurrentScreen, validate }) => {
     getAllCasesCountFunction();
   }, []);
 
+  useEffect(() => {
+    setCurrentScreen("High Court");
+    getAllHighCourtCasesFunction();
+    getAllCasesCountFunction();
+  }, [isFormOpen]);
+
   const getAllCasesCountFunction = async () => {
     setCompletedHighCourtCasesCount(await getAllCompletedHighCasesCount());
     setRunningHighCourtCasesCount(await getAllRunningHighCasesCount());

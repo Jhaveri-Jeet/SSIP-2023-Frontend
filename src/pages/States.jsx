@@ -47,6 +47,11 @@ const States = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
     getAllStatesData();
   }, []);
 
+  useEffect(() => {
+    setCurrentScreen("States");
+    getAllStatesData();
+  }, [isFormOpen]);
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}

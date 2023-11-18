@@ -65,6 +65,15 @@ const DistrictCourt = ({
     getAllDistrictCompletedCourtCasesFunction();
     getAllDistrictRunningCourtCasesFunction();
   }, []);
+
+  useEffect(() => {
+    setCurrentScreen("District Court");
+    getAllDistrictCourtCasesFunction();
+    getAllDistrictPendingCourtCasesFunction();
+    getAllDistrictCompletedCourtCasesFunction();
+    getAllDistrictRunningCourtCasesFunction();
+  }, [isFormOpen]);
+
   console.log("districtCompletedCourtCases :", districtCompletedCourtCases);
   return (
     <div className="flex h-screen overflow-hidden">

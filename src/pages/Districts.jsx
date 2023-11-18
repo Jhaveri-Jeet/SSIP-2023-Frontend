@@ -47,6 +47,11 @@ const Districts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
     getAllDistrictsData();
   }, []);
 
+  useEffect(() => {
+    setCurrentScreen("Districts");
+    getAllDistrictsData();
+  }, [isFormOpen]);
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}

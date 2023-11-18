@@ -31,6 +31,11 @@ const Advocates = ({ currentScreen, setCurrentScreen, validate}) => {
     setCurrentScreen("Advocates");
     getAllAdvocatesData();
   }, []);
+
+  useEffect(() => {
+    setCurrentScreen("Advocates");
+    getAllAdvocatesData();
+  }, [isFormOpen]);
  
 
   return (
