@@ -14,6 +14,10 @@ const ShowCaseDetail = () => {
   const [hearing, setHearing] = useState([]);
   const [evidences, setEvidences] = useState([]);
   const [witnesses, setWitnesses] = useState([]);
+  const [showOptions, setShowOptions] = useState(false);
+  const [isHearingOpen, setIsHearingOpen] = useState(false);
+  const [isEvidenceOpen, setIsEvidenceOpen] = useState(false);
+  const [isWitnessOpen, setIsWitnessOpen] = useState(false);
 
   const get_hearing = async (caseId) => {
     const res = await getHearing(caseId);
@@ -39,15 +43,15 @@ const ShowCaseDetail = () => {
     setCaseData(response);
   };
 
-
-  const [showOptions, setShowOptions] = useState(false);
-  const [isHearingOpen, setIsHearingOpen] = useState(false);
-  const [isEvidenceOpen, setIsEvidenceOpen] = useState(false);
-  const [isWitnessOpen, setIsWitnessOpen] = useState(false);
-
   const handleButtonClick = () => {
     setShowOptions(!showOptions);
   };
+  const handleOutsideClick = () => {
+    if (showOptions) {
+      setShowOptions(false);
+    }
+  };
+
   const handleShowHearing = () => {
     setShowOptions(false);
     setIsHearingOpen(true);
@@ -82,8 +86,8 @@ const ShowCaseDetail = () => {
     <>
       {/* component */}
 
-      <div className="flex justify-center py-6 min-h-screen h-full md:mx-4">
-        <div className="relative p-3 w-screen mx-3 md:mx-0  dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100">
+      <div className="flex justify-center py-6 min-h-screen h-full md:mx-4" onClick={handleOutsideClick}>
+        <div className="relative p-3 w-screen mx-3 md:mx-0  dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100" >
           {/* Case details section */}
           <div className="flex justify-end items-center space-x-2 rounded-b">
             <div className="flex justify-start mr-auto">
@@ -107,43 +111,67 @@ const ShowCaseDetail = () => {
                 </svg>
               </NavLink>
             </div>
+            <div
+              style={{ marginRight: "1rem" }}
+              className="bg-green-200 w-fit px-3 py-1 rounded-full text-normal font-medium text-black flex items-center">
+              {caseData ? caseData.caseStatus : null}
+            </div>
+
             {(localStorage.getItem("userId") ===
               caseData.roleId ||
               localStorage.getItem("userId") ==
               caseData.transferToId) && (
-                <button
-                  type="button"
-                  onClick={handleButtonClick}
-                  className="bg-transparent text-black font-bold py-2 px-5 border border-transparent hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
-                >+
-                </button>
+                <div className="options-menu">
+                  <button
+                    type="button"
+                    onClick={handleButtonClick}
+                    className="flex items-center justify-center p-2 border border-gray-400 rounded"
+                  // className="bg-[#10375e] text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-0"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+
+                  </button>
+                </div>
               )}
 
           </div>
           <div className="flex justify-end relative">
             {showOptions && (
-              <div className="absolute right-0 bg-white shadow-md rounded-md p-2">
+              <div className="absolute right-0 bg-white shadow-md rounded-md mt-2 p-4">
                 <ul>
-                  <li className="cursor-pointer" onClick={handleShowHearing}>Add Hearing</li>
-                  <li className="cursor-pointer" onClick={handleShowEvidence}>Add Evidence</li>
-                  <li className="cursor-pointer" onClick={handleShowWitness}>Add Witness</li>
+                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2"><button className="cursor-pointer" onClick={handleShowHearing}>Add Hearing</button></li>
+                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2"><button className="cursor-pointer" onClick={handleShowEvidence}>Add Evidence</button></li>
+                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2"><button className="cursor-pointer" onClick={handleShowWitness}>Add Witness</button></li>
                 </ul>
               </div>
             )}
           </div>
           <div className="flex flex-col md:flex-row md:space-x-5 md:space-y-0 ">
-            <div className="flex justify-center items-center md:items-start text-slate-800 dark:text-slate-100">
-              {/* <div className="w-40 h-40 md:h-40 md:w-40 lg:w-60 lg:h-60 bg-white">
+            {/* <div className="flex justify-center items-center md:items-start text-slate-800 dark:text-slate-100">
+              <div className="w-40 h-40 md:h-40 md:w-40 lg:w-60 lg:h-60 bg-white">
                 <img
                   src="\src\images\user-36-02.jpg"
                   alt="tailwind logo"
                   className="rounded-xl w-full h-full"
                 />
-              </div> */}
-            </div>
-            <div className="w-full md:w-full text-slate-800 dark:text-slate-100 dark:bg-slate-800 flex flex-col space-y-2 p-3">
+              </div>
+            </div> */}
+            <div className="w-full md:w-full text-slate-800 dark:text-slate-100 dark:bg-slate-800 flex flex-col lg:space-y-2 p-2">
+
               {/* case header section */}
-              <div className="md:flex justify-between item-center">
+              {/* <div className="md:flex justify-between item-center">
                 <div className="flex items-center mb-1 ">
                   <p className="text-md font-bold lg:text-xl capitalize">
                     Case number:-&nbsp;
@@ -178,44 +206,27 @@ const ShowCaseDetail = () => {
                 <div className="hidden md:block bg-green-200 w-fit px-3 py-1 rounded-full text-normal font-medium text-black flex items-center">
                   {caseData ? caseData.caseStatus : null}
                 </div>
-              </div>
+              </div> */}
+
               {/* Candidate details section */}
               <div className="pt-5">
                 <div className="md:flex">
                   <div className="w-full">
                     <div className="mb-5">
-                      <p className="font-black font-bold text-md lg:text-xl capitalize">
-                        Deffendant:-&nbsp;
-                        <span className="lg:text-xl text-md font-semibold ml-1">
-                          {caseData ? caseData.defendant : null}
+                      <p className="text-md font-bold lg:text-xl capitalize">
+                        Case number:-&nbsp;
+                        <span className="text-md font-normal lg:text-xl">
+                          {caseData ? caseData.cnrNumber : null}
                         </span>
                       </p>
                     </div>
                     <div className="mb-5">
                       <p className="font-black font-bold text-md lg:text-xl capitalize">
-                        Petitioner:-&nbsp;
-                        <span className="lg:text-xl text-md font-semibold ml-1">
-                          {caseData ? caseData.petitioner : null}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="mb-5">
-                      <p className="font-black font-bold text-md lg:text-xl capitalize">
-                        Judge:-&nbsp;
-                        <span className="lg:text-xl text-md font-semibold ml-1">
-                          {caseData ? caseData.judgeName : null}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="w-full">
-                    <div className="mb-5">
-                      <p className="font-black font-bold text-md lg:text-xl capitalize">
-                        Attorney:-&nbsp;
-                        <span className="lg:text-xl text-md font-semibold ml-1">
+                        Court:-&nbsp;
+                        <span className="lg:text-xl text-md font-normal ml-1">
                           {caseData
-                            ? caseData.attorney
-                              ? caseData.attorney.name
+                            ? caseData.court
+                              ? caseData.court.name
                               : null
                             : null}
                         </span>
@@ -224,7 +235,7 @@ const ShowCaseDetail = () => {
                     <div className="mb-5">
                       <p className="font-black font-bold text-md lg:text-xl capitalize">
                         Advocate:-&nbsp;
-                        <span className="lg:text-xl text-md font-semibold ml-1">
+                        <span className="lg:text-xl text-md font-normal ml-1">
                           {caseData
                             ? caseData.advocate
                               ? caseData.advocate.name
@@ -235,22 +246,26 @@ const ShowCaseDetail = () => {
                     </div>
                     <div className="mb-5">
                       <p className="font-black font-bold text-md lg:text-xl capitalize">
-                        Court:-&nbsp;
-                        <span className="lg:text-xl text-md font-semibold ml-1">
-                          {caseData
-                            ? caseData.court
-                              ? caseData.court.name
-                              : null
-                            : null}
+                        Deffendant:-&nbsp;
+                        <span className="lg:text-xl text-md font-normal ml-1">
+                          {caseData ? caseData.defendant : null}
                         </span>
                       </p>
                     </div>
                   </div>
                   <div className="w-full">
                     <div className="mb-5">
+                      <p className="text-md font-bold lg:text-xl capitalize">
+                        Date file:-&nbsp;
+                        <span className="text-md font-normal lg:text-xl">
+                          {caseData ? caseData.dateFiled : null}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="mb-5">
                       <p className="font-black font-bold text-md lg:text-xl capitalize">
                         Act:-&nbsp;
-                        <span className="lg:text-xl text-md font-semibold ml-1">
+                        <span className="lg:text-xl text-md font-normal ml-1">
                           {caseData
                             ? caseData.act
                               ? caseData.act.name
@@ -261,19 +276,77 @@ const ShowCaseDetail = () => {
                     </div>
                     <div className="mb-5">
                       <p className="font-black font-bold text-md lg:text-xl capitalize">
-                        Comments:-&nbsp;
-                        <span className="lg:text-xl text-md font-semibold ml-1">
-                          {caseData ? caseData.comments : null}
+                        Attorney:-&nbsp;
+                        <span className="lg:text-xl text-md font-normal ml-1">
+                          {caseData
+                            ? caseData.attorney
+                              ? caseData.attorney.name
+                              : null
+                            : null}
                         </span>
                       </p>
                     </div>
+                    <div className="mb-5">
+                      <p className="font-black font-bold text-md lg:text-xl capitalize">
+                        Judgment:-&nbsp;
+                        <span className="lg:text-xl text-md font-normal ml-1">
+                          {caseData
+                            ? caseData.judgment
+                              ? caseData.judgment
+                              : null
+                            : null}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-full">
+                    <div className="mb-5">
+                      <p className="text-md font-bold lg:text-xl capitalize">
+                        Case type:-&nbsp;
+                        <span className="text-md font-normal lg:text-xl capitalize">
+                          {caseData
+                            ? caseData.caseType
+                              ? caseData.caseType.name
+                              : null
+                            : null}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="mb-5">
+                      <p className="font-black font-bold text-md lg:text-xl capitalize">
+                        Judge:-&nbsp;
+                        <span className="lg:text-xl text-md font-normal ml-1">
+                          {caseData ? caseData.judgeName : null}
+                        </span>
+                      </p>
+
+                    </div>
+                    <div className="mb-5">
+                      <p className="font-black font-bold text-md lg:text-xl capitalize">
+                        Petitioner:-&nbsp;
+                        <span className="lg:text-xl text-md font-normal ml-1">
+                          {caseData ? caseData.petitioner : null}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-5">
+                  <div>
+                    <p className="font-black font-bold text-md lg:text-xl capitalize">
+                      Comments:-&nbsp;
+                      <span className="lg:text-xl text-md font-normal ml-1">
+                        {caseData ? caseData.comments : null}
+                      </span>
+                    </p>
                   </div>
                 </div>
                 <div>
                   <div className="mb-2">
                     <p className="font-black font-bold text-md lg:text-xl capitalize">
                       Description:-&nbsp;
-                      <span className="lg:text-xl text-md font-semibold ml-1">
+                      <span className="lg:text-xl text-md font-normal ml-1">
                         {caseData ? caseData.description : null}
                       </span>
                     </p>
@@ -311,7 +384,7 @@ const ShowCaseDetail = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
       <InsertHearing
         isOpen={isHearingOpen}
         onClose={closeform}
