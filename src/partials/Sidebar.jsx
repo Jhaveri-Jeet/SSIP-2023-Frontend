@@ -91,7 +91,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           <NavLink end to="/dashboard" className="block">
             <img
               src="\src\images\logo.png"
-              style={{marginTop: "-40px", marginBottom: "-50px"}}
+              style={{ marginTop: "-40px", marginBottom: "-50px" }}
               alt=""
             />
           </NavLink>
@@ -216,7 +216,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       : "hover:text-white"
                   }`}
                 >
-
                   <div className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -282,8 +281,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
-                            {/* Courts */}
-                            <li
+              {/* Courts */}
+              <li
                 className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
                   pathname.includes("inbox") && "bg-slate-900"
                 }`}

@@ -8,7 +8,10 @@ import InsertEvidence from "../Modals/InsertEvidence";
 import InsertWitness from "../Modals/InsertWitness";
 
 import { getHearing, getEvidences, getallEvidences, getWitnesses } from "../Services/Api";
-const ShowCaseDetail = () => {
+const ShowCaseDetail = ({validate}) => {
+
+  validate();
+
   const { caseid } = useParams();
   const [caseData, setCaseData] = useState([]);
   const [hearing, setHearing] = useState([]);
@@ -359,7 +362,7 @@ const ShowCaseDetail = () => {
           {/* Table section */}
           <div className="xl:flex w-full gap-x-2">
             {/* Hearing table section */}
-            <div className="w-full">
+            <div className="w-full my-2">
               <CasesTable
                 HearingDetail={hearing}
                 tableName={"Hearing"}
@@ -367,7 +370,7 @@ const ShowCaseDetail = () => {
               />
             </div>
             {/* Evidence table section */}
-            <div className="w-full">
+            <div className="w-full my-2">
               <CasesTable
                 Evidence={evidences}
                 tableName={"Evidence"}
@@ -375,7 +378,7 @@ const ShowCaseDetail = () => {
               />
             </div>
             {/* Witness table section */}
-            <div className="w-full">
+            <div className="w-full my-2">
               <CasesTable
                 Witness={witnesses}
                 tableName={"Witness"}

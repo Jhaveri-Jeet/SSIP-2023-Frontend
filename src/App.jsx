@@ -61,7 +61,7 @@ function App() {
           path="/dashboard"
           element={
             <Dashboard
-              validate = {()=>{}}
+              validate = {validate}
               caseData={caseData}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
