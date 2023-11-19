@@ -113,18 +113,15 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
 
               <CasesTable
                 caseData={caseData}
-                userId={1}
                 tableName={"District Court Current Cases"}
                 cases={districtCourtCases}
               />
               <CasesTable
                 tableName={"High Court Current Cases"}
-                userId={3}
                 cases={highCourtCases}
               />
               <CasesTable
                 tableName={"Supreme Court Current Cases"}
-                userId={4}
                 cases={supremeCourtCases}
               />
             </div>

@@ -18,7 +18,7 @@ function DropdownProfile({ align }) {
   }, [])
   
   const getUserRole = async () => {
-    const response = await axios.get(`${prefixUrl}/roles/${localStorage.getItem("userId")}`)
+    const response = await axios.get(`${prefixUrl}/roles/${localStorage.getItem("userRoleId")}`)
     setUserRole(response.data.name)
   }
 

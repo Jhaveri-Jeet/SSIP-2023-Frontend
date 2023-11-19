@@ -81,7 +81,7 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
             <div className="sm:flex sm:justify-end sm:items-center mb-8">
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                  
-                {localStorage.getItem("userId") == 4 && (
+                {localStorage.getItem("userRoleId") == 4 && (
                   <button
                     className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
                     onClick={openForm}

@@ -121,9 +121,9 @@ const ShowCaseDetail = () => {
               {caseData ? caseData.caseStatus : null}
             </div>
 
-            {(localStorage.getItem("userId") ===
+            {(localStorage.getItem("userRoleId") ===
               caseData.roleId ||
-              localStorage.getItem("userId") ==
+              localStorage.getItem("userRoleId") ==
               caseData.transferToId) && (
                 <div className="options-menu">
                   <button

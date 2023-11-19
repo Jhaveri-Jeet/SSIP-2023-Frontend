@@ -65,7 +65,7 @@ const Login = () => {
     try {
       await axios.get(`${prefixUrl}/CheckUser/${userRoleId}/${districtId}/${courtId}/${password}`)
       localStorage.setItem("isAuthenticated",true);
-      localStorage.setItem("userId", userRoleId);
+      localStorage.setItem("userRoleId", userRoleId);
       localStorage.setItem("districtId", districtId);
       localStorage.setItem("courtId", courtId);
       location.href = "/dashboard"

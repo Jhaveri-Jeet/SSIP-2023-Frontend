@@ -37,7 +37,6 @@ import InsertEvidence from "../Modals/InsertEvidence";
 import { prefixUrl } from "../Services/Config";
 
 function CasesTable({
-  userId,
   tableName,
   cases,
   HearingDetail,
@@ -60,6 +59,7 @@ function CasesTable({
   // const [isOpenForEvidence, setIsOpenForEvidence] = useState(false);
   // const [isOpenForWitness, setIsOpenForWitness] = useState(false);
 
+  const userRoleId = localStorage.getItem("userRoleId");
   const [isOpen, setIsOpen] = useState(false);
 
   const openInNewTab = (url) => {
@@ -299,7 +299,7 @@ function CasesTable({
                     ? cases.map((singleCase) => {
                       // console.log(
                       //   "edit",
-                      //   localStorage.getItem("userId"),
+                      //   userRoleId,
                       //   singleCase.roleId,
                       //   singleCase.transferToId
                       // );
@@ -374,10 +374,7 @@ function CasesTable({
                               </svg>
                             </button>
                           </td>
-                          {(localStorage.getItem("userId") ===
-                            singleCase.roleId ||
-                            localStorage.getItem("userId") ==
-                            singleCase.transferToId) && (
+                          {(userRoleId == singleCase.roleId && userRoleId == singleCase.transferToId) && (
                               <td className="p-2">
                                 <div className="inline-flex items-center">
                                   <div className="text-slate-800 dark:text-slate-100 ml-5">

@@ -17,7 +17,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
     ActId: "",
     CourtId: localStorage.getItem("courtId"),
     CaseTypeId: "",
-    RoleId: localStorage.getItem("userId"),
+    RoleId: localStorage.getItem("userRoleId"),
   });
   const [form, setForm] = useState({
     DateFiled: "",

@@ -8,7 +8,7 @@ export const goToDashboardIfAuthenticated = () => {
 
 export const logout = () => {
   localStorage.removeItem("isAuthenticated");
-  localStorage.removeItem("userId");
+  localStorage.removeItem("userRoleId");
   localStorage.removeItem("districtId");
   localStorage.removeItem("courtId");
   location.href = "/";

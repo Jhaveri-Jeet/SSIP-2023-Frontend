@@ -99,7 +99,7 @@ const HighCourt = ({ currentScreen, setCurrentScreen }) => {
                 {/* Datepicker built with flatpickr */}
                 <Datepicker />
                 {/* Add view button */}
-                {localStorage.getItem("userId") == 3 && (
+                {localStorage.getItem("userRoleId") == 3 && (
                   <button
                     className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
                     onClick={openForm}
