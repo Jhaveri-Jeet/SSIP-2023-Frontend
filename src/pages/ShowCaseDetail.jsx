@@ -12,10 +12,6 @@ import { authenticate } from "../utils/Auth";
 
 const ShowCaseDetail = () => {
 
-  useEffect(() => {
-    authenticate();
-  }, []);
-
   const { caseid } = useParams();
   const [caseData, setCaseData] = useState([]);
   const [hearing, setHearing] = useState([]);
@@ -83,6 +79,7 @@ const ShowCaseDetail = () => {
 
 
   useEffect(() => {
+    authenticate();
     getCasedata();
     get_hearing(caseid);
     get_evidences(caseid);

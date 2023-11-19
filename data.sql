@@ -1,3 +1,5 @@
+-- Created by Jignesh-Rathod
+
 USE `criminalcasedb`;
 
 INSERT INTO `roles` (`Name`) VALUES ('District Court');

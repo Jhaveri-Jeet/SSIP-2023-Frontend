@@ -17,12 +17,9 @@ import { authenticate } from "../utils/Auth";
 const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] =
-    useState(0);
-  const [runningSupremeCourtCasesCount, setRunningSupremeCourtCasesCount] =
-    useState(0);
-  const [completedSupremeCourtCasesCount, setCompletedSupremeCourtCasesCount] =
-    useState(0);
+  const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] = useState(0);
+  const [runningSupremeCourtCasesCount, setRunningSupremeCourtCasesCount] = useState(0);
+  const [completedSupremeCourtCasesCount, setCompletedSupremeCourtCasesCount] = useState(0);
   const [supremeCourtCases, setSupremeCourtCases] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
 

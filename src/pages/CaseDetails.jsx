@@ -1,6 +1,12 @@
 import React from "react";
+import { authenticate } from '../utils/Auth'
 
 const CaseDetails = ({singleCase}) => {
+
+  useEffect(() => {
+    authenticate();
+  }, []);
+
   return (
     <>
       <div className="flex h-screen overflow-hidden">
