@@ -20,9 +20,7 @@ import Cases from "./pages/Cases";
 import States from "./pages/States";
 import Sections from "./pages/Sections";
 import Districts from "./pages/Districts";
-import AddWitness from "./Modals/InsertWitness";
 import Demo from './pages/Demo';
-import { validate } from "./utils/Auth";
 
 function App() {
 
@@ -61,7 +59,6 @@ function App() {
           path="/dashboard"
           element={
             <Dashboard
-              validate = {validate}
               caseData={caseData}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
@@ -73,7 +70,6 @@ function App() {
           path="/dashboard/cases"
           element={
             <Cases
-              validate = {validate}
               caseData={caseData}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
@@ -85,7 +81,6 @@ function App() {
           path="/dashboard/highcourt"
           element={
             <HighCourt
-              validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
@@ -96,7 +91,6 @@ function App() {
           path="/dashboard/districtcourt"
           element={
             <DistrictCourt
-              validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
@@ -107,7 +101,6 @@ function App() {
           path="/dashboard/supremecourt"
           element={
             <SupremeCourt
-            validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
@@ -118,7 +111,6 @@ function App() {
           path="/dashboard/courts"
           element={
             <Courts
-              validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
@@ -129,7 +121,6 @@ function App() {
           path="/dashboard/advocates"
           element={
             <Advocates
-              validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
@@ -140,7 +131,6 @@ function App() {
           path="/dashboard/acts"
           element={
             <Acts
-              validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
@@ -151,7 +141,6 @@ function App() {
           path="/dashboard/Casetype"
           element={
             <CaseType
-              validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
@@ -162,7 +151,6 @@ function App() {
           path="/dashboard/states"
           element={
             <States
-              validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
@@ -173,7 +161,6 @@ function App() {
           path="/dashboard/districts"
           element={
             <Districts
-              validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
@@ -184,18 +171,42 @@ function App() {
           path="/dashboard/evidence"
           element={
             <EvidencePage
-              validate = {validate}
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />
           }
         />
-        <Route path="/dashboard/analytics" element={<Analytics validate = {validate} />} />
-        <Route path="/dashboard/showcasedetail/:caseid" element={<ShowCaseDetail validate = {validate}/>} />
-        <Route path="/dashboard/demo" element={<Demo />} />
-        <Route path="/dashboard/sections" element={<Sections validate = {validate}
+        <Route 
+          exact
+          path="/dashboard/analytics"
+          element={
+            <Analytics />
+          }
+        />
+        <Route
+          exact
+          path="/dashboard/showcasedetail/:caseid"
+          element={
+            <ShowCaseDetail />
+          }
+        />
+        <Route
+          exact
+          path="/dashboard/demo"
+          element={
+            <Demo />
+          }
+        />
+        <Route
+          exact
+          path="/dashboard/sections"
+          element={
+            <Sections
               currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen} />} />
+              setCurrentScreen={setCurrentScreen}
+            />
+          }
+        />
       </Routes>
     </>
   );

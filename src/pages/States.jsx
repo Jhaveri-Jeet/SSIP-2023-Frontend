@@ -5,11 +5,9 @@ import InsertState from "../Modals/InsertState";
 import { getAllStates } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
+import { authenticate } from "../utils/Auth";
 
-const States = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
-  
-  // if(!isLoggedIn)
-  //   window.location.href="/";
+const States = ({ currentScreen, setCurrentScreen }) => {
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
@@ -43,6 +41,7 @@ const States = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
   };
   
   useEffect(() => {
+    authenticate();
     setCurrentScreen("States");
     getAllStatesData();
   }, []);

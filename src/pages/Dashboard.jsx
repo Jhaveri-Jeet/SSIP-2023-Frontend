@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import FilterButton from "../components/DropdownFilter";
-import Datepicker from "../components/Datepicker";
 import CasesCard from "../common/CasesCard";
 import CasesTable from "../common/CasesTable";
 import { advocates, courts, acts } from "../constant";
@@ -15,9 +13,9 @@ import {
   getAllDistrictCourtCases,
   getAllSupremeCourtCases,
 } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
-function Dashboard({ caseData, currentScreen, setCurrentScreen, validate }) {
-  validate();
+function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [addCaseOpen, setAddCaseOpen] = useState(false);
@@ -33,6 +31,7 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen, validate }) {
   };
   
   useEffect(() => {
+    authenticate();
     setCurrentScreen("Dashboard");
     getAllCasesCountFunction();
     getAllHighCourtCasesFunction();
@@ -117,19 +116,16 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen, validate }) {
                 userId={1}
                 tableName={"District Court Current Cases"}
                 cases={districtCourtCases}
-                validate={() => {}}
               />
               <CasesTable
                 tableName={"High Court Current Cases"}
                 userId={3}
                 cases={highCourtCases}
-                validate={() => {}}
               />
               <CasesTable
                 tableName={"Supreme Court Current Cases"}
                 userId={4}
                 cases={supremeCourtCases}
-                validate={() => {}}
               />
             </div>
           </div>

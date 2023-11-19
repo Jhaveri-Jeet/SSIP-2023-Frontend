@@ -1,8 +1,14 @@
 import { React, useState } from "react";
 import CasesTable from "../common/CasesTable";
 import { HearingDetail, Evidence } from "../constant";
+import { authenticate } from "../utils/Auth";
 
 const Demo = () => {
+
+  useEffect(() => {
+    authenticate();
+  }, []);
+
   return (
     <>
       {/* component */}

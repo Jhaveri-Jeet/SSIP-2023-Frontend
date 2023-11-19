@@ -1,8 +1,7 @@
 import { React, useState,useEffect } from 'react'
 import {addAdvocate,editAdvocateAPI} from "../Services/Api";
 
-function InsertAdvocate({ isOpen, onClose,editAdvocateData ,validate }) {
-    // validate()
+function InsertAdvocate({ isOpen, onClose,editAdvocateData }) {
     const [form, setForm] = useState({
         name: "",
         Enrollmentnumber: "",

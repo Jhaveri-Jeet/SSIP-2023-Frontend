@@ -50,14 +50,11 @@ function CasesTable({
   CaseType,
   States,
   Districts,
-  validate,
   sections,
   getAllCourtsData,
   getAllStatesData,
   getAllDistrictsData
 }) {
-  // alert(localStorage.getItem('isLoggedIn'));
-  // validate()
 
   // const [isOpenForHearing, setIsOpenForHearnig] = useState(false);
   // const [isOpenForEvidence, setIsOpenForEvidence] = useState(false);
@@ -890,7 +887,6 @@ function CasesTable({
           </div>
           <div>
             <InsertAdvocate
-              validate={validate}
               editAdvocateData={editAdvocate}
               isOpen={isOpen}
               onClose={closeAdvocateModel}

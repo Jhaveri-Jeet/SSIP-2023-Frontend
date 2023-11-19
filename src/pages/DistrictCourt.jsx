@@ -15,14 +15,13 @@ import {
   getAllDistrictRunningCasesCount,
   getAllDistrictCompletedCasesCount,
 } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
 const DistrictCourt = ({
   caseData,
   currentScreen,
   setCurrentScreen,
-  validate,
 }) => {
-  validate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [districtCourtCases, setDistrictCourtCases] = useState("");
@@ -59,6 +58,7 @@ const DistrictCourt = ({
   };
 
   useEffect(() => {
+    authenticate();
     setCurrentScreen("District Court");
     getAllDistrictCourtCasesFunction();
     getAllDistrictPendingCourtCasesFunction();
@@ -151,7 +151,6 @@ const DistrictCourt = ({
                 caseData={caseData}
                 tableName={"District Court Cases"}
                 cases={districtCourtCases}
-                validate={() => {}}
               />
             </div>
           </div>

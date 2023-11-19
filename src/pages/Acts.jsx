@@ -5,11 +5,9 @@ import Header from "../partials/Header";
 import InsertActs from "../Modals/InsertActs";
 import CasesTable from "../common/CasesTable";
 import { getAllActs } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
-const Acts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
-    
-    // if(!isLoggedIn)
-    //     window.location.href="/";
+const Acts = ({ currentScreen, setCurrentScreen }) => {
     
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [acts,setActs] = useState([]);
@@ -28,6 +26,7 @@ const Acts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
         setActs(data);
       };
     useEffect(() => {
+        authenticate();
         setCurrentScreen("Acts");
         getAllActsData();
     }, []);

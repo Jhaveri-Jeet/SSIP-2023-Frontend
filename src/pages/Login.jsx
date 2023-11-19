@@ -1,10 +1,9 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
+import { goToDashboardIfAuthenticated } from '../utils/Auth';
 
 const Login = () => {
-
-  if(localStorage.getItem("isLoggedIn")) location.href = "/dashboard"
 
   const [isSelectUserRole, setIsSelectUserRole] = useState(false);
   const [isSelectDistrict, setIsSelectDistrict] = useState(false);
@@ -20,6 +19,7 @@ const Login = () => {
   const [password, setPassword] = useState(null);
 
   useEffect(() => {
+    goToDashboardIfAuthenticated();
     getAllUserRoles();
     getAllDistricts();
   }, []);
@@ -64,15 +64,14 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       await axios.get(`${prefixUrl}/CheckUser/${userRoleId}/${districtId}/${courtId}/${password}`)
-      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("isAuthenticated",true);
       localStorage.setItem("userId", userRoleId);
       localStorage.setItem("districtId", districtId);
       localStorage.setItem("courtId", courtId);
-      window.location.href = "/dashboard"
-      return;
-    } catch (error) {}
-    
-    alert("Wrong Username or Password");
+      location.href = "/dashboard"
+    } catch (error) {
+      alert("Wrong Username or Password");
+    }
   };
 
   return (

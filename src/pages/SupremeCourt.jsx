@@ -12,9 +12,10 @@ import {
   getAllPendingSupremeCasesCount,
 } from "../Services/Api";
 import Addcase from "../Modals/Addcase";
+import { authenticate } from "../utils/Auth";
 
-const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
-  // validate();
+const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] =
     useState(0);
@@ -34,6 +35,7 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen, validate }) => {
   };
 
   useEffect(() => {
+    authenticate();
     setCurrentScreen("Supreme Court");
     getAllSupremeCourtCasesFunction();
     getAllCasesCountFunction();

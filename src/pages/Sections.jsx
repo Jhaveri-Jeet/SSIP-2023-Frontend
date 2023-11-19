@@ -4,10 +4,9 @@ import Header from "../partials/Header";
 import AddSections from "../Modals/AddSections";
 import CasesTable from "../common/CasesTable";
 import { getAllSections } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
 const Sections = ({ currentScreen, setCurrentScreen }) => {
-  // if(!isLoggedIn)
-  //     window.location.href="/";
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sections, setSections] = useState([]);
@@ -28,6 +27,7 @@ const Sections = ({ currentScreen, setCurrentScreen }) => {
     setActs(data[1]);
   };
   useEffect(() => {
+    authenticate();
     setCurrentScreen("Sections");
     getAllSectionsData();
   }, []);

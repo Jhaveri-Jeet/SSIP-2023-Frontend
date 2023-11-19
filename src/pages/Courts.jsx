@@ -5,10 +5,9 @@ import Header from "../partials/Header";
 import InsertCourt from "../Modals/InsertCourt";
 import CasesTable from "../common/CasesTable";
 import { getAllCourts } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
-const Courts = ({ currentScreen, setCurrentScreen, isLoggedIn }) => {
-  // if(!isLoggedIn)
-  //   window.location.href="/";
+const Courts = ({ currentScreen, setCurrentScreen }) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
@@ -46,6 +45,7 @@ const Courts = ({ currentScreen, setCurrentScreen, isLoggedIn }) => {
     setCourts(data);
   };
   useEffect(() => {
+    authenticate();
     setCurrentScreen("Courts");
     getAllCourtsData();
   }, []);

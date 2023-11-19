@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Transition from "../utils/Transition";
-import { logout } from "../utils/Auth"
 import axios from "axios";
+import { logout } from "../utils/Auth";
 
 import UserAvatar from "../images/user-avatar-32.png";
 import { prefixUrl } from "../Services/Config";
@@ -105,7 +104,7 @@ function DropdownProfile({ align }) {
             <li>
               <button
                 className="font-medium text-sm text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center py-1 px-3"
-                onClick={logout}
+                onClick={ logout }
               >
                 Sign Out
               </button>

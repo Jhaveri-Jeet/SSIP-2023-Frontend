@@ -5,11 +5,9 @@ import InsertDistrict from "../Modals/InsertDistrict";
 import { getAllDistrict } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
+import { authenticate } from "../utils/Auth";
 
-const Districts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
-  
-  // if(!isLoggedIn)
-  //   window.location.href="/";
+const Districts = ({ currentScreen, setCurrentScreen }) => {
   
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
@@ -43,6 +41,7 @@ const Districts = ({ currentScreen, setCurrentScreen, isLoggedIn}) => {
   };
   
   useEffect(() => {
+    authenticate();
     setCurrentScreen("Districts");
     getAllDistrictsData();
   }, []);

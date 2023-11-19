@@ -8,9 +8,13 @@ import InsertEvidence from "../Modals/InsertEvidence";
 import InsertWitness from "../Modals/InsertWitness";
 
 import { getHearing, getEvidences, getallEvidences, getWitnesses } from "../Services/Api";
-const ShowCaseDetail = ({validate}) => {
+import { authenticate } from "../utils/Auth";
 
-  validate();
+const ShowCaseDetail = () => {
+
+  useEffect(() => {
+    authenticate();
+  }, []);
 
   const { caseid } = useParams();
   const [caseData, setCaseData] = useState([]);

@@ -17,9 +17,9 @@ import {
   getAllRunningHighCasesCount,
   getAllPendingHighCasesCount,
 } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
-const HighCourt = ({ currentScreen, setCurrentScreen, validate }) => {
-  validate();
+const HighCourt = ({ currentScreen, setCurrentScreen }) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pendingHighCourtCasesCount, setPendingHighCourtCasesCount] =
@@ -39,6 +39,7 @@ const HighCourt = ({ currentScreen, setCurrentScreen, validate }) => {
     setIsFormOpen(false);
   };
   useEffect(() => {
+    authenticate();
     setCurrentScreen("High Court");
     getAllHighCourtCasesFunction();
     getAllCasesCountFunction();

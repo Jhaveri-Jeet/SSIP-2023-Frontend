@@ -4,10 +4,9 @@ import Header from "../partials/Header";
 import InsertAdvocate from "../Modals/InsertAdvocate";
 import CasesTable from "../common/CasesTable";
 import { getAllAdvocates } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
-const Advocates = ({ currentScreen, setCurrentScreen, validate}) => {
-
-  validate()
+const Advocates = ({ currentScreen, setCurrentScreen }) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [advocates,setAdvocate] = useState([]);
@@ -28,6 +27,7 @@ const Advocates = ({ currentScreen, setCurrentScreen, validate}) => {
   };
 
   useEffect(() => {
+    authenticate();
     setCurrentScreen("Advocates");
     getAllAdvocatesData();
   }, []);
