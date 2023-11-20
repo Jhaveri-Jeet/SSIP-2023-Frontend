@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InsertAdvocate from "../Modals/InsertAdvocate";
 import Addcase from "../Modals/Addcase";
 import AddSections from "../Modals/AddSections";
@@ -6,8 +6,7 @@ import InsertHearing from "../Modals/InsertHearing";
 import InsertCourt from "../Modals/InsertCourt";
 import InsertState from "../Modals/InsertState";
 import InsertDistrict from "../Modals/InsertDistrict";
-
-
+import CustomPagination from "./CustomPagination";
 import {
   deleteCaseType,
   updateCase,
@@ -37,6 +36,7 @@ import InsertEvidence from "../Modals/InsertEvidence";
 import { prefixUrl } from "../Services/Config";
 
 function CasesTable({
+  userId,
   tableName,
   cases,
   HearingDetail,
@@ -49,17 +49,45 @@ function CasesTable({
   CaseType,
   States,
   Districts,
+  validate,
   sections,
   getAllCourtsData,
   getAllStatesData,
   getAllDistrictsData
 }) {
+  // alert(localStorage.getItem('isLoggedIn'));
+  // validate()
 
   // const [isOpenForHearing, setIsOpenForHearnig] = useState(false);
   // const [isOpenForEvidence, setIsOpenForEvidence] = useState(false);
   // const [isOpenForWitness, setIsOpenForWitness] = useState(false);
 
-  const userRoleId = localStorage.getItem("userRoleId");
+  const [filteredCases, setFilteredCases] = useState(cases);
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [casesPerPage] = useState(4); // Number of cases per page
+
+  const calculatePagination = (data) => {
+    const indexOfLastCase = currentPage * casesPerPage;
+    const indexOfFirstCase = indexOfLastCase - casesPerPage;
+    const totalPages = Math.ceil(data.length / casesPerPage);
+    return { indexOfLastCase, indexOfFirstCase, totalPages };
+  };
+
+  const getCase = async () => {
+  
+    const { indexOfLastCase, indexOfFirstCase } = calculatePagination(cases);
+    const currentCases = cases.slice(indexOfFirstCase, indexOfLastCase);
+    setFilteredCases(currentCases);
+  };
+
+  useEffect(() => {
+  
+    getCase();
+  }, [cases, currentPage]); // Include currentPage as a dependency
+
+
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const openInNewTab = (url) => {
@@ -69,8 +97,31 @@ function CasesTable({
   const navigate = useNavigate();
 
   // ------------------ operations for Case ------------------
-  const [editCaseData, setEditCaseData] = useState();
 
+
+  const onPageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+
+  };
+
+  
+  const [editCaseData, setEditCaseData] = useState();
+  const casesearch = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+
+    // Filter the cases array based on the search term
+    const filtered = cases.filter((caseItem) => {
+      // Check if any field in the caseItem includes the search term
+      return Object.values(caseItem).some((value) =>
+        String(value).toLowerCase().includes(searchTerm)
+      );
+
+    });
+
+    // Update the filteredCases state
+    setFilteredCases(filtered);
+    console.log(filtered);
+  };
   const editCase = async (e) => {
     const res = await getCase(e);
     setEditCaseData(res);
@@ -235,10 +286,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+            
+                  <input
+                    onChange={casesearch}
+                    type="text"
+                    name="Search"
+                    placeholder="Search"
+                    className="inputbox outline-none w-56  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  />
+               
           </header>
           <div className="p-3">
             {/* Table */}
@@ -295,11 +355,11 @@ function CasesTable({
                 {/* Table body */}
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {cases
-                    ? cases.map((singleCase) => {
+                  {filteredCases
+                    ? filteredCases.map((singleCase) => {
                       // console.log(
                       //   "edit",
-                      //   userRoleId,
+                      //   localStorage.getItem("userId"),
                       //   singleCase.roleId,
                       //   singleCase.transferToId
                       // );
@@ -374,7 +434,10 @@ function CasesTable({
                               </svg>
                             </button>
                           </td>
-                          {(userRoleId == singleCase.roleId && userRoleId == singleCase.transferToId) && (
+                          {(localStorage.getItem("userId") ===
+                            singleCase.roleId ||
+                            localStorage.getItem("userId") ==
+                            singleCase.transferToId) && (
                               <td className="p-2">
                                 <div className="inline-flex items-center">
                                   <div className="text-slate-800 dark:text-slate-100 ml-5">
@@ -389,9 +452,27 @@ function CasesTable({
                             )}
                         </tr>
                       );
-                    })
+                    }
+                    
+                    
+                    )
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={calculatePagination(cases).totalPages}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                </tfoot>
+
               </table>
             </div>
           </div>
@@ -884,6 +965,7 @@ function CasesTable({
           </div>
           <div>
             <InsertAdvocate
+              validate={validate}
               editAdvocateData={editAdvocate}
               isOpen={isOpen}
               onClose={closeAdvocateModel}
@@ -1149,6 +1231,7 @@ function CasesTable({
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+            <input type="text"  />
           </header>
           <div className="p-3">
             {/* Table */}
