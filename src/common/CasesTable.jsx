@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InsertAdvocate from "../Modals/InsertAdvocate";
 import Addcase from "../Modals/Addcase";
 import AddSections from "../Modals/AddSections";
@@ -65,6 +65,8 @@ function CasesTable({
   const openInNewTab = (url) => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
+
+  
 
   const navigate = useNavigate();
 
@@ -374,7 +376,7 @@ function CasesTable({
                               </svg>
                             </button>
                           </td>
-                          {(userRoleId == singleCase.roleId && userRoleId == singleCase.transferToId) && (
+                          {( userRoleId == singleCase.transferToId) && (
                               <td className="p-2">
                                 <div className="inline-flex items-center">
                                   <div className="text-slate-800 dark:text-slate-100 ml-5">
