@@ -1,19 +1,48 @@
 import axios from "axios";
 import { prefixUrl } from "./Config";
 
+// ------------------ All Apis for Login ------------------
+export const checkUser = async (userId, passwordHash) => {
+  try {
+    await axios.get(`${prefixUrl}/CheckUser/${userId}/${passwordHash}`);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+
 // ------------------ All Apis for User ------------------
 export const createUser = async (roleId,districtId,courtId,data) => {
-  const response = await axios.post(`${prefixUrl}/users/${roleId}/${districtId}/${courtId}`,data)
-  console.log(response);
-  return response;
+  try {
+    const response = await axios.post(`${prefixUrl}/users/${roleId}/${districtId}/${courtId}`,data)
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getAllUsers = async () => {
+  try {
+    const response = await axios.get(`${prefixUrl}/users`).then(res => {
+      return res.data;
+    });
+    return response;
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 // ------------------ All Apis for Role ------------------
 export const getAllRoles = async () => {
-  const response = await axios.get(`${prefixUrl}/roles`).then((res) => {
-    return res.data;
-  });
-  return response;
+  try {
+    const response = await axios.get(`${prefixUrl}/roles`).then((res) => {
+      return res.data;
+    });
+    return response;
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 // ------------------ All Apis for Case ------------------

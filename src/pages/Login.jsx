@@ -1,73 +1,52 @@
 import { React, useState, useEffect } from "react";
-import axios from "axios";
-import { prefixUrl } from "../Services/Config";
+import { checkUser, getAllDistrict, getAllRoles, getAllUsers } from "../Services/Api";
 
 const Login = () => {
 
   const [isSelectUserRole, setIsSelectUserRole] = useState(false);
   const [isSelectDistrict, setIsSelectDistrict] = useState(false);
-  const [isSelectCourt, setIsSelectCourt] = useState(false);
+  const [isSelectUser, setIsSelectUser] = useState(false);
 
   const [userRoles, setUserRoles] = useState([]);
   const [districts, setDistricts] = useState([]);
-  const [courts, setCourts] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const [userRoleId, setUserRoleId] = useState(null);
   const [districtId, setDistrictId] = useState(null);
-  const [courtId, setCourtId] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [password, setPassword] = useState(null);
 
   useEffect(() => {
-    getAllUserRoles();
-    getAllDistricts();
+    getRoles();
+    getDistricts();
   }, []);
+  
+  const getRoles = async () => {
+    setUserRoles(await getAllRoles());
+  }
 
-  const getAllUserRoles = async () => {
-    const response = await axios
-      .get(`${prefixUrl}/roles`)
-      .then((res) => {
-        return res.data;
-      });
+  const getDistricts = async () => {
+    setDistricts(await getAllDistrict());
+  }
 
-    setUserRoles(response);
-  };
-
-  const getAllDistricts = async () => {
-    const response = await axios
-      .get(`${prefixUrl}/districts`)
-      .then((res) => {
-        return res.data;
-      });
-    setDistricts(response);
-  };
-
+  const getUsers = async () => {
+    setUsers(await getAllUsers());
+  }
+  
   useEffect(() => {
     if(districtId !== null)
-      getCourts();
+      getUsers();
   }, [districtId]);
 
-  const getCourts = async () => {
-    const response = await axios
-      .get(
-        `${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`
-      )
-      .then((res) => {
-        return res.data;
-      });
-      console.log(response);
-
-    setCourts(response);
-  };
-
   const handleLogin = async () => {
-    try {
-      await axios.get(`${prefixUrl}/CheckUser/${userRoleId}/${districtId}/${courtId}/${password}`)
+    if(await checkUser(userId, password)) {
       localStorage.setItem("isAuthenticated",true);
       localStorage.setItem("userRoleId", userRoleId);
       localStorage.setItem("districtId", districtId);
-      localStorage.setItem("courtId", courtId);
+      localStorage.setItem("userId", userId);
       location.href = "/dashboard"
-    } catch (error) {
+    }
+    else {
       alert("Wrong Username or Password");
     }
   };
@@ -103,13 +82,13 @@ const Login = () => {
                   setIsSelectUserRole(true);
                   setUserRoleId(e.target.value);
                   setDistricts([]);
-                  setCourts([]);
-                  getAllDistricts();
+                  setUsers([]);
+                  getDistricts();
                 }}
                 id="courts-select"
                 className="pl-2 outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
               >
-                <option selected>Choose an User</option>
+                <option selected>Choose an Role</option>
                 {userRoles.map((item, index) => (
                   <option key={index} value={item.id}>
                     {item.name}
@@ -166,17 +145,17 @@ const Login = () => {
                 </svg>
                 <select
                   onChange={(e) => {
-                    setIsSelectCourt(true);
-                    setCourtId(e.target.value);
+                    setIsSelectUser(true);
+                    setUserId(e.target.value);
                   }}
                   id="district-court-select"
                   className="pl-2 outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
-                  <option selected>Choose Court</option>
-                  {courts
-                    ? courts.map((item, index) => (
+                  <option selected>Choose User</option>
+                  {users
+                    ? users.map((item, index) => (
                         <option key={index} value={item.id}>
-                          {item.name}
+                          {item.userName}
                         </option>
                       ))
                     : null}
@@ -184,7 +163,7 @@ const Login = () => {
               </div>
             )}
 
-            {isSelectCourt && (
+            {isSelectUser && (
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

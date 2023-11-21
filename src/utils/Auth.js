@@ -14,6 +14,6 @@ export const logout = () => {
   localStorage.removeItem("isAuthenticated");
   localStorage.removeItem("userRoleId");
   localStorage.removeItem("districtId");
-  localStorage.removeItem("courtId");
+  localStorage.removeItem("userId");
   location.href = "/";
 };
