@@ -8,7 +8,6 @@ import InsertEvidence from "../Modals/InsertEvidence";
 import InsertWitness from "../Modals/InsertWitness";
 
 import { getHearing, getEvidences, getallEvidences, getWitnesses } from "../Services/Api";
-import { authenticate } from "../utils/Auth";
 
 const ShowCaseDetail = () => {
 
@@ -79,7 +78,6 @@ const ShowCaseDetail = () => {
 
 
   useEffect(() => {
-    authenticate();
     getCasedata();
     get_hearing(caseid);
     get_evidences(caseid);

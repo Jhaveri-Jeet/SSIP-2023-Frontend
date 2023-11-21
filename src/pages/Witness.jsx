@@ -4,7 +4,6 @@ import Header from "../partials/Header";
 import {WitnessData  } from "../constant";
 import CasesTable from "../common/CasesTable";
 import InsertWitness from "../Modals/InsertWitness";
-import { authenticate } from "../utils/Auth";
 
 export default function Witness({ currentScreen, setCurrentScreen }) {
  
@@ -20,7 +19,6 @@ export default function Witness({ currentScreen, setCurrentScreen }) {
         setIsFormOpen(false);
     };
     useEffect(() => {
-        authenticate();
         setCurrentScreen("Witness");
     }, []);
 

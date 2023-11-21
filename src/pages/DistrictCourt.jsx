@@ -15,7 +15,6 @@ import {
   getAllDistrictRunningCasesCount,
   getAllDistrictCompletedCasesCount,
 } from "../Services/Api";
-import { authenticate } from "../utils/Auth";
 
 const DistrictCourt = ({
   caseData,
@@ -58,7 +57,6 @@ const DistrictCourt = ({
   };
 
   useEffect(() => {
-    authenticate();
     setCurrentScreen("District Court");
     getAllDistrictCourtCasesFunction();
     getAllDistrictPendingCourtCasesFunction();

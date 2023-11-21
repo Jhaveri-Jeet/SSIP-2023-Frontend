@@ -5,7 +5,6 @@ import Header from "../partials/Header";
 import InsertActs from "../Modals/InsertActs";
 import CasesTable from "../common/CasesTable";
 import { getAllActs } from "../Services/Api";
-import { authenticate } from "../utils/Auth";
 
 const Acts = ({ currentScreen, setCurrentScreen }) => {
     
@@ -26,7 +25,6 @@ const Acts = ({ currentScreen, setCurrentScreen }) => {
         setActs(data);
       };
     useEffect(() => {
-        authenticate();
         setCurrentScreen("Acts");
         getAllActsData();
     }, []);

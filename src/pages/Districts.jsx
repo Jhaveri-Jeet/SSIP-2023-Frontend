@@ -5,7 +5,6 @@ import InsertDistrict from "../Modals/InsertDistrict";
 import { getAllDistrict } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
-import { authenticate } from "../utils/Auth";
 
 const Districts = ({ currentScreen, setCurrentScreen }) => {
   
@@ -41,7 +40,6 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
   };
   
   useEffect(() => {
-    authenticate();
     setCurrentScreen("Districts");
     getAllDistrictsData();
   }, []);

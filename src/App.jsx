@@ -21,6 +21,7 @@ import States from "./pages/States";
 import Sections from "./pages/Sections";
 import Districts from "./pages/Districts";
 import Demo from './pages/Demo';
+import { authenticate } from "./utils/Auth";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState("Dahsboard");
 
   useEffect(() => {
+    authenticate();
     document.querySelector("html").style.scrollBehavior = "auto";
     window.scroll({ top: 0 });
     document.querySelector("html").style.scrollBehavior = "";

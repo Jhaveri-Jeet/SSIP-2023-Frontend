@@ -3,14 +3,8 @@ import Sidebar from "../Sidebar";
 import Header from "../Header";
 import FilterButton from "../../components/DropdownFilter";
 import Datepicker from "../../components/Datepicker";
-import { authenticate } from "../../utils/Auth";
 
 function Analytics() {
-
-  useEffect(() => {
-    authenticate();
-  }, []);
-  
 
   return (
     <div className="flex h-screen overflow-hidden">

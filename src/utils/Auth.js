@@ -1,9 +1,13 @@
 export const authenticate = () => {
-  if (!localStorage.getItem("isAuthenticated")) location.href = "/";
-};
-
-export const goToDashboardIfAuthenticated = () => {
-  if (localStorage.getItem("isAuthenticated")) location.href = "/dashboard";
+  if (!localStorage.getItem("isAuthenticated"))
+  {
+    if(location.pathname != "/")
+      location.href = "/";
+  }
+  else {
+    if(location.pathname == "/")
+      location.href = "/dashboard"
+  }
 };
 
 export const logout = () => {

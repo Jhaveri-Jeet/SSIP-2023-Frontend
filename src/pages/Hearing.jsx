@@ -4,7 +4,6 @@ import Header from "../partials/Header";
 import { HearingDetail } from "../constant";
 import CasesTable from "../common/CasesTable";
 import InsertHearing from "../Modals/InsertHearing";
-import { authenticate } from "../utils/Auth";
 
 const Hearing = ({ currentScreen, setCurrentScreen }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,7 +18,6 @@ const Hearing = ({ currentScreen, setCurrentScreen }) => {
         setIsFormOpen(false);
     };
     useEffect(() => {
-        authenticate();
         setCurrentScreen("Hearing");
     }, []);
 

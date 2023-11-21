@@ -4,7 +4,6 @@ import Header from "../partials/Header";
 import AddSections from "../Modals/AddSections";
 import CasesTable from "../common/CasesTable";
 import { getAllSections } from "../Services/Api";
-import { authenticate } from "../utils/Auth";
 
 const Sections = ({ currentScreen, setCurrentScreen }) => {
 
@@ -27,7 +26,6 @@ const Sections = ({ currentScreen, setCurrentScreen }) => {
     setActs(data[1]);
   };
   useEffect(() => {
-    authenticate();
     setCurrentScreen("Sections");
     getAllSectionsData();
   }, []);

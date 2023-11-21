@@ -4,7 +4,6 @@ import Header from "../partials/Header";
 import AddCaseType from "../Modals/AddCaseType";
 import CasesTable from "../common/CasesTable";
 import { getAllCaseType } from "../Services/Api";
-import { authenticate } from "../utils/Auth";
 
 const CaseType = ({ currentScreen, setCurrentScreen }) => {
 
@@ -26,7 +25,6 @@ const CaseType = ({ currentScreen, setCurrentScreen }) => {
     setCaseType(data);
   };
   useEffect(() => {
-    authenticate();
     setCurrentScreen("CaseType");
     getAllCaseTypeData();
   }, []);

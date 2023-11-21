@@ -4,7 +4,6 @@ import Header from "../partials/Header";
 import { Evidence } from "../constant";
 import CasesTable from "../common/CasesTable";
 import InsertEvidence from "../Modals/InsertEvidence"; 
-import { authenticate } from "../utils/Auth";
 
 export default function EvidencePage({ currentScreen, setCurrentScreen }) {
  
@@ -21,7 +20,6 @@ export default function EvidencePage({ currentScreen, setCurrentScreen }) {
     };
     
     useEffect(() => {
-        authenticate();
         setCurrentScreen("EvidencePage");
     }, []);
 

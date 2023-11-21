@@ -10,7 +10,6 @@ import CasesTable from "../common/CasesTable";
 import { cases } from "../constant";
 import Addcase from "../Modals/Addcase";
 import { getAllHighCourtCases } from "../Services/Api";
-import { authenticate } from "../utils/Auth";
 
 const Cases = ({ currentScreen, setCurrentScreen }) => {
 
@@ -29,7 +28,6 @@ const Cases = ({ currentScreen, setCurrentScreen }) => {
   }
 
   useEffect(() => {
-    authenticate();
     setCurrentScreen("Cases");
     getAllHighCourtCasesFunction();
   }, []);

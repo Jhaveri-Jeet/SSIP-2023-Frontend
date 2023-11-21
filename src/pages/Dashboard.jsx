@@ -13,7 +13,6 @@ import {
   getAllDistrictCourtCases,
   getAllSupremeCourtCases,
 } from "../Services/Api";
-import { authenticate } from "../utils/Auth";
 
 function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
 
@@ -31,7 +30,6 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
   };
   
   useEffect(() => {
-    authenticate();
     setCurrentScreen("Dashboard");
     getAllCasesCountFunction();
     getAllHighCourtCasesFunction();

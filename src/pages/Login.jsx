@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
-import { goToDashboardIfAuthenticated } from '../utils/Auth';
 
 const Login = () => {
 
@@ -19,7 +18,6 @@ const Login = () => {
   const [password, setPassword] = useState(null);
 
   useEffect(() => {
-    goToDashboardIfAuthenticated();
     getAllUserRoles();
     getAllDistricts();
   }, []);

@@ -5,7 +5,6 @@ import InsertState from "../Modals/InsertState";
 import { getAllStates } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
-import { authenticate } from "../utils/Auth";
 
 const States = ({ currentScreen, setCurrentScreen }) => {
   
@@ -41,7 +40,6 @@ const States = ({ currentScreen, setCurrentScreen }) => {
   };
   
   useEffect(() => {
-    authenticate();
     setCurrentScreen("States");
     getAllStatesData();
   }, []);

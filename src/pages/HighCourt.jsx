@@ -17,7 +17,6 @@ import {
   getAllRunningHighCasesCount,
   getAllPendingHighCasesCount,
 } from "../Services/Api";
-import { authenticate } from "../utils/Auth";
 
 const HighCourt = ({ currentScreen, setCurrentScreen }) => {
 
@@ -39,7 +38,6 @@ const HighCourt = ({ currentScreen, setCurrentScreen }) => {
     setIsFormOpen(false);
   };
   useEffect(() => {
-    authenticate();
     setCurrentScreen("High Court");
     getAllHighCourtCasesFunction();
     getAllCasesCountFunction();

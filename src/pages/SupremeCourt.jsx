@@ -12,7 +12,6 @@ import {
   getAllPendingSupremeCasesCount,
 } from "../Services/Api";
 import Addcase from "../Modals/Addcase";
-import { authenticate } from "../utils/Auth";
 
 const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
 
@@ -32,7 +31,6 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
   };
 
   useEffect(() => {
-    authenticate();
     setCurrentScreen("Supreme Court");
     getAllSupremeCourtCasesFunction();
     getAllCasesCountFunction();
