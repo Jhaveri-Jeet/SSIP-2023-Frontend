@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Transition from "../utils/Transition";
-import axios from "axios";
 import { logout } from "../utils/Auth";
-
 import UserAvatar from "../images/user-avatar-32.png";
-import { prefixUrl } from "../Services/Config";
+import { getRole } from "../Services/Api";
 
 function DropdownProfile({ align }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,8 +16,7 @@ function DropdownProfile({ align }) {
   }, [])
   
   const getUserRole = async () => {
-    const response = await axios.get(`${prefixUrl}/roles/${localStorage.getItem("userRoleId")}`)
-    setUserRole(response.data.name)
+    setUserRole(await getRole(parseInt(localStorage.getItem("userRoleId"))));
   }
 
   // close on click outside

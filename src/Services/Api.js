@@ -22,9 +22,9 @@ export const createUser = async (roleId,districtId,courtId,data) => {
     console.log(error);
   }
 };
-export const getAllUsers = async () => {
+export const getAllUsers = async (userRoleId, districtId) => {
   try {
-    const response = await axios.get(`${prefixUrl}/users`).then(res => {
+    const response = await axios.get(`${prefixUrl}/FetchUserAccCourtAndDis/${userRoleId}/${districtId}`).then(res => {
       return res.data;
     });
     return response;
@@ -38,6 +38,16 @@ export const getAllRoles = async () => {
   try {
     const response = await axios.get(`${prefixUrl}/roles`).then((res) => {
       return res.data;
+    });
+    return response;
+  } catch (error) {
+    console.log(error)
+  }
+};
+export const getRole = async (userRoleId) => {
+  try {
+    const response = await axios.get(`${prefixUrl}/roles/${userRoleId}`).then((res) => {
+      return res.data.name;
     });
     return response;
   } catch (error) {

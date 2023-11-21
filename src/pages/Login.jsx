@@ -30,7 +30,7 @@ const Login = () => {
   }
 
   const getUsers = async () => {
-    setUsers(await getAllUsers());
+    setUsers(await getAllUsers(userRoleId,districtId));
   }
   
   useEffect(() => {
@@ -115,6 +115,7 @@ const Login = () => {
                   onChange={(e) => {
                     setIsSelectDistrict(true);
                     setDistrictId(e.target.value);
+                    getUsers();
                   }}
                   id="district-select"
                   className="pl-2 outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
