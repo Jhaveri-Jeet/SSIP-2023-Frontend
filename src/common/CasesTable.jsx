@@ -376,7 +376,7 @@ function CasesTable({
                               </svg>
                             </button>
                           </td>
-                          {( userRoleId == singleCase.transferToId) && (
+                          {(userRoleId == singleCase.roleId && userRoleId == singleCase.transferToId) && (
                               <td className="p-2">
                                 <div className="inline-flex items-center">
                                   <div className="text-slate-800 dark:text-slate-100 ml-5">
@@ -528,9 +528,9 @@ function CasesTable({
                     <th className="p-2">
                       <div className="font-semibold text-center">Image</div>
                     </th>
-                    <th className="p-2">
+                    {/* <th className="p-2">
                       <div className="font-semibold text-center">Actions</div>
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 {/* Table body */}
@@ -563,30 +563,6 @@ function CasesTable({
                                   <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
                                 </svg>
                               </button>
-                            </td>
-                            <td className="p-2">
-                              <div className=" flex justify-center  items-center">
-                                <div className="text-slate-800 dark:text-slate-100 ">
-                                  <button
-                                    onClick={() => {
-                                      edit_Evidence(Evidencedata.id);
-                                    }}
-                                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold  rounded"
-                                  >
-                                    <i className="m-2 fa-solid fa-edit"></i>
-                                  </button>
-                                </div>
-                                {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
-                                  <button
-                                    onClick={() =>
-                                      delete_Hearing(Evidencedata.id)
-                                    }
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold  rounded"
-                                  >
-                                    <i className="m-2 fa-solid fa-trash"></i>
-                                  </button>
-                                </div> */}
-                              </div>
                             </td>
                           </tr>
                         );
@@ -636,9 +612,9 @@ function CasesTable({
                     <th className="p-2">
                       <div className="font-semibold text-center">Image</div>
                     </th>
-                    <th className="p-2">
+                    {/* <th className="p-2">
                       <div className="font-semibold text-center">Actions</div>
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 {/* Table body */}
@@ -671,30 +647,6 @@ function CasesTable({
                                   <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
                                 </svg>
                               </button>
-                            </td>
-                            <td className="p-2">
-                              <div className=" flex justify-center  items-center">
-                                <div className="text-slate-800 dark:text-slate-100 ">
-                                  <button
-                                    onClick={() => {
-                                      edit_Witness(singleWitness.id);
-                                    }}
-                                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold  rounded"
-                                  >
-                                    <i className="m-2 fa-solid fa-edit"></i>
-                                  </button>
-                                </div>
-                                {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
-                                  <button
-                                    onClick={() =>
-                                      delete_Hearing(singleWitness.id)
-                                    }
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold  rounded"
-                                  >
-                                    <i className="m-2 fa-solid fa-trash"></i>
-                                  </button>
-                                </div> */}
-                              </div>
                             </td>
                           </tr>
                         );
