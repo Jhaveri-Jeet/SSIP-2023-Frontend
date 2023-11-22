@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import Cookies from "js-cookie";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import CasesCard from "../common/CasesCard";
@@ -30,6 +30,17 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
   };
   
   useEffect(() => {
+   
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const tokenData = JSON.parse(atob(accessToken.split(".")[1]));
+    console.log(tokenData["courtId"])
+
     setCurrentScreen("Dashboard");
     getAllCasesCountFunction();
     getAllHighCourtCasesFunction();

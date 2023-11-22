@@ -11,69 +11,7 @@ import { prefixUrl } from "../Services/Config";
 import Cookies from "js-cookie";
 
 function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
-  //   const [form, setForm] = useState({
-  //     caseId: caseId,
-  //     WitnessName: "",
-  //     Image: "",
-  //   });
-
-  //   useEffect(() => {
-  //     console.log("editeEvidence", editeEvidence);
-  //     if (editeEvidence) {
-  //       setUpdateForm({
-  //         id: editeEvidence.id || "",
-  //         caseId: editeEvidence.caseId || "",
-  //         WitnessName: editeEvidence.WitnessName || "",
-  //         Image: editeEvidence.Image || "",
-  //       });
-  //       console.log(updateform);
-  //     } else {
-  //       setForm({
-  //         caseId: caseId,
-  //         WitnessName: "",
-  //         Image: "",
-  //       });
-
-  //       // Clear the updateform when there's no editAdvocateData
-  //       setUpdateForm({
-  //         caseId: "",
-  //         WitnessName: "",
-  //         Image: "",
-  //       });
-  //     }
-  //   }, [editeEvidence]);
-
-  //   const handleInputChange = (e) => {
-  //     const { name, value } = e.target;
-
-  //     if (editeEvidence) {
-  //       setUpdateForm({
-  //         ...updateform,
-  //         [name]: value,
-  //       });
-  //     }
-  //     setForm({
-  //       ...form,
-  //       [name]: value,
-  //     });
-  //     console.log(form);
-  //   };
-
-  //   const handleFileChange = (e) => {
-  //     const { name, value, files } = e.target;
-
-  //     if (editeEvidence) {
-  //       setUpdateForm({
-  //         ...updateform,
-  //         [name]: value,
-  //       });
-  //     }
-  //     setForm({
-  //       ...form,
-  //       [name]: files[0],
-  //     });
-  //     console.log(form);
-  //   };
+  
 
   const formData = new FormData();
 
