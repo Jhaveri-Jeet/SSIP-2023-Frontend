@@ -8,6 +8,7 @@ import {
 } from "../Services/Api";
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
+import Cookies from "js-cookie";
 
 function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
   //   const [form, setForm] = useState({
@@ -85,9 +86,22 @@ function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
     formData.append("file", witnessImage.current.files[0]);
     console.log(formData);
     if (e.target.textContent == "Add") {
+      const accessToken = Cookies.get("access_token");
+
+      if (!accessToken) {
+        console.error("Token not found.");
+        return null;
+      }
+
       const response = await axios.post(
         `${prefixUrl}/Witness/${caseId}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log("Add response: " + response.data);
     } else if (e.target.textContent == "Update") {
