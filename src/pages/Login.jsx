@@ -38,6 +38,8 @@ const Login = () => {
       getUsers();
   }, [districtId]);
 
+  
+
   const handleLogin = async () => {
     if(await checkUser(userId, password)) {
       localStorage.setItem("isAuthenticated",true);
