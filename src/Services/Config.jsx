@@ -1,8 +1,13 @@
 import Cookies from "js-cookie";
 
-export const prefixUrl = "http://localhost:5000/";
+export const prefixUrl = "http://localhost:5000";
+
+let tokenData = null;
 
 const accessToken = Cookies.get("access_token");
 
-export const tokenData = JSON.parse(atob(accessToken.split(".")[1]));
+if (accessToken) {
+  tokenData = JSON.parse(atob(accessToken.split(".")[1]));
+}
 
+export { tokenData };

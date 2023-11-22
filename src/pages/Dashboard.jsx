@@ -5,6 +5,7 @@ import Header from "../partials/Header";
 import CasesCard from "../common/CasesCard";
 import CasesTable from "../common/CasesTable";
 import { advocates, courts, acts } from "../constant";
+import { tokenData } from "../Services/Config";
 import {
   getAllHighCasesCount,
   getAllDistrictCasesCount,
@@ -38,8 +39,7 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
       return null;
     }
 
-    const tokenData = JSON.parse(atob(accessToken.split(".")[1]));
-    console.log(tokenData["courtId"])
+    console.log(tokenData)
 
     setCurrentScreen("Dashboard");
     getAllCasesCountFunction();
