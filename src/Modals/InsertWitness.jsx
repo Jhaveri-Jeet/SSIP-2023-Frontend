@@ -19,6 +19,7 @@ function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    formData.append("caseId", caseId)
     formData.append("witnessName", witnessName.current.value);
     formData.append("file", witnessImage.current.files[0]);
     console.log(formData);
@@ -36,7 +37,6 @@ function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
           },
         }
       );

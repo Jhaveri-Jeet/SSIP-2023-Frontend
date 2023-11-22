@@ -7,10 +7,14 @@ import InsertHearing from "../Modals/InsertHearing";
 import InsertEvidence from "../Modals/InsertEvidence";
 import InsertWitness from "../Modals/InsertWitness";
 
-import { getHearing, getEvidences, getallEvidences, getWitnesses } from "../Services/Api";
+import {
+  getHearing,
+  getEvidences,
+  getallEvidences,
+  getWitnesses,
+} from "../Services/Api";
 
 const ShowCaseDetail = () => {
-
   const { caseid } = useParams();
   const [caseData, setCaseData] = useState([]);
   const [hearing, setHearing] = useState([]);
@@ -27,13 +31,11 @@ const ShowCaseDetail = () => {
     // console.log(hearing);
   };
 
-
   const get_evidences = async (caseId) => {
     const res = await getEvidences(caseId);
-    console.log(res)
+    console.log(res);
     setEvidences(res);
   };
-
 
   const get_witnesses = async (caseId) => {
     const res = await getWitnesses(caseId);
@@ -69,27 +71,36 @@ const ShowCaseDetail = () => {
     setIsWitnessOpen(true);
   };
 
-
   const closeform = () => {
     setIsHearingOpen(false);
     setIsEvidenceOpen(false);
     setIsWitnessOpen(false);
-  }
+  };
 
-
-  useEffect(() => {
-    getCasedata();
+  const getAllDataFroHearingEvidenceAndWitness = () => {
     get_hearing(caseid);
     get_evidences(caseid);
     get_witnesses(caseid);
+  };
+
+  useEffect(() => {
+    getCasedata();
+    getAllDataFroHearingEvidenceAndWitness();
   }, []);
+
+  useEffect(() => {
+    getAllDataFroHearingEvidenceAndWitness();
+  }, [isEvidenceOpen, isWitnessOpen, isHearingOpen]);
 
   return (
     <>
       {/* component */}
 
-      <div className="flex justify-center py-6 min-h-screen h-full md:mx-4" onClick={handleOutsideClick}>
-        <div className="relative p-3 w-screen mx-3 md:mx-0  dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100" >
+      <div
+        className="flex justify-center py-6 min-h-screen h-full md:mx-4"
+        onClick={handleOutsideClick}
+      >
+        <div className="relative p-3 w-screen mx-3 md:mx-0  dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100">
           {/* Case details section */}
           <div className="flex justify-end items-center space-x-2 rounded-b">
             <div className="flex justify-start mr-auto">
@@ -115,47 +126,66 @@ const ShowCaseDetail = () => {
             </div>
             <div
               style={{ marginRight: "1rem" }}
-              className="bg-green-200 w-fit px-3 py-1 rounded-full text-normal font-medium text-black flex items-center">
+              className="bg-green-200 w-fit px-3 py-1 rounded-full text-normal font-medium text-black flex items-center"
+            >
               {caseData ? caseData.caseStatus : null}
             </div>
 
-            {(localStorage.getItem("userRoleId") ===
-              caseData.roleId ||
-              localStorage.getItem("userRoleId") ==
-              caseData.transferToId) && (
-                <div className="options-menu">
-                  <button
-                    type="button"
-                    onClick={handleButtonClick}
-                    className="flex items-center justify-center p-2 border border-gray-400 rounded"
+            {(localStorage.getItem("userRoleId") === caseData.roleId ||
+              localStorage.getItem("userRoleId") == caseData.transferToId) && (
+              <div className="options-menu">
+                <button
+                  type="button"
+                  onClick={handleButtonClick}
+                  className="flex items-center justify-center p-2 border border-gray-400 rounded"
                   // className="bg-[#10375e] text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-0"
-                  ><svg
+                >
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      />
-                    </svg>
-
-                  </button>
-                </div>
-              )}
-
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
           <div className="flex justify-end relative">
             {showOptions && (
               <div className="absolute right-0 bg-white shadow-md rounded-md mt-2 p-4">
                 <ul>
-                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2"><button className="cursor-pointer" onClick={handleShowHearing}>Add Hearing</button></li>
-                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2"><button className="cursor-pointer" onClick={handleShowEvidence}>Add Evidence</button></li>
-                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2"><button className="cursor-pointer" onClick={handleShowWitness}>Add Witness</button></li>
+                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2">
+                    <button
+                      className="cursor-pointer"
+                      onClick={handleShowHearing}
+                    >
+                      Add Hearing
+                    </button>
+                  </li>
+                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2">
+                    <button
+                      className="cursor-pointer"
+                      onClick={handleShowEvidence}
+                    >
+                      Add Evidence
+                    </button>
+                  </li>
+                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2">
+                    <button
+                      className="cursor-pointer"
+                      onClick={handleShowWitness}
+                    >
+                      Add Witness
+                    </button>
+                  </li>
                 </ul>
               </div>
             )}
@@ -171,7 +201,6 @@ const ShowCaseDetail = () => {
               </div>
             </div> */}
             <div className="w-full md:w-full text-slate-800 dark:text-slate-100 dark:bg-slate-800 flex flex-col lg:space-y-2 p-2">
-
               {/* case header section */}
               {/* <div className="md:flex justify-between item-center">
                 <div className="flex items-center mb-1 ">
@@ -321,7 +350,6 @@ const ShowCaseDetail = () => {
                           {caseData ? caseData.judgeName : null}
                         </span>
                       </p>
-
                     </div>
                     <div className="mb-5">
                       <p className="font-black font-bold text-md lg:text-xl capitalize">
@@ -386,7 +414,7 @@ const ShowCaseDetail = () => {
             </div>
           </div>
         </div>
-      </div >
+      </div>
       <InsertHearing
         isOpen={isHearingOpen}
         onClose={closeform}
@@ -395,7 +423,8 @@ const ShowCaseDetail = () => {
       <InsertEvidence
         isOpen={isEvidenceOpen}
         onClose={closeform}
-        caseId={caseid} />
+        caseId={caseid}
+      />
 
       <InsertWitness
         isOpen={isWitnessOpen}
