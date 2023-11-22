@@ -8,6 +8,7 @@ import {
 } from "../Services/Api";
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
+import Cookies from "js-cookie";
 
 function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
   //   const [form, setForm] = useState({
@@ -85,9 +86,22 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
     formData.append("file", evidenceImage.current.files[0]);
     console.log(formData);
     if (e.target.textContent == "Add") {
+      const accessToken = Cookies.get("access_token");
+
+      if (!accessToken) {
+        console.error("Token not found.");
+        return null;
+      }
+
       const response = await axios.post(
         `${prefixUrl}/Evidences/${caseId}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log("Add response: " + response.data);
     } else if (e.target.textContent == "Update") {
@@ -100,8 +114,9 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
     return (
       <>
         <div
-          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
-            }`}
+          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
+            isOpen ? "block" : "hidden"
+          }`}
         >
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
             <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
@@ -113,7 +128,6 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
                   <input
                     ref={evidenceDescription}
                     defaultValue={updateform.EvidenceDescription}
-
                     type="text"
                     name="EvidenceDescription"
                     placeholder="Witness name"
@@ -133,7 +147,6 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
                     defaultValue={updateform.Image}
                     name="WitnessImage"
                     accept="image/*" // Allow only image files
-
                     className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
@@ -161,8 +174,9 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
   return (
     <>
       <div
-        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
-          }`}
+        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
+          isOpen ? "block" : "hidden"
+        }`}
       >
         <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
           <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
@@ -172,9 +186,7 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
                   Evidence Description:
                 </label>
                 <input
-
                   ref={evidenceDescription}
-
                   type="text"
                   name="EvidenceDescription"
                   placeholder="Evidence Description"

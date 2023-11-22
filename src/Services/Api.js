@@ -21,9 +21,22 @@ export const checkUser = async (userId, passwordHash) => {
 // ------------------ All Apis for User ------------------
 export const createUser = async (roleId, districtId, courtId, data) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const response = await axios.post(
       `${prefixUrl}/users/${roleId}/${districtId}/${courtId}`,
-      data
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     console.log(response);
     return response;
@@ -71,7 +84,19 @@ export const getRole = async (userRoleId) => {
 // ------------------ All Apis for Case ------------------
 export const getCaseDetails = async (id) => {
   try {
-    const response = await axios.get(`${prefixUrl}/cases/${id}`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/cases/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -79,7 +104,19 @@ export const getCaseDetails = async (id) => {
 };
 export const getAllDistrictPendingCasesCount = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/TotalPendingCases/1`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/TotalPendingCases/1`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -87,7 +124,19 @@ export const getAllDistrictPendingCasesCount = async () => {
 };
 export const getAllDistrictRunningCasesCount = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/TotalRunningCases/1`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/TotalRunningCases/1`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -95,7 +144,19 @@ export const getAllDistrictRunningCasesCount = async () => {
 };
 export const getAllDistrictCompletedCasesCount = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/TotalCompletedCases/1`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/TotalCompletedCases/1`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -103,7 +164,19 @@ export const getAllDistrictCompletedCasesCount = async () => {
 };
 export const getAllDistrictCasesCount = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/TotalCasesCount/1`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/TotalCasesCount/1`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -111,7 +184,19 @@ export const getAllDistrictCasesCount = async () => {
 };
 export const getAllHighCasesCount = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/TotalCasesCount/3`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/TotalCasesCount/3`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -119,7 +204,19 @@ export const getAllHighCasesCount = async () => {
 };
 export const getAllPendingHighCasesCount = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/TotalPendingCases/3`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/TotalPendingCases/3`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -127,7 +224,19 @@ export const getAllPendingHighCasesCount = async () => {
 };
 export const getAllRunningHighCasesCount = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/TotalRunningCases/3`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/TotalRunningCases/3`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -135,7 +244,19 @@ export const getAllRunningHighCasesCount = async () => {
 };
 export const getAllCompletedHighCasesCount = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/TotalCompletedCases/3`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/TotalCompletedCases/3`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -143,7 +264,19 @@ export const getAllCompletedHighCasesCount = async () => {
 };
 export const getAllSupremeCasesCount = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/TotalCasesCount/4`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/TotalCasesCount/4`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -151,7 +284,19 @@ export const getAllSupremeCasesCount = async () => {
 };
 export const getAllPendingSupremeCasesCount = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/TotalPendingCases/4`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/TotalPendingCases/4`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -159,7 +304,19 @@ export const getAllPendingSupremeCasesCount = async () => {
 };
 export const getAllRunningSupremeCasesCount = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/TotalRunningCases/4`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/TotalRunningCases/4`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -167,7 +324,19 @@ export const getAllRunningSupremeCasesCount = async () => {
 };
 export const getAllCompletedSupremeCasesCount = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/TotalCompletedCases/4`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/TotalCompletedCases/4`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -175,7 +344,19 @@ export const getAllCompletedSupremeCasesCount = async () => {
 };
 export const getAllCases = async () => {
   try {
-    const data = await axios.get(`${prefixUrl}/cases`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.get(`${prefixUrl}/cases`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -183,8 +364,21 @@ export const getAllCases = async () => {
 };
 export const getAllDistrictCourtCases = async () => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const data = await axios.get(
-      `${prefixUrl}/FetchCasesIncludingTransfered/1`
+      `${prefixUrl}/FetchCasesIncludingTransfered/1`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     return data.data;
   } catch (error) {
@@ -193,8 +387,21 @@ export const getAllDistrictCourtCases = async () => {
 };
 export const getAllSupremeCourtCases = async () => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const data = await axios.get(
-      `${prefixUrl}/FetchCasesIncludingTransfered/4`
+      `${prefixUrl}/FetchCasesIncludingTransfered/4`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     return data.data;
   } catch (error) {
@@ -203,8 +410,21 @@ export const getAllSupremeCourtCases = async () => {
 };
 export const getAllHighCourtCases = async () => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const data = await axios.get(
-      `${prefixUrl}/FetchCasesIncludingTransfered/3`
+      `${prefixUrl}/FetchCasesIncludingTransfered/3`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     return data.data;
   } catch (error) {
@@ -213,7 +433,19 @@ export const getAllHighCourtCases = async () => {
 };
 export const getCase = async (caseId) => {
   try {
-    const res = await axios.get(`${prefixUrl}/cases/${caseId}`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const res = await axios.get(`${prefixUrl}/cases/${caseId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return res.data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -221,7 +453,19 @@ export const getCase = async (caseId) => {
 };
 export const deleteCase = async (deleteCaseId) => {
   try {
-    const data = await axios.delete(`${prefixUrl}/cases/${deleteCaseId}`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const data = await axios.delete(`${prefixUrl}/cases/${deleteCaseId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return data;
   } catch (error) {
     console.log("Error ouccur in api call", error);
@@ -230,8 +474,20 @@ export const deleteCase = async (deleteCaseId) => {
 export const updateCase = async (data) => {
   console.log("Data :", data);
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     let id = data.id;
-    const response = await axios.put(`${prefixUrl}/cases/${id}`, data);
+    const response = await axios.put(`${prefixUrl}/cases/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -247,9 +503,22 @@ export const addCase = async (
   data
 ) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const response = await axios.post(
       `${prefixUrl}/cases/${caseTypeId}/${courtId}/${actId}/${advocateId}/${attorneyId}/${roleId}`,
-      data
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -260,23 +529,60 @@ export const addCase = async (
 // ------------------ All Apis for Advocate ------------------
 export const getAllAdvocates = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/advocates`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/advocates`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 export const getAdvocate = async (advocateId) => {
-  const data = await axios.get(`${prefixUrl}/advocates/${advocateId}`);
+  const data = await axios.get(`${prefixUrl}/advocates/${advocateId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
   return data;
 };
 export const deleteAdvocate = async (deleteAdvocateId) => {
-  const data = await axios.delete(`${prefixUrl}/advocates/${deleteAdvocateId}`);
+  const data = await axios.delete(
+    `${prefixUrl}/advocates/${deleteAdvocateId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
   return data;
 };
 export const addAdvocate = async (data) => {
   try {
-    const response = await axios.post(`${prefixUrl}/advocates`, data);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.post(`${prefixUrl}/advocates`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -284,8 +590,20 @@ export const addAdvocate = async (data) => {
 };
 export const editAdvocateAPI = async (data) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     let id = data.id;
-    const response = await axios.put(`${prefixUrl}/advocates/${id}`, data);
+    const response = await axios.put(`${prefixUrl}/advocates/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -294,23 +612,57 @@ export const editAdvocateAPI = async (data) => {
 // ------------------ All Apis for Act ------------------
 export const getAllActs = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/acts`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/acts`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 export const getAct = async (actId) => {
-  const response = await axios.get(`${prefixUrl}/acts/${actId}`);
+  const response = await axios.get(`${prefixUrl}/acts/${actId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
   return response.data;
 };
 export const deleteAct = async (deleteActId) => {
-  const response = await axios.delete(`${prefixUrl}/acts/${deleteActId}`);
+  const response = await axios.delete(`${prefixUrl}/acts/${deleteActId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
   return response.data;
 };
 export const addAct = async (data) => {
   try {
-    const response = await axios.post(`${prefixUrl}/acts`, data);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.post(`${prefixUrl}/acts`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -319,8 +671,20 @@ export const addAct = async (data) => {
 export const updateAct = async (data) => {
   console.log("Data :", data);
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     let id = data.id;
-    const response = await axios.put(`${prefixUrl}/acts/${id}`, data);
+    const response = await axios.put(`${prefixUrl}/acts/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -329,8 +693,21 @@ export const updateAct = async (data) => {
 // ------------------ All Apis for Court ------------------
 export const getCourts = async (userRoleId, districtId) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const response = await axios.get(
-      `${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`
+      `${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -340,23 +717,53 @@ export const getCourts = async (userRoleId, districtId) => {
 
 export const getAllCourts = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/courts`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/courts`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 export const getCourt = async (courtId) => {
-  const response = await axios.get(`${prefixUrl}/courts/${courtId}`);
+  const response = await axios.get(`${prefixUrl}/courts/${courtId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
   return response.data;
 };
 
 export const addCourt = async (RoleId, StateId, DistrictId, data) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     console.log(data);
     const response = await axios.post(
       `${prefixUrl}/courts/${RoleId}/${StateId}/${DistrictId}`,
-      data
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     if (response.status === 200) {
       var courtId = response.data;
@@ -373,7 +780,19 @@ export const addCourt = async (RoleId, StateId, DistrictId, data) => {
 };
 export const updateCourt = async (courtId, data) => {
   try {
-    const response = await axios.put(`${prefixUrl}/courts/${courtId}/`, data);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.put(`${prefixUrl}/courts/${courtId}/`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -383,7 +802,19 @@ export const updateCourt = async (courtId, data) => {
 // ------------------ All Apis for CaseType ------------------
 export const getAllCaseType = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/CaseType`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/CaseType`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -391,7 +822,19 @@ export const getAllCaseType = async () => {
 };
 export const addCaseType = async (data) => {
   try {
-    const response = await axios.post(`${prefixUrl}/CaseType`, data);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.post(`${prefixUrl}/CaseType`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -400,8 +843,20 @@ export const addCaseType = async (data) => {
 export const updateCaseType = async (data) => {
   console.log("Data :", data);
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     let id = data.id;
-    const response = await axios.put(`${prefixUrl}/CaseType/${id}`, data);
+    const response = await axios.put(`${prefixUrl}/CaseType/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -409,7 +864,19 @@ export const updateCaseType = async (data) => {
 };
 export const getCaseType = async (caseTypeId) => {
   try {
-    const response = await axios.get(`${prefixUrl}/CaseType/${caseTypeId}`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/CaseType/${caseTypeId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -417,8 +884,21 @@ export const getCaseType = async (caseTypeId) => {
 };
 export const deleteCaseType = async (deleteCaseTypeId) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const response = await axios.delete(
-      `${prefixUrl}/CaseType/${deleteCaseTypeId}`
+      `${prefixUrl}/CaseType/${deleteCaseTypeId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -544,7 +1024,19 @@ export const getDistrict = async (districtId) => {
 
 export const addDistrict = async (data) => {
   try {
-    const response = await axios.post(`${prefixUrl}/Districts`, data);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.post(`${prefixUrl}/Districts`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -553,8 +1045,20 @@ export const addDistrict = async (data) => {
 
 export const updateDistrict = async (data) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     let id = data.id;
-    const response = await axios.put(`${prefixUrl}/Districts/${id}`, data);
+    const response = await axios.put(`${prefixUrl}/Districts/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -565,8 +1069,20 @@ export const updateDistrict = async (data) => {
 
 export const getAllSections = async () => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const actAllData = await getAllActs();
-    const response = await axios.get(`${prefixUrl}/sections`);
+    const response = await axios.get(`${prefixUrl}/sections`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     const data = [response.data, actAllData];
     return data;
   } catch (error) {
@@ -574,19 +1090,42 @@ export const getAllSections = async () => {
   }
 };
 export const getSection = async (sectionId) => {
-  const response = await axios.get(`${prefixUrl}/sections/${sectionId}`);
+  const response = await axios.get(`${prefixUrl}/sections/${sectionId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
   return response.data;
 };
 export const deleteSection = async (deletesectionId) => {
   console.log("Id:::", deletesectionId);
   const response = await axios.delete(
-    `${prefixUrl}/sections/${deletesectionId}`
+    `${prefixUrl}/sections/${deletesectionId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    }
   );
   return response.data;
 };
 export const addSections = async (actId, data) => {
   try {
-    const response = await axios.post(`${prefixUrl}/sections/${actId}`, data);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.post(`${prefixUrl}/sections/${actId}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -595,8 +1134,20 @@ export const addSections = async (actId, data) => {
 export const updateSection = async (data) => {
   console.log("Update section Data :", data);
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     let id = data.id;
-    const response = await axios.put(`${prefixUrl}/sections/${id}`, data);
+    const response = await axios.put(`${prefixUrl}/sections/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -605,8 +1156,20 @@ export const updateSection = async (data) => {
 // ------------------ All Apis for Hearing ------------------
 export const getHearing = async (caseId) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     console.log(caseId);
-    const response = await axios.get(`${prefixUrl}/HearingAccCase/${caseId}`);
+    const response = await axios.get(`${prefixUrl}/HearingAccCase/${caseId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -615,8 +1178,20 @@ export const getHearing = async (caseId) => {
 
 export const getSingleHearing = async (caseId) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     console.log(caseId);
-    const response = await axios.get(`${prefixUrl}/Hearing/${caseId}`);
+    const response = await axios.get(`${prefixUrl}/Hearing/${caseId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -625,7 +1200,19 @@ export const getSingleHearing = async (caseId) => {
 
 export const getallHearing = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/Hearing`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/Hearing`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -633,7 +1220,19 @@ export const getallHearing = async () => {
 };
 export const deleteHearing = async (Id) => {
   try {
-    const response = await axios.delete(`${prefixUrl}/Hearing/${Id}`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.delete(`${prefixUrl}/Hearing/${Id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -641,8 +1240,20 @@ export const deleteHearing = async (Id) => {
 };
 export const updateHearing = async (data) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const Id = data.id;
-    const response = await axios.put(`${prefixUrl}/hearing/${Id}`, data);
+    const response = await axios.put(`${prefixUrl}/hearing/${Id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -650,8 +1261,20 @@ export const updateHearing = async (data) => {
 };
 export const addHearing = async (data) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const caseId = data.caseId;
-    const response = await axios.post(`${prefixUrl}/Hearing/${caseId}`, data);
+    const response = await axios.post(`${prefixUrl}/Hearing/${caseId}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -661,8 +1284,20 @@ export const addHearing = async (data) => {
 // ------------------ All Apis for Evidences ------------------
 export const getEvidences = async (caseId) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     console.log(caseId);
-    const response = await axios.get(`${prefixUrl}/EvidenceAccCase/${caseId}`);
+    const response = await axios.get(`${prefixUrl}/EvidenceAccCase/${caseId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -671,8 +1306,20 @@ export const getEvidences = async (caseId) => {
 
 export const getSingleEvidence = async (caseId) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     console.log(caseId);
-    const response = await axios.get(`${prefixUrl}/Evidences/${caseId}`);
+    const response = await axios.get(`${prefixUrl}/Evidences/${caseId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -681,7 +1328,19 @@ export const getSingleEvidence = async (caseId) => {
 
 export const getallEvidences = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/Evidences`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/Evidences`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -689,7 +1348,19 @@ export const getallEvidences = async () => {
 };
 export const deleteEvidence = async (Id) => {
   try {
-    const response = await axios.delete(`${prefixUrl}/Evidences/${Id}`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.delete(`${prefixUrl}/Evidences/${Id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -697,8 +1368,20 @@ export const deleteEvidence = async (Id) => {
 };
 export const updateEvidence = async (data) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const Id = data.id;
-    const response = await axios.put(`${prefixUrl}/Evidences/${Id}`, data);
+    const response = await axios.put(`${prefixUrl}/Evidences/${Id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -706,8 +1389,24 @@ export const updateEvidence = async (data) => {
 };
 export const addEvidence = async (formData) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const caseId = data.caseId;
-    const response = await axios.post(`${prefixUrl}/Evidences/${caseId}`, data);
+    const response = await axios.post(
+      `${prefixUrl}/Evidences/${caseId}`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.log(error);
@@ -717,8 +1416,20 @@ export const addEvidence = async (formData) => {
 // ------------------ All Apis for Winesses ------------------
 export const getWitnesses = async (caseId) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     console.log(caseId);
-    const response = await axios.get(`${prefixUrl}/WitnessAccCase/${caseId}`);
+    const response = await axios.get(`${prefixUrl}/WitnessAccCase/${caseId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -727,8 +1438,20 @@ export const getWitnesses = async (caseId) => {
 
 export const getSingleWitness = async (caseId) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     console.log(caseId);
-    const response = await axios.get(`${prefixUrl}/Witness/${caseId}`);
+    const response = await axios.get(`${prefixUrl}/Witness/${caseId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -737,7 +1460,19 @@ export const getSingleWitness = async (caseId) => {
 
 export const getallWitnesses = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/Witness`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/Witness`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -745,7 +1480,19 @@ export const getallWitnesses = async () => {
 };
 export const deleteWitness = async (Id) => {
   try {
-    const response = await axios.delete(`${prefixUrl}/Witness/${Id}`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.delete(`${prefixUrl}/Witness/${Id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -753,8 +1500,20 @@ export const deleteWitness = async (Id) => {
 };
 export const updateWitness = async (data) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const Id = data.id;
-    const response = await axios.put(`${prefixUrl}/Witness/${Id}`, data);
+    const response = await axios.put(`${prefixUrl}/Witness/${Id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -762,11 +1521,24 @@ export const updateWitness = async (data) => {
 };
 export const addWitness = async (formData) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     console.log(formData);
     const caseId = data.caseId;
     const response = await axios.post(
       `${prefixUrl}/Witness/${caseId}`,
-      formData
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     return response.data;
   } catch (error) {
