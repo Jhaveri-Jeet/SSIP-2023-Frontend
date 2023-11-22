@@ -1,21 +1,30 @@
 import axios from "axios";
 import { prefixUrl } from "./Config";
+import Cookies from "js-cookie";
 
 // ------------------ All Apis for Login ------------------
 export const checkUser = async (userId, passwordHash) => {
   try {
-    await axios.get(`${prefixUrl}/CheckUser/${userId}/${passwordHash}`);
-    return true;
+    const response = await axios.get(
+      `${prefixUrl}/CheckUser/${userId}/${passwordHash}`
+    );
+
+    const token = response.data.token;
+    Cookies.set("access_token", token, { httpOnly: true });
+
+    return response;
   } catch (error) {
     return false;
   }
-}
-
+};
 
 // ------------------ All Apis for User ------------------
-export const createUser = async (roleId,districtId,courtId,data) => {
+export const createUser = async (roleId, districtId, courtId, data) => {
   try {
-    const response = await axios.post(`${prefixUrl}/users/${roleId}/${districtId}/${courtId}`,data)
+    const response = await axios.post(
+      `${prefixUrl}/users/${roleId}/${districtId}/${courtId}`,
+      data
+    );
     console.log(response);
     return response;
   } catch (error) {
@@ -24,12 +33,14 @@ export const createUser = async (roleId,districtId,courtId,data) => {
 };
 export const getAllUsers = async (userRoleId, districtId) => {
   try {
-    const response = await axios.get(`${prefixUrl}/FetchUserAccCourtAndDis/${userRoleId}/${districtId}`).then(res => {
-      return res.data;
-    });
+    const response = await axios
+      .get(`${prefixUrl}/FetchUserAccCourtAndDis/${userRoleId}/${districtId}`)
+      .then((res) => {
+        return res.data;
+      });
     return response;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -41,17 +52,19 @@ export const getAllRoles = async () => {
     });
     return response;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 export const getRole = async (userRoleId) => {
   try {
-    const response = await axios.get(`${prefixUrl}/roles/${userRoleId}`).then((res) => {
-      return res.data.name;
-    });
+    const response = await axios
+      .get(`${prefixUrl}/roles/${userRoleId}`)
+      .then((res) => {
+        return res.data.name;
+      });
     return response;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -241,12 +254,14 @@ export const updateAct = async (data) => {
 // ------------------ All Apis for Court ------------------
 export const getCourts = async (userRoleId, districtId) => {
   try {
-    const response = await axios.get(`${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`);
+    const response = await axios.get(
+      `${prefixUrl}/FetchCourtAccRoleAndDis/${userRoleId}/${districtId}`
+    );
     return response.data;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getAllCourts = async () => {
   try {
@@ -261,24 +276,27 @@ export const getCourt = async (courtId) => {
   return response.data;
 };
 
-export const addCourt = async (RoleId,StateId,DistrictId,data) => {
+export const addCourt = async (RoleId, StateId, DistrictId, data) => {
   try {
     console.log(data);
-    const response = await axios.post(`${prefixUrl}/courts/${RoleId}/${StateId}/${DistrictId}`, data);
-    if(response.status === 200) {
+    const response = await axios.post(
+      `${prefixUrl}/courts/${RoleId}/${StateId}/${DistrictId}`,
+      data
+    );
+    if (response.status === 200) {
       var courtId = response.data;
       var courtData = {
-        "UserName" : data.name,
-        "PasswordHash" : "123"
+        UserName: data.name,
+        PasswordHash: "123",
       };
-      await createUser(RoleId,DistrictId,courtId,courtData);
+      await createUser(RoleId, DistrictId, courtId, courtData);
     }
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
-export const updateCourt = async (courtId,data) => {
+export const updateCourt = async (courtId, data) => {
   try {
     const response = await axios.put(`${prefixUrl}/courts/${courtId}/`, data);
     return response.data;
@@ -337,7 +355,20 @@ export const deleteCaseType = async (deleteCaseTypeId) => {
 
 export const getAllStates = async () => {
   try {
-    const response = await axios.get(`${prefixUrl}/states`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/states`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.log(error);
@@ -346,17 +377,43 @@ export const getAllStates = async () => {
 
 export const getState = async (stateId) => {
   try {
-    const response = await axios.get(`${prefixUrl}/states/${stateId}`);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/states/${stateId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-
 export const addState = async (data) => {
   try {
-    const response = await axios.post(`${prefixUrl}/States`, data);
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+    const response = await axios.post(
+      `${prefixUrl}/States`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      },
+      data
+    );
     return response.data;
   } catch (error) {
     console.log(error);
@@ -365,9 +422,25 @@ export const addState = async (data) => {
 
 export const updateState = async (data) => {
   try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     let id = data.id;
     console.log(data);
-    const response = await axios.put(`${prefixUrl}/states/${id}`, data);
+    const response = await axios.put(
+      `${prefixUrl}/states/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      },
+      data
+    );
     return response.data;
   } catch (error) {
     console.log(error);
@@ -614,9 +687,12 @@ export const updateWitness = async (data) => {
 };
 export const addWitness = async (formData) => {
   try {
-    console.log(formData)
+    console.log(formData);
     const caseId = data.caseId;
-    const response = await axios.post(`${prefixUrl}/Witness/${caseId}`, formData);
+    const response = await axios.post(
+      `${prefixUrl}/Witness/${caseId}`,
+      formData
+    );
     return response.data;
   } catch (error) {
     console.log(error);
