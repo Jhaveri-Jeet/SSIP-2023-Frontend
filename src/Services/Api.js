@@ -10,7 +10,7 @@ export const checkUser = async (userId, passwordHash) => {
     );
 
     const token = response.data.token;
-    Cookies.set("access_token", token, { httpOnly: true });
+    Cookies.set("access_token", token, { httpOnly: false });
 
     return response;
   } catch (error) {
@@ -70,87 +70,162 @@ export const getRole = async (userRoleId) => {
 
 // ------------------ All Apis for Case ------------------
 export const getCaseDetails = async (id) => {
-  const response = await axios.get(`${prefixUrl}/cases/${id}`);
-  return response.data;
+  try {
+    const response = await axios.get(`${prefixUrl}/cases/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllDistrictPendingCasesCount = async () => {
-  const response = await axios.get(`${prefixUrl}/TotalPendingCases/1`);
-  return response.data;
+  try {
+    const response = await axios.get(`${prefixUrl}/TotalPendingCases/1`);
+    return response.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllDistrictRunningCasesCount = async () => {
-  const response = await axios.get(`${prefixUrl}/TotalRunningCases/1`);
-  return response.data;
+  try {
+    const response = await axios.get(`${prefixUrl}/TotalRunningCases/1`);
+    return response.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllDistrictCompletedCasesCount = async () => {
-  const response = await axios.get(`${prefixUrl}/TotalCompletedCases/1`);
-  return response.data;
+  try {
+    const response = await axios.get(`${prefixUrl}/TotalCompletedCases/1`);
+    return response.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllDistrictCasesCount = async () => {
-  const data = await axios.get(`${prefixUrl}/TotalCasesCount/1`);
-  return data.data;
+  try {
+    const data = await axios.get(`${prefixUrl}/TotalCasesCount/1`);
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllHighCasesCount = async () => {
-  const data = await axios.get(`${prefixUrl}/TotalCasesCount/3`);
-  return data.data;
+  try {
+    const data = await axios.get(`${prefixUrl}/TotalCasesCount/3`);
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllPendingHighCasesCount = async () => {
-  const data = await axios.get(`${prefixUrl}/TotalPendingCases/3`);
-  console.log("pending", data.data);
-  return data.data;
+  try {
+    const data = await axios.get(`${prefixUrl}/TotalPendingCases/3`);
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllRunningHighCasesCount = async () => {
-  const data = await axios.get(`${prefixUrl}/TotalRunningCases/3`);
-  console.log(data.data);
-  return data.data;
+  try {
+    const data = await axios.get(`${prefixUrl}/TotalRunningCases/3`);
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllCompletedHighCasesCount = async () => {
-  const data = await axios.get(`${prefixUrl}/TotalCompletedCases/3`);
-  console.log(data.data);
-  return data.data;
+  try {
+    const data = await axios.get(`${prefixUrl}/TotalCompletedCases/3`);
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllSupremeCasesCount = async () => {
-  const data = await axios.get(`${prefixUrl}/TotalCasesCount/4`);
-  return data.data;
+  try {
+    const data = await axios.get(`${prefixUrl}/TotalCasesCount/4`);
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllPendingSupremeCasesCount = async () => {
-  const data = await axios.get(`${prefixUrl}/TotalPendingCases/4`);
-  console.log("pending", data.data);
-  return data.data;
+  try {
+    const data = await axios.get(`${prefixUrl}/TotalPendingCases/4`);
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllRunningSupremeCasesCount = async () => {
-  const data = await axios.get(`${prefixUrl}/TotalRunningCases/4`);
-  console.log(data.data);
-  return data.data;
+  try {
+    const data = await axios.get(`${prefixUrl}/TotalRunningCases/4`);
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllCompletedSupremeCasesCount = async () => {
-  const data = await axios.get(`${prefixUrl}/TotalCompletedCases/4`);
-  console.log(data.data);
-  return data.data;
+  try {
+    const data = await axios.get(`${prefixUrl}/TotalCompletedCases/4`);
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllCases = async () => {
-  const data = await axios.get(`${prefixUrl}/cases`);
-  return data;
+  try {
+    const data = await axios.get(`${prefixUrl}/cases`);
+    return data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllDistrictCourtCases = async () => {
-  const data = await axios.get(`${prefixUrl}/FetchCasesIncludingTransfered/1`);
-  return data.data;
+  try {
+    const data = await axios.get(
+      `${prefixUrl}/FetchCasesIncludingTransfered/1`
+    );
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllSupremeCourtCases = async () => {
-  const data = await axios.get(`${prefixUrl}/FetchCasesIncludingTransfered/4`);
-  return data.data;
+  try {
+    const data = await axios.get(
+      `${prefixUrl}/FetchCasesIncludingTransfered/4`
+    );
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getAllHighCourtCases = async () => {
-  const data = await axios.get(`${prefixUrl}/FetchCasesIncludingTransfered/3`);
-  return data.data;
+  try {
+    const data = await axios.get(
+      `${prefixUrl}/FetchCasesIncludingTransfered/3`
+    );
+    return data.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const getCase = async (caseId) => {
-  const res = await axios.get(`${prefixUrl}/cases/${caseId}`);
-  // console.log("res ,",res);
-  return res.data;
+  try {
+    const res = await axios.get(`${prefixUrl}/cases/${caseId}`);
+    return res.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const deleteCase = async (deleteCaseId) => {
-  const data = await axios.delete(`${prefixUrl}/cases/${deleteCaseId}`);
-  return data;
+  try {
+    const data = await axios.delete(`${prefixUrl}/cases/${deleteCaseId}`);
+    return data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
 };
 export const updateCase = async (data) => {
   console.log("Data :", data);
