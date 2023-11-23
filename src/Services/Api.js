@@ -1111,16 +1111,15 @@ export const deleteSection = async (deletesectionId) => {
   );
   return response.data;
 };
-export const addSections = async (actId, data) => {
+export const addSections = async (data) => {
   try {
     const accessToken = Cookies.get("access_token");
-
+    console.log("session data :",data);
     if (!accessToken) {
       console.error("Token not found.");
       return null;
     }
-
-    const response = await axios.post(`${prefixUrl}/sections/${actId}`, data, {
+    const response = await axios.post(`${prefixUrl}/sections`, data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",

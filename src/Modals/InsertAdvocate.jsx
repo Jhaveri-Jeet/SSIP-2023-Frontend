@@ -62,9 +62,9 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
       [name]: value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target.textContent);
     if (e.target.textContent == "Add") {
       const res = await addAdvocate(form);
       console.log("Add response: " + res);
@@ -77,16 +77,34 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
       console.log(updateform);
       const res = await editAdvocateAPI(updateform);
       console.log("update response: " + res);
+      setForm({
+        id: "",
+        name: "",
+        Enrollmentnumber: "",
+      });
     }
     onClose();
+    setForm({
+      id: "",
+      name: "",
+      Enrollmentnumber: "",
+    });
   };
+  
+  const modelClose = async () => {
+    setForm({
+      name: "",
+      Enrollmentnumber: "",
+    });
+    console.log('form');
+    onClose();
+  }
   if (editAdvocateData) {
     return (
       <>
         <div
-          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
-            isOpen ? "block" : "hidden"
-          }`}
+          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
+            }`}
         >
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
             <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
@@ -128,7 +146,7 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
                     Update
                   </button>
                   <button
-                    onClick={onClose}
+                    onClick={modelClose}
                     className="bg-white text-[#10375e] font-bold  py-2 px-5 border hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
                   >
                     Cancel
@@ -145,9 +163,8 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
   return (
     <>
       <div
-        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
-          isOpen ? "block" : "hidden"
-        }`}
+        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
+          }`}
       >
         <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
           <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
@@ -186,7 +203,7 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
                   Add
                 </button>
                 <button
-                  onClick={onClose}
+               onClick={modelClose}
                   className="bg-white text-[#10375e] font-bold  py-2 px-5 border hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
                 >
                   Cancel
