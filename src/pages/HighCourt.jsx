@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import DashboardCard07 from "../partials/dashboard/DashboardCard07";
 import FilterButton from "../components/DropdownFilter";
 import Datepicker from "../components/Datepicker";
-import Banner from "../partials/Banner";
 import CasesCard from "../common/CasesCard";
 import CasesTable from "../common/CasesTable";
-import { cases } from "../constant";
 import Addcase from "../Modals/Addcase";
 
 import {
@@ -17,6 +14,7 @@ import {
   getAllRunningHighCasesCount,
   getAllPendingHighCasesCount,
 } from "../Services/Api";
+import { tokenData } from "../Services/Config";
 
 const HighCourt = ({ currentScreen, setCurrentScreen }) => {
 
@@ -62,17 +60,13 @@ const HighCourt = ({ currentScreen, setCurrentScreen }) => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         currentScreen={currentScreen}
         setCurrentScreen={setCurrentScreen}
       />
-
-      {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        {/*  Site header */}
         <Header
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
@@ -82,22 +76,11 @@ const HighCourt = ({ currentScreen, setCurrentScreen }) => {
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            {/* Welcome banner */}
-            {/* <WelcomeBanner /> */}
-
-            {/* Dashboard actions */}
             <div className="sm:flex sm:justify-end sm:items-center mb-8">
-              {/* Left: Avatars */}
-              {/* <DashboardAvatars /> */}
-
-              {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                {/* Filter button */}
                 <FilterButton />
-                {/* Datepicker built with flatpickr */}
                 <Datepicker />
-                {/* Add view button */}
-                {localStorage.getItem("userRoleId") == 3 && (
+                {tokenData.role == 3 && (
                   <button
                     className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
                     onClick={openForm}
@@ -141,8 +124,6 @@ const HighCourt = ({ currentScreen, setCurrentScreen }) => {
           </div>
         </main>
         <Addcase isOpen={isFormOpen} onClose={closeForm} />
-
-        {/* <Banner /> */}
       </div>
     </div>
   );
