@@ -109,6 +109,23 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
       });
     }
     else {
+      setForm({
+        DateFiled: "",
+        CnrNumber: "",
+        Petitioner: "",
+        Defendant: "",
+        JudgeName: "",
+        Description: "",
+        CaseStatus: "",
+        Judgment: "",
+        Comments: "",
+        AttorneyId: "",
+        AdvocateId: "",
+        ActId: "",
+        CourtId: parseInt(tokenData.courtId),
+        CaseTypeId: "",
+        RoleId: parseInt(tokenData.role),
+      })
       // Clear the updateform when there's no editCaseTypeData
       setUpdateForm({
         id: "",
@@ -153,6 +170,23 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await addCase(form);
+    setForm({
+      DateFiled: "",
+      CnrNumber: "",
+      Petitioner: "",
+      Defendant: "",
+      JudgeName: "",
+      Description: "",
+      CaseStatus: "",
+      Judgment: "",
+      Comments: "",
+      AttorneyId: "",
+      AdvocateId: "",
+      ActId: "",
+      CourtId: parseInt(tokenData.courtId),
+      CaseTypeId: "",
+      RoleId: parseInt(tokenData.role),
+    })
     onClose();
   };
 
@@ -275,7 +309,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <div>
                   <label>Judgment</label>
                   <input
-                    defaultValue={updateform.judgment || editCaseData.judgment}
+                    value={updateform.judgment || editCaseData.judgment}
                     onChange={(e) =>
                       updatehandleInputChange("judgment", e.target.value)}
                     type="text"
@@ -420,7 +454,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
               <div>
                 <label>DateFiled</label>
                 <input
-                  defaultValue={form.DateFiled}
+                  value={form.DateFiled}
                   onChange={(e) =>
                     handleInputChange("DateFiled", e.target.value)}
                   type="date"
@@ -431,7 +465,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
               <div>
                 <label>CnrNumber</label>
                 <input
-                  defaultValue={form.CnrNumber}
+                  value={form.CnrNumber}
                   onChange={(e) =>
                     handleInputChange("CnrNumber", e.target.value)}
                   type="text"
@@ -444,7 +478,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <select
                   id="caseType"
                   name="CaseTypeId"
-                  defaultValue={form.CaseTypeId}
+                  value={form.CaseTypeId}
                   onChange={(e) =>
                     handleInputChange("CaseTypeId", parseInt(e.target.value))
                   }
@@ -461,7 +495,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
               <div>
                 <label>Petitioner</label>
                 <input
-                  defaultValue={form.Petitioner}
+                  value={form.Petitioner}
                   onChange={(e) =>
                     handleInputChange("Petitioner", e.target.value)}
                   type="text"
@@ -472,7 +506,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
               <div>
                 <label>Defendant</label>
                 <input
-                  defaultValue={form.Defendant}
+                  value={form.Defendant}
                   onChange={(e) =>
                     handleInputChange("Defendant", e.target.value)}
                   type="text"
@@ -483,7 +517,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
               <div>
                 <label>JudgeName</label>
                 <input
-                  defaultValue={form.JudgeName}
+                  value={form.JudgeName}
                   onChange={(e) =>
                     handleInputChange("JudgeName", e.target.value)}
                   type="text"
@@ -494,7 +528,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
               <div>
                 <label>Description</label>
                 <input
-                  defaultValue={form.Description}
+                  value={form.Description}
                   onChange={(e) =>
                     handleInputChange("Description", e.target.value)}
                   type="text"
@@ -503,23 +537,23 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 />
               </div>
               <div>
-                  <label>Comments</label>
-                  <input
-                    defaultValue={form.Comments}
-                    onChange={(e) =>
-                      handleInputChange("Comments", e.target.value)}
-                    type="text"
-                    name="Comments"
-                    className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
-                  />
-                </div>
+                <label>Comments</label>
+                <input
+                  value={form.Comments}
+                  onChange={(e) =>
+                    handleInputChange("Comments", e.target.value)}
+                  type="text"
+                  name="Comments"
+                  className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
+                />
+              </div>
 
               <div>
                 <label>Act Name</label>
                 <select
                   id="act"
                   name="ActId"
-                  defaultValue={form.ActId}
+                  value={form.ActId}
                   onChange={(e) =>
                     handleInputChange("ActId", parseInt(e.target.value))
                   }
@@ -538,7 +572,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <select
                   id="advocate"
                   name="AdvocateId"
-                  defaultValue={form.AdvocateId}
+                  value={form.AdvocateId}
                   onChange={(e) =>
                     handleInputChange("AdvocateId", parseInt(e.target.value))
                   }
@@ -557,7 +591,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <select
                   id="attorney"
                   name="AttorneyId"
-                  defaultValue={form.AttorneyId}
+                  value={form.AttorneyId}
                   onChange={(e) =>
                     handleInputChange("AttorneyId", parseInt(e.target.value))
                   }
@@ -591,6 +625,6 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
       </div>
     </>
   );
-  
+
 };
 export default Addcase;
