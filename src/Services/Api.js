@@ -19,7 +19,8 @@ export const checkUser = async (userId, passwordHash) => {
 };
 
 // ------------------ All Apis for User ------------------
-export const createUser = async (roleId, districtId, courtId, data) => {
+export const createUser = async (data) => {
+  
   try {
     const accessToken = Cookies.get("access_token");
 
@@ -29,7 +30,7 @@ export const createUser = async (roleId, districtId, courtId, data) => {
     }
 
     const response = await axios.post(
-      `${prefixUrl}/users/${roleId}/${districtId}/${courtId}`,
+      `${prefixUrl}/users/`,
       data,
       {
         headers: {
@@ -690,6 +691,7 @@ export const updateAct = async (data) => {
     console.log(error);
   }
 };
+
 // ------------------ All Apis for Court ------------------
 export const getCourts = async (userRoleId, districtId) => {
   try {
@@ -736,16 +738,6 @@ export const getAllCourts = async () => {
   }
 };
 export const getCourt = async (courtId) => {
-  const response = await axios.get(`${prefixUrl}/courts/${courtId}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-  });
-  return response.data;
-};
-
-export const addCourt = async (RoleId, StateId, DistrictId, data) => {
   try {
     const accessToken = Cookies.get("access_token");
 
@@ -754,9 +746,29 @@ export const addCourt = async (RoleId, StateId, DistrictId, data) => {
       return null;
     }
 
-    console.log(data);
+    const response = await axios.get(`${prefixUrl}/courts/${courtId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addCourt = async (data) => {
+  try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
     const response = await axios.post(
-      `${prefixUrl}/courts/${RoleId}/${StateId}/${DistrictId}`,
+      `${prefixUrl}/courts/`,
       data,
       {
         headers: {
@@ -770,8 +782,11 @@ export const addCourt = async (RoleId, StateId, DistrictId, data) => {
       var courtData = {
         UserName: data.name,
         PasswordHash: "123",
+        roleId: data.RoleId,
+        districtId: data.DistrictId,
+        courtId: courtId,
       };
-      await createUser(RoleId, DistrictId, courtId, courtData);
+      await createUser(courtData);
     }
     return response.data;
   } catch (error) {
@@ -959,15 +974,17 @@ export const addState = async (data) => {
       console.error("Token not found.");
       return null;
     }
+
+    console.log(data);
     const response = await axios.post(
-      `${prefixUrl}/States`,
+      `${prefixUrl}/states/`,
+      data,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
-      },
-      data
+      }
     );
     return response.data;
   } catch (error) {
@@ -987,14 +1004,13 @@ export const updateState = async (data) => {
     let id = data.id;
     console.log(data);
     const response = await axios.put(
-      `${prefixUrl}/states/${id}`,
+      `${prefixUrl}/states/${id}`,data,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
-      },
-      data
+      }
     );
     return response.data;
   } catch (error) {
