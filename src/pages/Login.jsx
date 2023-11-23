@@ -58,12 +58,18 @@ const Login = () => {
       {/* component */}
       <div className="h-screen">
         <div className="flex w-full h-screen justify-center py-10 items-center bg-white">
-          <div className="bg-white">
-            <h1 className="text-gray-800 font-bold text-2xl mb-1">
-              Hello Again!
+          <div className="bg-white border bottom-3 py-5 px-8 w-80">
+          {/* <img
+              src="\src\images\logo.png"
+              style={{ marginTop: "-40px", marginBottom: "-50px" }}
+              alt="websitelogo"
+              className="h-60 w-full"
+            /> */}
+            <h1 className="text-gray-800 font-bold text-2xl mb-1 text-center">
+             Wellcome to 
             </h1>
-            <p className="text-sm font-normal text-gray-600 mb-7">
-              Welcome Back
+            <p className="text-sm font-normal text-gray-600 mb-7 text-center">
+              Indian Judicial System
             </p>
 
             <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
@@ -88,7 +94,7 @@ const Login = () => {
                   getDistricts();
                 }}
                 id="courts-select"
-                className="pl-2 outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                className="pl-2 outline-none border-none text-gray-900 text-sm rounded-lg block w-full"
               >
                 <option selected>Choose an Role</option>
                 {userRoles.map((item, index) => (

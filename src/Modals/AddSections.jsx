@@ -1,6 +1,10 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import { addSections, updateSection } from "../Services/Api";
 function AddSections({ isOpen, onClose, editAddSection, acts }) {
+  const actId = useRef(null);
+  const sectionName = useRef(null);
+  const sectionDescription = useRef(null);
+
   const [form, setForm] = useState({
     ActId: "",
     name: "",
@@ -65,16 +69,24 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
     e.preventDefault();
     if (e.target.textContent === "Add") {
       const dataToAdd = { ...form, ...selectedValues };
-      console.log("dataToAdd",dataToAdd);
       const res = await addSections(dataToAdd);
+      actId.current.value = "";
+      sectionName.current.value = "";
+      sectionDescription.current.value = "";
     } else if (e.target.textContent === "Update") {
-      console.log("update:", updateform);
       // const res = await updateSection(updateform);
     }
     onClose();
   };
+  const modelClose = async () => {
+    if (!editAddSection) {
+      actId.current.value = "";
+      sectionName.current.value = "";
+      sectionDescription.current.value = "";
+    }
+    onClose();
+  }
   if (editAddSection) {
-
     return (
       <>
         <div
@@ -82,7 +94,7 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
             }`}
         >
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
-            <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+            <div className="h-full relative rounded-xl bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 bg-clip-border shadow-lg">
               <div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                   <label htmlFor="state" className="block font-semibold mb-2">
@@ -94,7 +106,7 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
                     type="text"
                     name="name"
                     placeholder="Sections Name"
-                    className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                    className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
@@ -107,7 +119,7 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
                     type="text"
                     name="Description"
                     placeholder="Act description"
-                    className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                    className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
@@ -129,13 +141,13 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
                 <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
                   <button
                     onClick={handleSubmit}
-                    className="bg-[#10375e] hover:bg-[#185490] text-white font-semibold hover:text-white py-2 px-4 border  rounded focus:outline-none focus:ring-0"
+                    className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-0"
                   >
                     Update
                   </button>
                   <button
-                    onClick={onClose}
-                    className="bg-white text-[#10375e] font-bold  py-2 px-5 border hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
+                    onClick={modelClose}
+                    className="bg-white text-[#10375e] font-bold  py-2 px-5 border border-gray-300 rounded focus:outline-none focus:ring-0"
                   >
                     Cancel
                   </button>
@@ -153,19 +165,20 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
         className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
           }`}
       >
-        <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
-          <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+        <div className="relative transform overflow-hidden rounded-lg dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
+          <div className="h-full relative rounded-xl bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 bg-clip-border shadow-lg">
             <div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                 <label htmlFor="state" className="block font-semibold mb-2">
                   Sections Name:
                 </label>
                 <input
+                  ref={sectionName}
                   onChange={handleInputChange}
                   type="text"
                   name="name"
                   placeholder="Sections Name"
-                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
@@ -173,20 +186,22 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
                   Sections description:
                 </label>
                 <input
+                  ref={sectionDescription}
                   onChange={handleInputChange}
                   type="text"
                   name="Description"
                   placeholder="Sections description"
-                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                 <label>ActType</label>
                 <select
+                  ref={actId}
                   id="actid"
                   name="ActId"
                   onChange={(e) => handleSelectChange("ActId", e.target.value)}
-                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
                   <option value="">Select a Act Type</option>
                   {acts.map((item, index) => (
@@ -199,13 +214,13 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
               <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
                 <button
                   onClick={handleSubmit}
-                  className="bg-[#10375e] hover:bg-[#185490] text-white font-semibold hover:text-white py-2 px-4 border  rounded focus:outline-none focus:ring-0"
+                  className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-0"
                 >
                   Add
                 </button>
                 <button
-                  onClick={onClose}
-                  className="bg-white text-[#10375e] font-bold  py-2 px-5 border hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
+                  onClick={modelClose}
+                  className="bg-white text-[#10375e] font-bold  py-2 px-5 border border-gray-300 rounded focus:outline-none focus:ring-0"
                 >
                   Cancel
                 </button>

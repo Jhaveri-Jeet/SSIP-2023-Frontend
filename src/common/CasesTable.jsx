@@ -228,8 +228,8 @@ function CasesTable({
   };
   const editSingleAct = async (e) => {
     const res = await getAct(e);
-
-    setAllActs(acts);
+    console.log(res);
+    setEditSingleActData(res);
     setIsOpen(true);
   };
   
@@ -756,7 +756,6 @@ function CasesTable({
       </>
     );
   }
-
   if (Advocates) {
     return (
       <>
@@ -847,7 +846,6 @@ function CasesTable({
       </>
     );
   }
-
   if (Acts) {
     return (
       <>
@@ -1016,7 +1014,6 @@ function CasesTable({
       </>
     );
   }
-
   if (States) {
     return (
       <>
@@ -1094,7 +1091,6 @@ function CasesTable({
       </>
     );
   }
-
   if (Districts) {
     return (
       <>

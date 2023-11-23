@@ -56,8 +56,8 @@ function InsertDistrict({ isOpen, onClose, editSingleDistrict , getAllDistrictsD
         return(
         <>
             <div className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? 'block' : 'hidden'}`}>
-                <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
-                    <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+                <div className="relative transform overflow-hidden rounded-lg bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
+                    <div className="h-full relative rounded-xl bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 bg-clip-border shadow-lg">
                         <div>
                             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                                 <label htmlFor="district" className="block font-semibold mb-2">District Name:</label>
@@ -67,19 +67,19 @@ function InsertDistrict({ isOpen, onClose, editSingleDistrict , getAllDistrictsD
                                     type="text"
                                     name='name'
                                     placeholder="District Name"
-                                    className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                                    className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                                 />
                             </div>
                             <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
                                 <button
                                     onClick={handleSubmit}
-                                    className="bg-[#10375e] hover:bg-[#185490] text-white font-semibold hover:text-white py-2 px-4 border  rounded focus:outline-none focus:ring-0"
+                                    className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-0"
                                 >
                                     Edit
                                 </button>
                                 <button
                                     onClick={onClose}
-                                    className="bg-white text-[#10375e] font-bold  py-2 px-5 border hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
+                                    className="bg-white text-[#10375e] font-bold  py-2 px-5 border border-gray-300 rounded focus:outline-none focus:ring-0"
                                 >
                                     Cancel
                                 </button>
@@ -94,8 +94,8 @@ function InsertDistrict({ isOpen, onClose, editSingleDistrict , getAllDistrictsD
     return (
         <>
             <div className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? 'block' : 'hidden'}`}>
-                <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
-                    <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+                <div className="relative transform overflow-hidden rounded-lg bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
+                    <div className="h-full relative rounded-xl bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 bg-clip-border shadow-lg">
                         <div>
                             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                                 <label htmlFor="district" className="block font-semibold mb-2">District Name:</label>
@@ -105,19 +105,19 @@ function InsertDistrict({ isOpen, onClose, editSingleDistrict , getAllDistrictsD
                                     type="text"
                                     name='name'
                                     placeholder="District Name"
-                                    className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                                    className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                                 />
                             </div>
                             <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
                                 <button
                                     onClick={handleSubmit}
-                                    className="bg-[#10375e] hover:bg-[#185490] text-white font-semibold hover:text-white py-2 px-4 border  rounded focus:outline-none focus:ring-0"
+                                    className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-0"
                                 >
                                     Add
                                 </button>
                                 <button
                                     onClick={onClose}
-                                    className="bg-white text-[#10375e] font-bold  py-2 px-5 border hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
+                                    className="bg-white text-[#10375e] font-bold  py-2 px-5 border border-gray-300 rounded focus:outline-none focus:ring-0"
                                 >
                                     Cancel
                                 </button>

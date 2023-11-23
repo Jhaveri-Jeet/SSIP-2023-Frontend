@@ -548,13 +548,18 @@ export const getAllAdvocates = async () => {
   }
 };
 export const getAdvocate = async (advocateId) => {
-  const data = await axios.get(`${prefixUrl}/advocates/${advocateId}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-  });
-  return data;
+  try {
+    const accessToken = Cookies.get("access_token");
+    const data = await axios.get(`${prefixUrl}/advocates/${advocateId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const deleteAdvocate = async (deleteAdvocateId) => {
   const data = await axios.delete(
@@ -631,13 +636,19 @@ export const getAllActs = async () => {
   }
 };
 export const getAct = async (actId) => {
-  const response = await axios.get(`${prefixUrl}/acts/${actId}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-  });
-  return response.data;
+  const accessToken = Cookies.get("access_token");
+  try {
+    const response = await axios.get(`${prefixUrl}/acts/${actId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+    
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const deleteAct = async (deleteActId) => {
   const response = await axios.delete(`${prefixUrl}/acts/${deleteActId}`, {

@@ -1,7 +1,11 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import { addAdvocate, editAdvocateAPI } from "../Services/Api";
 
 function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
+
+  const advocateName = useRef(null);
+  const enrollmentNumber = useRef(null);
+
   const [form, setForm] = useState({
     name: "",
     Enrollmentnumber: "",
@@ -27,7 +31,6 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
 
   useEffect(() => {
     if (editAdvocateData) {
-      console.log("editAdvocateData", editAdvocateData);
       setUpdateForm({
         id: editAdvocateData.id || "",
         name: editAdvocateData.name || "",
@@ -67,12 +70,14 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
     e.preventDefault();
     if (e.target.textContent == "Add") {
       const res = await addAdvocate(form);
-      console.log("Add response: " + res);
-      setForm({
-        id: "",
-        name: "",
-        Enrollmentnumber: "",
-      });
+      if (res.status === 200) {
+        advocateName.current.value = "";
+        enrollmentNumber.current.value = "";
+        setForm({
+          name: "",
+          Enrollmentnumber: "",
+        });
+      }
     } else if (e.target.textContent == "Update") {
       console.log(updateform);
       const res = await editAdvocateAPI(updateform);
@@ -90,13 +95,12 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
       Enrollmentnumber: "",
     });
   };
-  
+
   const modelClose = async () => {
-    setForm({
-      name: "",
-      Enrollmentnumber: "",
-    });
-    console.log('form');
+    if (!editAdvocateData) {
+      advocateName.current.value = "";
+      enrollmentNumber.current.value = "";
+    }
     onClose();
   }
   if (editAdvocateData) {
@@ -106,8 +110,8 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
           className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
             }`}
         >
-          <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
-            <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+          <div className="relative transform overflow-hidden rounded-lg bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
+            <div className="h-full relative rounded-xl bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 bg-clip-border shadow-lg">
               <div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                   <label htmlFor="state" className="block font-semibold mb-2">
@@ -119,7 +123,7 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
                     name="name"
                     type="text"
                     placeholder="Advocate name"
-                    className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                    className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
@@ -135,19 +139,19 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
                     type="number"
                     name="Enrollmentnumber"
                     placeholder="Enrollment number"
-                    className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                    className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                   />
                 </div>
                 <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
                   <button
                     onClick={handleSubmit}
-                    className="bg-[#10375e] hover:bg-[#185490] text-white font-semibold hover:text-white py-2 px-4 border  rounded focus:outline-none focus:ring-0"
+                    className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-0"
                   >
                     Update
                   </button>
                   <button
                     onClick={modelClose}
-                    className="bg-white text-[#10375e] font-bold  py-2 px-5 border hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
+                    className="bg-white text-[#10375e] font-bold  py-2 px-5 border border-gray-300 rounded focus:outline-none focus:ring-0"
                   >
                     Cancel
                   </button>
@@ -166,20 +170,20 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
         className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
           }`}
       >
-        <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
-          <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+        <div className="relative transform overflow-hidden rounded-lg bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
+          <div className="h-full relative rounded-xl bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 bg-clip-border shadow-lg">
             <div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                 <label htmlFor="state" className="block font-semibold mb-2">
                   Advocate Name:
                 </label>
                 <input
-                  defaultValue={form.Advocatename}
+                  ref={advocateName}
                   onChange={handleInputChange}
                   name="name"
                   type="text"
                   placeholder="Advocate name"
-                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
@@ -187,24 +191,24 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
                   Enrollment Number:
                 </label>
                 <input
-                  defaultValue={form.Enrollmentnumber}
+                  ref={enrollmentNumber}
                   onChange={handleInputChange}
                   type="number"
                   name="Enrollmentnumber"
                   placeholder="Enrollment number"
-                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
                 <button
                   onClick={handleSubmit}
-                  className="bg-[#10375e] hover:bg-[#185490] text-white font-semibold hover:text-white py-2 px-4 border  rounded focus:outline-none focus:ring-0"
+                  className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-0"
                 >
                   Add
                 </button>
                 <button
-               onClick={modelClose}
-                  className="bg-white text-[#10375e] font-bold  py-2 px-5 border hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
+                  onClick={modelClose}
+                  className="bg-white text-[#10375e] font-bold  py-2 px-5 border border-gray-300 rounded focus:outline-none focus:ring-0"
                 >
                   Cancel
                 </button>
