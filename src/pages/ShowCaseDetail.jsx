@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import InsertHearing from "../Modals/InsertHearing";
 import InsertEvidence from "../Modals/InsertEvidence";
 import InsertWitness from "../Modals/InsertWitness";
-
+import { tokenData } from "../Services/Config";
 import {
   getHearing,
   getEvidences,
@@ -131,14 +131,13 @@ const ShowCaseDetail = () => {
               {caseData ? caseData.caseStatus : null}
             </div>
 
-            {(localStorage.getItem("userRoleId") === caseData.roleId ||
-              localStorage.getItem("userRoleId") == caseData.transferToId) && (
+            {(tokenData.role === caseData.roleId ||
+              tokenData.role == caseData.transferToId) && (
               <div className="options-menu">
                 <button
                   type="button"
                   onClick={handleButtonClick}
                   className="flex items-center justify-center p-2 border border-gray-400 rounded"
-                  // className="bg-[#10375e] text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-0"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -201,45 +200,6 @@ const ShowCaseDetail = () => {
               </div>
             </div> */}
             <div className="w-full md:w-full text-slate-800 dark:text-slate-100 dark:bg-slate-800 flex flex-col lg:space-y-2 p-2">
-              {/* case header section */}
-              {/* <div className="md:flex justify-between item-center">
-                <div className="flex items-center mb-1 ">
-                  <p className="text-md font-bold lg:text-xl capitalize">
-                    Case number:-&nbsp;
-                    <span className="text-md font-semibold lg:text-xl">
-                      {caseData ? caseData.cnrNumber : null}
-                    </span>
-                  </p>
-                  <div className="md:hidden ml-auto bg-green-200 w-fit px-3 py-1 rounded-full text-normal font-medium text-black flex items-center">
-                    {caseData ? caseData.caseStatus : null}
-                  </div>
-                </div>
-                <div className="flex items-center mb-1 lg:mx-4">
-                  <p className="text-md font-bold lg:text-xl capitalize">
-                    Date file:-&nbsp;
-                    <span className="text-md font-semibold lg:text-xl">
-                      {caseData ? caseData.dateFiled : null}
-                    </span>
-                  </p>
-                </div>
-                <div className="flex items-center mb-1 ">
-                  <p className="text-md font-bold lg:text-xl capitalize">
-                    Case type:-&nbsp;
-                    <span className="text-md font-semibold lg:text-xl capitalize">
-                      {caseData
-                        ? caseData.caseType
-                          ? caseData.caseType.name
-                          : null
-                        : null}
-                    </span>
-                  </p>
-                </div>
-                <div className="hidden md:block bg-green-200 w-fit px-3 py-1 rounded-full text-normal font-medium text-black flex items-center">
-                  {caseData ? caseData.caseStatus : null}
-                </div>
-              </div> */}
-
-              {/* Candidate details section */}
               <div className="pt-5">
                 <div className="md:flex">
                   <div className="w-full">

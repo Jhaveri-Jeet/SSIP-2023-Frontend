@@ -493,15 +493,7 @@ export const updateCase = async (data) => {
     console.log(error);
   }
 };
-export const addCase = async (
-  caseTypeId,
-  courtId,
-  actId,
-  advocateId,
-  attorneyId,
-  roleId,
-  data
-) => {
+export const addCase = async (data) => {
   try {
     const accessToken = Cookies.get("access_token");
 
@@ -511,15 +503,12 @@ export const addCase = async (
     }
 
     const response = await axios.post(
-      `${prefixUrl}/cases/${caseTypeId}/${courtId}/${actId}/${advocateId}/${attorneyId}/${roleId}`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+      `${prefixUrl}/cases`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
