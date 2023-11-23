@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { addSections, updateSection } from "../Services/Api";
 function AddSections({ isOpen, onClose, editAddSection, acts }) {
   const [form, setForm] = useState({
+    ActId: "",
     name: "",
     Description: "",
   });
@@ -63,7 +64,9 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (e.target.textContent === "Add") {
-      const res = await addSections(parseInt(selectedValues.ActId), form);
+      const dataToAdd = { ...form, ...selectedValues };
+      console.log("dataToAdd",dataToAdd);
+      const res = await addSections(dataToAdd);
     } else if (e.target.textContent === "Update") {
       console.log("update:", updateform);
       // const res = await updateSection(updateform);
@@ -75,9 +78,8 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
     return (
       <>
         <div
-          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
-            isOpen ? "block" : "hidden"
-          }`}
+          className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
+            }`}
         >
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
             <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
@@ -109,8 +111,8 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
                   />
                 </div>
                 <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
-                <label>ActType</label>
-                {/* <select
+                  <label>ActType</label>
+                  {/* <select
                   id="actid"
                   name="ActId"
                   onChange={(e) => handleSelectChange("ActId", e.target.value)}
@@ -123,7 +125,7 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
                     </option>
                   ))}
                 </select> */}
-              </div>
+                </div>
                 <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
                   <button
                     onClick={handleSubmit}
@@ -148,9 +150,8 @@ function AddSections({ isOpen, onClose, editAddSection, acts }) {
   return (
     <>
       <div
-        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${
-          isOpen ? "block" : "hidden"
-        }`}
+        className={`fixed z-50 left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden ${isOpen ? "block" : "hidden"
+          }`}
       >
         <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-lg">
           <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
