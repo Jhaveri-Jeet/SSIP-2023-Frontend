@@ -34,7 +34,7 @@ import InsertActs from "../Modals/InsertActs";
 import { useNavigate } from "react-router-dom";
 import InsertWitness from "../Modals/InsertWitness";
 import InsertEvidence from "../Modals/InsertEvidence";
-import { prefixUrl } from "../Services/Config";
+import { prefixUrl, tokenData } from "../Services/Config";
 
 function CasesTable({
   tableName,
@@ -59,7 +59,7 @@ function CasesTable({
   // const [isOpenForEvidence, setIsOpenForEvidence] = useState(false);
   // const [isOpenForWitness, setIsOpenForWitness] = useState(false);
 
-  const userRoleId = localStorage.getItem("userRoleId");
+  const userRoleId = tokenData.role;
   const [isOpen, setIsOpen] = useState(false);
 
   const openInNewTab = (url) => {

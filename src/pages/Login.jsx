@@ -42,10 +42,6 @@ const Login = () => {
 
   const handleLogin = async () => {
     if(await checkUser(userId, password)) {
-      localStorage.setItem("isAuthenticated",true);
-      localStorage.setItem("userRoleId", userRoleId);
-      localStorage.setItem("districtId", districtId);
-      localStorage.setItem("userId", userId);
       location.href = "/dashboard"
     }
     else {

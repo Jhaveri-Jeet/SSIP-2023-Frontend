@@ -3,6 +3,7 @@ import Transition from "../utils/Transition";
 import { logout } from "../utils/Auth";
 import UserAvatar from "../images/user-avatar-32.png";
 import { getRole } from "../Services/Api";
+import { tokenData } from "../Services/Config";
 
 function DropdownProfile({ align }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -16,7 +17,7 @@ function DropdownProfile({ align }) {
   }, [])
   
   const getUserRole = async () => {
-    setUserRole(await getRole(parseInt(localStorage.getItem("userRoleId"))));
+    setUserRole(await getRole(parseInt(tokenData.role)));
   }
 
   // close on click outside

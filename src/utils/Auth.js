@@ -1,6 +1,9 @@
+import Cookies from "js-cookie";
+
 export const authenticate = () => {
-  if (!localStorage.getItem("isAuthenticated"))
-  {
+  const accessToken = Cookies.get("access_token");
+
+  if (!accessToken) {
     if(location.pathname != "/")
       location.href = "/";
   }
@@ -11,9 +14,6 @@ export const authenticate = () => {
 };
 
 export const logout = () => {
-  localStorage.removeItem("isAuthenticated");
-  localStorage.removeItem("userRoleId");
-  localStorage.removeItem("districtId");
-  localStorage.removeItem("userId");
+  Cookies.remove("access_token");
   location.href = "/";
 };

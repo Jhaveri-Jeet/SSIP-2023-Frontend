@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
+import { tokenData } from "../Services/Config";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
-  const userRoleId = localStorage.getItem("userRoleId");
+  const userRoleId = tokenData.role;
   const location = useLocation();
   const { pathname } = location;
 
