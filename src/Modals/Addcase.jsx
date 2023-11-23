@@ -109,23 +109,6 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
       });
     }
     else {
-      setForm({
-        DateFiled: "",
-        CnrNumber: "",
-        Petitioner: "",
-        Defendant: "",
-        JudgeName: "",
-        Description: "",
-        CaseStatus: "",
-        Judgment: "",
-        Comments: "",
-        AttorneyId: "",
-        AdvocateId: "",
-        ActId: "",
-        CourtId: parseInt(tokenData.courtId),
-        CaseTypeId: "",
-        RoleId: parseInt(tokenData.role),
-      })
       // Clear the updateform when there's no editCaseTypeData
       setUpdateForm({
         id: "",
