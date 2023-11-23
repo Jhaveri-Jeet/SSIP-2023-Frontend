@@ -60,6 +60,7 @@ function CasesTable({
   // const [isOpenForWitness, setIsOpenForWitness] = useState(false);
 
   const userRoleId = tokenData.role;
+  const userCourtId = tokenData.courtId;
   const [isOpen, setIsOpen] = useState(false);
 
   const openInNewTab = (url) => {
@@ -376,7 +377,7 @@ function CasesTable({
                               </svg>
                             </button>
                           </td>
-                          {(userRoleId == singleCase.roleId && userRoleId == singleCase.transferToId) && (
+                          {(userCourtId == singleCase.courtId && userCourtId == singleCase.transferToId) && (
                               <td className="p-2">
                                 <div className="inline-flex items-center">
                                   <div className="text-slate-800 dark:text-slate-100 ml-5">
