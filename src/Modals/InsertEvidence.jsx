@@ -11,8 +11,6 @@ import { prefixUrl } from "../Services/Config";
 import Cookies from "js-cookie";
 
 function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
-  
-
   const formData = new FormData();
 
   const evidenceDescription = useRef(null);
@@ -20,6 +18,7 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    formData.append("caseId", caseId);
     formData.append("EvidenceDescription", evidenceDescription.current.value);
     formData.append("file", evidenceImage.current.files[0]);
     console.log(formData);
@@ -31,16 +30,11 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
         return null;
       }
 
-      const response = await axios.post(
-        `${prefixUrl}/Evidences/${caseId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${prefixUrl}/Evidences`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       console.log("Add response: " + response.data);
     } else if (e.target.textContent == "Update") {
       const res = await updateEvidence(updateform);
