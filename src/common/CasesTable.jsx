@@ -6,7 +6,7 @@ import InsertHearing from "../Modals/InsertHearing";
 import InsertCourt from "../Modals/InsertCourt";
 import InsertState from "../Modals/InsertState";
 import InsertDistrict from "../Modals/InsertDistrict";
-
+import CustomPagination from "./CustomPagination";
 
 import {
   deleteCaseType,
@@ -59,14 +59,42 @@ function CasesTable({
   // const [isOpenForEvidence, setIsOpenForEvidence] = useState(false);
   // const [isOpenForWitness, setIsOpenForWitness] = useState(false);
 
+// pagination
+const [currentPage, setCurrentPage] = useState(1);
+const [casesPerPage] = useState(1); // Number of cases per page
+const calculatePagination = (data) => {
+  const indexOfLastCase = currentPage * casesPerPage;
+  const indexOfFirstCase = indexOfLastCase - casesPerPage;
+  const totalPages = Math.ceil(data.length / casesPerPage);
+  return { indexOfLastCase, indexOfFirstCase, totalPages };
+};
+const getCase = async () => {
+  
+  const { indexOfLastCase, indexOfFirstCase } = calculatePagination(cases);
+  const currentCases = cases.slice(indexOfFirstCase, indexOfLastCase);
+  setFilteredCases(currentCases);
+  };
+  useEffect(() => {
+    
+    getCase();
+  }, [cases, currentPage]); // Include currentPage as a dependency
+
+
+  const onPageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+
+  };
+
   const userRoleId = tokenData.role;
+
   const [isOpen, setIsOpen] = useState(false);
 
   const openInNewTab = (url) => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
-  
+
+
 
   const navigate = useNavigate();
 
@@ -394,6 +422,20 @@ function CasesTable({
                     })
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={calculatePagination(cases).totalPages}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
