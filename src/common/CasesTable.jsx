@@ -6,7 +6,7 @@ import InsertHearing from "../Modals/InsertHearing";
 import InsertCourt from "../Modals/InsertCourt";
 import InsertState from "../Modals/InsertState";
 import InsertDistrict from "../Modals/InsertDistrict";
-
+import CustomPagination from "./CustomPagination";
 
 import {
   deleteCaseType,
@@ -27,6 +27,7 @@ import {
   getSingleHearing,
   getSingleEvidence,
   getSingleWitness,
+  
 } from "../Services/Api";
 import { addWitness } from "../Services/Api";
 import AddCaseType from "../Modals/AddCaseType";
@@ -34,6 +35,7 @@ import InsertActs from "../Modals/InsertActs";
 import { useNavigate } from "react-router-dom";
 import InsertWitness from "../Modals/InsertWitness";
 import InsertEvidence from "../Modals/InsertEvidence";
+import InsertUsers from "../Modals/InsertUsers";
 import { prefixUrl, tokenData } from "../Services/Config";
 
 function CasesTable({
@@ -44,16 +46,167 @@ function CasesTable({
   Witness,
   CaseId,
   Courts,
+  Users,
   Advocates,
   Acts,
   CaseType,
   States,
   Districts,
   sections,
+  getAllUsersData,
   getAllCourtsData,
   getAllStatesData,
-  getAllDistrictsData
+  getAllDistrictsData,
 }) {
+  //pagination code -> om
+
+  // all useState
+  const [filteredCases, setFilteredCases] = useState(cases);
+  const [filteredCourts, setFilteredCourts] = useState(Courts);
+  const [filteredAdvocates, setFilteredAdvocates] = useState(Advocates);
+  const [filteredActs, setFilteredActs] = useState(Acts);
+  const [filteredCasetype, setFilteredCasetype] = useState(CaseType);
+  const [filteredStates, setFilteredStates] = useState(States);
+  const [filteredDistricts, setFilteredDistricts] = useState(Districts);
+  const [filteredSection, setFilteredSection] = useState(sections);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [PageSize, setPageSize] = useState(10); // Number pagesize
+  const [TotalPage, setTotalPage] = useState(0);
+
+  const handlePagination = (data) => {
+    if (data) {
+      const indexOfLastCase = currentPage * PageSize;
+      const indexOfFirstCase = indexOfLastCase - PageSize;
+      const totalPages = Math.ceil(data.length / PageSize);
+      setTotalPage(totalPages);
+
+      return data.slice(indexOfFirstCase, indexOfLastCase);
+    }
+  };
+
+  const onPageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const getCurrentData = async (data, setStateFunction) => {
+    const currentdata = handlePagination(data);
+    console.log("currentdata", currentdata);
+    setStateFunction(currentdata);
+  };
+
+  useEffect(() => {
+    if (cases) {
+      getCurrentData(cases, setFilteredCases);
+    }
+    if (Courts) {
+      getCurrentData(Courts, setFilteredCourts);
+    }
+    if (Advocates) {
+      getCurrentData(Advocates, setFilteredAdvocates);
+    }
+    if (Acts) {
+      getCurrentData(Acts, setFilteredActs);
+    }
+    if (CaseType) {
+      getCurrentData(CaseType, setFilteredCasetype);
+    }
+    if (States) {
+      getCurrentData(States, setFilteredStates);
+    }
+    if (Districts) {
+      getCurrentData(Districts, setFilteredDistricts);
+    }
+    if (sections) {
+      getCurrentData(sections, setFilteredSection);
+    }
+  }, [
+    cases,
+    Courts,
+    Advocates,
+    CaseType,
+    Acts,
+    States,
+    Districts,
+    sections,
+    currentPage,
+  ]); // Include currentPage as a dependency
+
+  const casesearch = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+
+    // Filter the cases array based on the search term
+    const filtered = cases.filter((caseItem) => {
+      // Define an array of fields to search in
+      const fieldsToSearch = [
+        "cnrNumber",
+        "petitioner",
+        "defendant",
+        "advocate.name",
+        "attorney.name",
+        "transferTo.name",
+        "act.name",
+        "court.name",
+        "caseType.name",
+        "caseStatus",
+      ];
+
+      // Check if the search term is present in any of the specified fields
+      return fieldsToSearch.some((field) =>
+        deepSearch(caseItem, field, searchTerm)
+      );
+    });
+
+    // console.log(searchTerm, filtered);
+    // Update the filteredCases state
+
+    const currentCases = handlePagination(filtered);
+
+    setFilteredCases(currentCases);
+  };
+
+  const CommonSearch = (data, setStateFunction) => (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+
+    const filtered = data.filter((item) => {
+      return Object.values(item).some((value) =>
+        String(value).toLowerCase().includes(searchTerm)
+      );
+    });
+
+    // console.log(searchTerm, filtered);
+
+    const currentCases = handlePagination(filtered);
+
+    setStateFunction(currentCases);
+  };
+
+  // All Search function for  all components
+  const handleCourtSearch = CommonSearch(Courts, setFilteredCourts);
+  const handleAdvocateSearch = CommonSearch(Advocates, setFilteredAdvocates);
+  const handleActsSearch = CommonSearch(Acts, setFilteredActs);
+  const handleStatesSearch = CommonSearch(States, setFilteredStates);
+  const handleCaseTypeSearch = CommonSearch(CaseType, setFilteredCasetype);
+  const handleDistrictSearch = CommonSearch(Districts, setFilteredDistricts);
+  const handleSectionSearch = CommonSearch(sections, setFilteredSection);
+
+  // Recursive function to search through nested objects based on specified field
+
+  const deepSearch = (obj, field, term) => {
+    const keys = field.split(".");
+
+    for (const key of keys) {
+      obj = obj[key];
+      if (obj === undefined) {
+        return false;
+      }
+    }
+
+    // Check if the string representation of the value includes the search term
+    return String(obj).toLowerCase().includes(term);
+  };
+
+  //end pagination code
 
   // const [isOpenForHearing, setIsOpenForHearnig] = useState(false);
   // const [isOpenForEvidence, setIsOpenForEvidence] = useState(false);
@@ -66,8 +219,6 @@ function CasesTable({
   const openInNewTab = (url) => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
-
-  
 
   const navigate = useNavigate();
 
@@ -159,6 +310,20 @@ function CasesTable({
     }
   };
 
+  // ------------------ operations for User ---------------------
+
+  const editSingleUser = async (e) => {
+    const res = await getUser(e);
+    setEditSingleUserData(res);
+    setIsOpen(true);
+  };
+
+  const [editsingleUserData, setEditSingleUserData] = useState([]);
+
+  const closeSingleUserTypeModel = () => {
+    setIsOpen(false);
+  };
+
   // ------------------ operations for Court ---------------------
 
   const editSingleCourt = async (e) => {
@@ -233,15 +398,25 @@ function CasesTable({
     setEditSingleActData(res);
     setIsOpen(true);
   };
-  
+
   if (cases) {
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+            
+                  <input
+                    onChange={casesearch}
+                    type="text"
+                    style={{maxWidth:'260px'}}
+                    name="Search"
+                    placeholder="Search"
+                    className="inputbox outline-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  />
+               
           </header>
           <div className="p-3">
             {/* Table */}
@@ -263,9 +438,7 @@ function CasesTable({
                       <div className="font-semibold text-center">Advocate</div>
                     </th>
                     <th className="p-2">
-                      <div className="font-semibold text-center">
-                        Attorney
-                      </div>
+                      <div className="font-semibold text-center">Attorney</div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">Defendant</div>
@@ -281,14 +454,10 @@ function CasesTable({
                       </div>
                     </th>
                     <th className="p-2">
-                      <div className="font-semibold text-center">
-                        Status
-                      </div>
+                      <div className="font-semibold text-center">Status</div>
                     </th>
                     <th className="p-2">
-                      <div className="font-semibold text-center">
-                        Report
-                      </div>
+                      <div className="font-semibold text-center">Report</div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">Action</div>
@@ -298,86 +467,87 @@ function CasesTable({
                 {/* Table body */}
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {cases
-                    ? cases.map((singleCase) => {
-                      // console.log(
-                      //   "edit",
-                      //   userRoleId,
-                      //   singleCase.roleId,
-                      //   singleCase.transferToId
-                      // );
-                      return (
-                        <tr key={singleCase.id}>
-                          <td className="p-2">
-                            <div className="flex items-center">
-                              <div className="text-slate-800 dark:text-slate-100">
-                                {singleCase.cnrNumber}
+                  {filteredCases
+                    ? filteredCases.map((singleCase) => {
+                        // console.log(
+                        //   "edit",
+                        //   userRoleId,
+                        //   singleCase.roleId,
+                        //   singleCase.transferToId
+                        // );
+                        return (
+                          <tr key={singleCase.id}>
+                            <td className="p-2">
+                              <div className="flex items-center">
+                                <div className="text-slate-800 dark:text-slate-100">
+                                  {singleCase.cnrNumber}
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="text-center">
-                              {singleCase.dateFiled}
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="text-center text-emerald-500">
-                              {singleCase.caseType.name}
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="text-center">
-                              {singleCase.advocate.name}
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="text-center text-sky-500">
-                              {singleCase.attorney.name}
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="text-center">
-                              {singleCase.defendant}
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="text-center">
-                              {singleCase.petitioner}
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="text-center">
-                              {singleCase.transferTo.name}
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <div className="text-center text-emerald-500">
-                              {singleCase.caseStatus}
-                            </div>
-                          </td>
-                          <td className="p-2">
-                            <button
-                              className="flex justify-center text-center"
-                              style={{ width: "100%" }}
-                              onClick={() => navigate(
-                                `/dashboard/showCaseDetail/${singleCase.id}`
-                              )
-                              }
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width={20}
-                                fill="currentColor"
-                                className="bi bi-eye"
-                                viewBox="0 0 16 16"
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center">
+                                {singleCase.dateFiled}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center text-emerald-500">
+                                {singleCase.caseType.name}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center">
+                                {singleCase.advocate.name}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center text-sky-500">
+                                {singleCase.attorney.name}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center">
+                                {singleCase.defendant}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center">
+                                {singleCase.petitioner}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center">
+                                {singleCase.transferTo.name}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center text-emerald-500">
+                                {singleCase.caseStatus}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <button
+                                className="flex justify-center text-center"
+                                style={{ width: "100%" }}
+                                onClick={() =>
+                                  navigate(
+                                    `/dashboard/showCaseDetail/${singleCase.id}`
+                                  )
+                                }
                               >
-                                {" "}
-                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
-                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
-                              </svg>
-                            </button>
-                          </td>
-                          {(userRoleId == singleCase.roleId || userCourtId == singleCase.transferToId) && (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width={20}
+                                  fill="currentColor"
+                                  className="bi bi-eye"
+                                  viewBox="0 0 16 16"
+                                >
+                                  {" "}
+                                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                                </svg>
+                              </button>
+                            </td>
+                            {userCourtId == singleCase.transferToId && (
                               <td className="p-2">
                                 <div className="inline-flex items-center">
                                   <div className="text-slate-800 dark:text-slate-100 ml-5">
@@ -390,11 +560,25 @@ function CasesTable({
                                 </div>
                               </td>
                             )}
-                        </tr>
-                      );
-                    })
+                          </tr>
+                        );
+                      })
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={TotalPage}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -412,9 +596,7 @@ function CasesTable({
       <>
         <div className=" col-span-full xl:col-span-12  bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
           <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
-            <h2
-              className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle "
-            >
+            <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
               {tableName}
             </h2>
           </header>
@@ -426,14 +608,10 @@ function CasesTable({
                 <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                   <tr>
                     <th className="p-2">
-                      <div className="font-semibold text-center">
-                        Date
-                      </div>
+                      <div className="font-semibold text-center">Date</div>
                     </th>
                     <th className="p-2">
-                      <div className="font-semibold text-center">
-                        Details
-                      </div>
+                      <div className="font-semibold text-center">Details</div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">Actions</div>
@@ -550,7 +728,11 @@ function CasesTable({
                               <button
                                 className="flex justify-center text-center"
                                 style={{ width: "100%" }}
-                                onClick={()=> openInNewTab(`${prefixUrl}/EvidenceImages/${Evidencedata.evidenceImageName}`)}
+                                onClick={() =>
+                                  openInNewTab(
+                                    `${prefixUrl}/EvidenceImages/${Evidencedata.evidenceImageName}`
+                                  )
+                                }
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -596,7 +778,6 @@ function CasesTable({
             <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
               {tableName}
             </h2>
-            
           </header>
           <div className="p-3">
             {/* Table */}
@@ -606,9 +787,7 @@ function CasesTable({
                 <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
                   <tr>
                     <th className="p-2">
-                      <div className="font-semibold text-center">
-                         Name
-                      </div>
+                      <div className="font-semibold text-center">Name</div>
                     </th>
                     <th className="p-2">
                       <div className="font-semibold text-center">Image</div>
@@ -634,7 +813,11 @@ function CasesTable({
                               <button
                                 className="flex justify-center text-center"
                                 style={{ width: "100%" }}
-                                onClick={()=> openInNewTab(`${prefixUrl}/WitnessImages/${singleWitness.witnessImage}`)}
+                                onClick={() =>
+                                  openInNewTab(
+                                    `${prefixUrl}/WitnessImages/${singleWitness.witnessImage}`
+                                  )
+                                }
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -676,10 +859,20 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+            
+                  <input
+                    onChange={handleCourtSearch}
+                    type="text"
+                    name="Search"
+                    style={{maxWidth:'260px'}}
+                    placeholder="Search"
+                    className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  />
+               
           </header>
           <div className="p-3">
             {/* Table */}
@@ -707,8 +900,8 @@ function CasesTable({
                 {/* Table body */}
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {Courts
-                    ? Courts.map((singleCourt) => {
+                  {filteredCourts
+                    ? filteredCourts.map((singleCourt) => {
                         return (
                           <tr key={singleCourt.id}>
                             <td className="p-2">
@@ -732,7 +925,9 @@ function CasesTable({
                               <div className="inline-flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100 ml-5">
                                   <button
-                                    onClick={() => editSingleCourt(singleCourt.id)}
+                                    onClick={() =>
+                                      editSingleCourt(singleCourt.id)
+                                    }
                                   >
                                     Edit
                                   </button>
@@ -744,6 +939,20 @@ function CasesTable({
                       })
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={TotalPage}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                  </tfoot>
               </table>
             </div>
           </div>
@@ -757,7 +966,7 @@ function CasesTable({
       </>
     );
   }
-  if (Advocates) {
+  if (Users) {
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
@@ -765,6 +974,93 @@ function CasesTable({
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+          </header>
+          <div className="p-3">
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="table-auto w-full dark:text-slate-300">
+                {/* Table header */}
+                <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                  <tr>
+                    <th className="p-2">
+                      <div className="font-semibold text-left">Username</div>
+                    </th>
+                    <th className="p-2">
+                      <div className="font-semibold text-center">
+                        Court Name
+                      </div>
+                    </th>
+                    {/* <th className="p-2">
+                      <div className="font-semibold text-center">Actions</div>
+                    </th> */}
+                  </tr>
+                </thead>
+                {/* Table body */}
+
+                <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                  {Users
+                    ? Users.map((singleUser) => {
+                        return (
+                          <tr key={singleUser.id}>
+                            <td className="p-2">
+                              <div className="flex items-center">
+                                <div className="text-slate-800 dark:text-slate-100">
+                                  {singleUser.userName}
+                                </div>
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center">
+                                {singleUser.court.name}
+                              </div>
+                            </td>
+                            {/* <td className="p-2">
+                              <div className="inline-flex items-center">
+                                <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                  <button
+                                    onClick={() => editSingleUser(singleUser.id)}
+                                  >
+                                    Edit
+                                  </button>
+                                </div>
+                              </div>
+                            </td> */}
+                          </tr>
+                        );
+                      })
+                    : null}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <InsertUsers
+          editSingleUser={editsingleUserData}
+          isOpen={isOpen}
+          onClose={closeSingleCourtTypeModel}
+          getAllUsersData={getAllUsersData}
+        />
+      </>
+    );
+  }
+  if (Advocates) {
+    return (
+      <>
+        <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+            <h2 className="font-semibold text-slate-800 dark:text-slate-100">
+              {tableName}
+            </h2>
+            
+                  <input
+                    onChange={handleAdvocateSearch}
+                    type="text"
+                    name="Search"
+                    style={{maxWidth:'260px'}}
+                    placeholder="Search"
+                    className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  />
+               
           </header>
           <div className="p-3">
             {/* Table */}
@@ -788,8 +1084,8 @@ function CasesTable({
                 </thead>
                 {/* Table body */}
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {Advocates
-                    ? Advocates.map((singleAdvocate) => {
+                  {filteredAdvocates
+                    ? filteredAdvocates.map((singleAdvocate) => {
                         return (
                           <tr key={singleAdvocate.id}>
                             <td className="p-2">
@@ -833,6 +1129,20 @@ function CasesTable({
                       })
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={TotalPage}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                  </tfoot>
               </table>
             </div>
           </div>
@@ -851,10 +1161,20 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+            
+                  <input
+                    onChange={handleActsSearch}
+                    type="text"
+                    name="Search"
+                    style={{maxWidth:'260px'}}
+                    placeholder="Search"
+                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  />
+               
           </header>
           <div className="p-3">
             {/* Table */}
@@ -877,8 +1197,8 @@ function CasesTable({
                 {/* Table body */}
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {Acts
-                    ? Acts.map((singleAct) => {
+                  {filteredActs
+                    ? filteredActs.map((singleAct) => {
                         return (
                           <tr key={singleAct.id}>
                             <td className="p-2">
@@ -920,6 +1240,20 @@ function CasesTable({
                       })
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={TotalPage}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                  </tfoot>
               </table>
             </div>
           </div>
@@ -936,10 +1270,20 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+            
+                  <input
+                    onChange={handleCaseTypeSearch}
+                    type="text"
+                    name="Search"
+                    style={{maxWidth:'260px'}}
+                    placeholder="Search"
+                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  />
+               
           </header>
           <div className="p-3">
             {/* Table */}
@@ -964,8 +1308,8 @@ function CasesTable({
                 {/* Table body */}
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {CaseType
-                    ? CaseType.map((item) => {
+                  {filteredCasetype
+                    ? filteredCasetype.map((item) => {
                         return (
                           <tr key={item.id}>
                             <td className="p-2">
@@ -1003,6 +1347,20 @@ function CasesTable({
                       })
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={TotalPage}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                  </tfoot>
               </table>
             </div>
           </div>
@@ -1019,10 +1377,20 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+            
+                  <input
+                    onChange={handleStatesSearch}
+                    type="text"
+                    name="Search"
+                    style={{maxWidth:'260px'}}
+                    placeholder="Search"
+                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  />
+               
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1045,14 +1413,14 @@ function CasesTable({
                 {/* Table body */}
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {States
-                    ? States.map((singleState,index) => {
+                  {filteredStates
+                    ? filteredStates.map((singleState, index) => {
                         return (
                           <tr key={singleState.id}>
                             <td className="p-2">
                               <div className="flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100">
-                                  {index+1}
+                                  {index + 1}
                                 </div>
                               </div>
                             </td>
@@ -1067,7 +1435,9 @@ function CasesTable({
                               <div className="inline-flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100 ml-5">
                                   <button
-                                    onClick={() => editSingleState(singleState.id)}
+                                    onClick={() =>
+                                      editSingleState(singleState.id)
+                                    }
                                   >
                                     Edit
                                   </button>
@@ -1079,6 +1449,20 @@ function CasesTable({
                       })
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={TotalPage}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                  </tfoot>
               </table>
             </div>
           </div>
@@ -1096,10 +1480,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+            
+                  <input
+                    onChange={handleDistrictSearch}
+                    type="text"
+                    name="Search"
+                    placeholder="Search"
+                    className="inputbox outline-none w-56  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  />
+               
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1122,14 +1515,14 @@ function CasesTable({
                 {/* Table body */}
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {Districts
-                    ? Districts.map((singleDistrict,index) => {
+                  {filteredDistricts
+                    ? filteredDistricts.map((singleDistrict, index) => {
                         return (
                           <tr key={singleDistrict.id}>
                             <td className="p-2">
                               <div className="flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100">
-                                  {index+1}
+                                  {index + 1}
                                 </div>
                               </div>
                             </td>
@@ -1144,7 +1537,9 @@ function CasesTable({
                               <div className="inline-flex items-center">
                                 <div className="text-slate-800 dark:text-slate-100 ml-5">
                                   <button
-                                    onClick={() => editSingleDistrict(singleDistrict.id)}
+                                    onClick={() =>
+                                      editSingleDistrict(singleDistrict.id)
+                                    }
                                   >
                                     Edit
                                   </button>
@@ -1156,6 +1551,20 @@ function CasesTable({
                       })
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={TotalPage}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                  </tfoot>
               </table>
             </div>
           </div>
@@ -1173,10 +1582,20 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
+            
+                  <input
+                    onChange={handleSectionSearch}
+                    type="text"
+                    name="Search"
+                    style={{maxWidth:'260px'}}
+                    placeholder="Search"
+                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  />
+               
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1199,8 +1618,8 @@ function CasesTable({
                 {/* Table body */}
 
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {sections
-                    ? sections.map((item) => {
+                  {filteredSection
+                    ? filteredSection.map((item) => {
                         return (
                           <tr key={item.id}>
                             <td className="p-2">
@@ -1229,6 +1648,20 @@ function CasesTable({
                       })
                     : null}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={12}  >
+                      <div className="w-full flex justify-end">
+
+                      <CustomPagination
+                        currentPage={currentPage}
+                        totalPages={TotalPage}
+                        onPageChange={onPageChange}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                  </tfoot>
               </table>
             </div>
           </div>

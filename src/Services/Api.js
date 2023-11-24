@@ -3,11 +3,9 @@ import { prefixUrl } from "./Config";
 import Cookies from "js-cookie";
 
 // ------------------ All Apis for Login ------------------
-export const checkUser = async (userId, passwordHash) => {
+export const checkUser = async (data) => {
   try {
-    const response = await axios.get(
-      `${prefixUrl}/CheckUser/${userId}/${passwordHash}`
-    );
+    const response = await axios.post(`${prefixUrl}/CheckUser/`, data);
 
     const token = response.data.token;
     Cookies.set("access_token", token, { httpOnly: false });
@@ -45,6 +43,32 @@ export const getAllUsers = async (userRoleId, districtId) => {
     const response = await axios
       .get(`${prefixUrl}/FetchUserAccCourtAndDis/${userRoleId}/${districtId}`)
       .then((res) => {
+        return res.data;
+      });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCourtsUsers = async (courtId) => {
+  try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios
+      .get(`${prefixUrl}/FetchUserAccCourt/${courtId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
         return res.data;
       });
     return response;
@@ -102,7 +126,6 @@ export const updatePassword = async (data) => {
     console.log(error);
   }
 };
-
 
 // ------------------ All Apis for Role ------------------
 export const getAllRoles = async () => {

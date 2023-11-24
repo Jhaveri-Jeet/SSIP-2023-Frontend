@@ -86,7 +86,6 @@ const ShowCaseDetail = () => {
     getCasedata();
     getAllDataFroHearingEvidenceAndWitness();
   }, []);
-
   useEffect(() => {
     getAllDataFroHearingEvidenceAndWitness();
   }, [isEvidenceOpen, isWitnessOpen, isHearingOpen]);
@@ -130,8 +129,7 @@ const ShowCaseDetail = () => {
               {caseData ? caseData.caseStatus : null}
             </div>
 
-            {(tokenData.role === caseData.roleId ||
-              tokenData.role == caseData.transferToId) && (
+            {(tokenData.courtId == caseData.transferToId) && (
                 <div className="options-menu">
                   <button
                     type="button"

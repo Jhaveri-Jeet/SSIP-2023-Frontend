@@ -16,7 +16,6 @@ import {
 } from "../Services/Api";
 
 function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [addCaseOpen, setAddCaseOpen] = useState(false);
   const [highCourtCasesCount, setHighCourtCasesCount] = useState(0);
@@ -29,9 +28,8 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
   const closeAddCaseModel = () => {
     setAddCaseOpen(false);
   };
-  
+
   useEffect(() => {
-   
     const accessToken = Cookies.get("access_token");
 
     if (!accessToken) {
@@ -39,7 +37,7 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
       return null;
     }
 
-    console.log(tokenData)
+    console.log(tokenData);
 
     setCurrentScreen("Dashboard");
     getAllCasesCountFunction();
@@ -47,13 +45,13 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
     getAllDistrictCourtCasesFunction();
     getAllSupremeCourtCasesFunction();
   }, []);
-  
+
   const getAllCasesCountFunction = async () => {
     setDistrictCourtCasesCount(await getAllDistrictCasesCount());
     setHighCourtCasesCount(await getAllHighCasesCount());
     setSupremeCourtCasesCount(await getAllSupremeCasesCount());
   };
-  
+
   const getAllHighCourtCasesFunction = async () => {
     const res = await getAllHighCourtCases();
     setHighCourtCases(res);
@@ -69,7 +67,7 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
     setSupremeCourtCases(res);
   };
 
-    return (
+  return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <Sidebar

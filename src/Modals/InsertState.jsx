@@ -48,10 +48,12 @@ function InsertState({ isOpen, onClose, editSingleState , getAllStatesData }) {
         else if(e.target.textContent === "Edit")
         {
             console.log("form")   
-            console.log(form)   
             const res = await updateState(updateform);
         }
         await getAllStatesData();
+        setForm({
+            name: ""
+        });
         onClose();
     };
     if(editSingleState)
@@ -65,7 +67,7 @@ function InsertState({ isOpen, onClose, editSingleState , getAllStatesData }) {
                             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                                 <label htmlFor="state" className="block font-semibold mb-2">State Name:</label>
                                 <input
-                                    defaultValue={updateform.name}
+                                    value={updateform.name}
                                     onChange={updatehandleInputChange}
                                     type="text"
                                     name='name'
@@ -103,7 +105,7 @@ function InsertState({ isOpen, onClose, editSingleState , getAllStatesData }) {
                             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                                 <label htmlFor="state" className="block font-semibold mb-2">State Name:</label>
                                 <input
-                                    defaultValue={form.name}
+                                    value={form.name}
                                     onChange={handleInputChange}
                                     type="text"
                                     name='name'

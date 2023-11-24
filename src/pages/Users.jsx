@@ -3,23 +3,26 @@ import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import InsertCourt from "../Modals/InsertCourt";
 import CasesTable from "../common/CasesTable";
-import { getAllCourts } from "../Services/Api";
+import { getAllCourts, getCourtsUsers } from "../Services/Api";
+import { tokenData } from "../Services/Config";
+import InsertUsers from "../Modals/InsertUsers";
 
-const Courts = ({ currentScreen, setCurrentScreen }) => {
+const Users = ({ currentScreen, setCurrentScreen }) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
-  const [courts, setCourts] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({
-    Courtname: "",
-    Statename: "",
-    Districtname: "",
-    Address: "",
+    UserName: "",
+    PasswordHash: "123",
+    roleId: tokenData.role,
+    districtId: tokenData.districtId,
+    courtId: tokenData.courtId
   });
   const openForm = () => {
-    setIsFormOpen(true);
+    setIsFormOpen(true);  
   };
 
   const closeForm = () => {
@@ -38,18 +41,18 @@ const Courts = ({ currentScreen, setCurrentScreen }) => {
     }
   };
 
-  const getAllCourtsData = async () => {
-    const data = await getAllCourts();
-    setCourts(data);
+  const getAllUsersData = async () => {
+    const data = await getCourtsUsers(tokenData.courtId);
+    setUsers(data);
   };
   useEffect(() => {
-    setCurrentScreen("Courts");
-    getAllCourtsData();
+    setCurrentScreen("Users");
+    getAllUsersData();
   }, []);
 
   useEffect(() => {
-    setCurrentScreen("Courts");
-    getAllCourtsData();
+    setCurrentScreen("Users");
+    getAllUsersData();
   }, [isFormOpen]);
 
   return (
@@ -86,21 +89,21 @@ const Courts = ({ currentScreen, setCurrentScreen }) => {
                   >
                     <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                   </svg>
-                  <span className="hidden xs:block ml-2">Add Courts</span>
+                  <span className="hidden xs:block ml-2">Add Users</span>
                 </button>
               </div>
             </div>
-            <InsertCourt
+            <InsertUsers
               isOpen={isFormOpen}
               onClose={closeForm}
               onSubmitForm={onSubmitForm}
-              getAllCourtsData={getAllCourtsData}
+              getAllUsersData={getAllUsersData}
             />
             <div className="grid grid-cols-12 gap-6">
               <CasesTable
-                getAllCourtsData={getAllCourtsData}
-                Courts={courts}
-                tableName={"Courts Lists"}
+                getAllUsersData={getAllUsersData}
+                Users={users}
+                tableName={"Users Lists"}
               />
             </div>
           </div>
@@ -110,4 +113,4 @@ const Courts = ({ currentScreen, setCurrentScreen }) => {
   );
 };
 
-export default Courts;
+export default Users;
