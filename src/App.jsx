@@ -12,6 +12,7 @@ import DistrictCourt from "./pages/DistrictCourt";
 import SupremeCourt from "./pages/SupremeCourt";
 import ShowCaseDetail from "./pages/ShowCaseDetail";
 import Courts from "./pages/Courts";
+import Users from "./pages/Users";
 import Advocates from "./pages/Advocates";
 import Acts from "./pages/Acts";
 import CaseType from "./pages/CaseType";
@@ -103,6 +104,16 @@ function App() {
           path="/dashboard/supremecourt"
           element={
             <SupremeCourt
+              currentScreen={currentScreen}
+              setCurrentScreen={setCurrentScreen}
+            />
+          }
+        />
+         <Route
+          exact
+          path="/dashboard/users"
+          element={
+            <Users
               currentScreen={currentScreen}
               setCurrentScreen={setCurrentScreen}
             />

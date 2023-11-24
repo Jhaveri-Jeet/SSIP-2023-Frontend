@@ -7,11 +7,10 @@ import {
   getAllAdvocates,
   getAllActs,
   getAllTransferHighCourts,
-  getAllTransferSupremeCourts
+  getAllTransferSupremeCourts,
 } from "../Services/Api";
 
 const Addcase = ({ isOpen, onClose, editCaseData }) => {
-
   const userRoleId = tokenData.role;
   const userCourtId = tokenData.courtId;
   const userLoginRoleId = 1;
@@ -83,9 +82,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
     setActs(allActsData);
   };
 
-
   useEffect(() => {
-    getAllTransferSupremeCourtsData()
+    getAllTransferSupremeCourtsData();
     getAllTransferHighCourtsData();
     getAllCaseTypeData();
     getAllAdvocatesData();
@@ -112,10 +110,9 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
         attorneyId: editCaseData.attorneyId || "",
         roleId: editCaseData.roleId || "",
         transferFromId: editCaseData.transferFromId || "",
-        transferToId: editCaseData.transferToId || ""
+        transferToId: editCaseData.transferToId || "",
       });
-    }
-    else {
+    } else {
       // Clear the updateform when there's no editCaseTypeData
       setUpdateForm({
         id: "",
@@ -135,11 +132,10 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
         attorneyId: "",
         roleId: "",
         transferFromId: "",
-        transferToId: ""
+        transferToId: "",
       });
     }
   }, [editCaseData]);
-
 
   const handleInputChange = (name, value) => {
     setForm({
@@ -154,8 +150,6 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
       [name]: value,
     });
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -176,7 +170,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
       CourtId: userCourtId,
       CaseTypeId: "",
       RoleId: userRoleId,
-    })
+    });
     onClose();
   };
 
@@ -184,15 +178,15 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
     e.preventDefault();
     const res = await updateCase(updateform);
     onClose();
-
-  }
+  };
 
   if (editCaseData) {
     return (
       <>
         <div
-          className={`w-full min-h-screen lg:h-screen bg-black bg-opacity-50 transition duration-150 ease-in-out z-50 fixed overflow-y-auto top-0 right-0 bottom-0 left-0 ${isOpen ? "block" : "hidden"
-            }`}
+          className={`w-full min-h-screen lg:h-screen bg-black bg-opacity-50 transition duration-150 ease-in-out z-50 fixed overflow-y-auto top-0 right-0 bottom-0 left-0 ${
+            isOpen ? "block" : "hidden"
+          }`}
         >
           <div className="relative lg:mx-auto md:mx-4 flex items-center justify-center lg:w-4/6 2xl:h-screen py-2">
             <div className="h-auto relative rounded-xl bg-clip-border text-gray-700 shadow-lg bg-white p-4">
@@ -206,7 +200,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   <label>DateFiled</label>
                   <input
                     onChange={(e) =>
-                      updatehandleInputChange("dateFiled", e.target.value)}
+                      updatehandleInputChange("dateFiled", e.target.value)
+                    }
                     value={updateform.dateFiled || editCaseData.dateFiled}
                     type="date"
                     name="dateFiled"
@@ -218,7 +213,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   <input
                     value={updateform.cnrNumber || editCaseData.cnrNumber}
                     onChange={(e) =>
-                      updatehandleInputChange("cnrNumber", e.target.value)}
+                      updatehandleInputChange("cnrNumber", e.target.value)
+                    }
                     type="text"
                     name="CnrNumber"
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -230,7 +226,12 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                     id="caseType"
                     name="caseTypeId"
                     value={updateform.caseTypeId || editCaseData.caseType.id}
-                    onChange={(e) => updatehandleInputChange("caseTypeId", parseInt(e.target.value))}
+                    onChange={(e) =>
+                      updatehandleInputChange(
+                        "caseTypeId",
+                        parseInt(e.target.value)
+                      )
+                    }
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                   >
                     <option value="">Select a Case Type</option>
@@ -246,7 +247,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   <input
                     value={updateform.petitioner || editCaseData.petitioner}
                     onChange={(e) =>
-                      updatehandleInputChange("petitioner", e.target.value)}
+                      updatehandleInputChange("petitioner", e.target.value)
+                    }
                     type="text"
                     name="petitioner"
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -256,7 +258,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   <label>Defendant</label>
                   <input
                     onChange={(e) =>
-                      updatehandleInputChange("defendant", e.target.value)}
+                      updatehandleInputChange("defendant", e.target.value)
+                    }
                     value={updateform.defendant || editCaseData.defendant}
                     type="text"
                     name="defendant"
@@ -268,7 +271,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   <input
                     value={updateform.judgeName || editCaseData.judgeName}
                     onChange={(e) =>
-                      updatehandleInputChange("judgeName", e.target.value)}
+                      updatehandleInputChange("judgeName", e.target.value)
+                    }
                     type="text"
                     name="judgeName"
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -279,7 +283,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   <input
                     value={updateform.description || editCaseData.description}
                     onChange={(e) =>
-                      updatehandleInputChange("description", e.target.value)}
+                      updatehandleInputChange("description", e.target.value)
+                    }
                     type="text"
                     name="description"
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -290,7 +295,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   <input
                     value={updateform.comments || editCaseData.comments}
                     onChange={(e) =>
-                      updatehandleInputChange("comments", e.target.value)}
+                      updatehandleInputChange("comments", e.target.value)
+                    }
                     type="text"
                     name="comments"
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -301,7 +307,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   <input
                     value={updateform.judgment || editCaseData.judgment}
                     onChange={(e) =>
-                      updatehandleInputChange("judgment", e.target.value)}
+                      updatehandleInputChange("judgment", e.target.value)
+                    }
                     type="text"
                     name="judgment"
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -333,7 +340,10 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                     name="advocateId"
                     value={updateform.advocateId || editCaseData.advocate.id}
                     onChange={(e) =>
-                      updatehandleInputChange("advocateId", parseInt(e.target.value))
+                      updatehandleInputChange(
+                        "advocateId",
+                        parseInt(e.target.value)
+                      )
                     }
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                   >
@@ -352,7 +362,10 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                     name="attorneyId"
                     value={updateform.attorneyId || editCaseData.attorney.id}
                     onChange={(e) =>
-                      updatehandleInputChange("attorneyId", parseInt(e.target.value))
+                      updatehandleInputChange(
+                        "attorneyId",
+                        parseInt(e.target.value)
+                      )
                     }
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                   >
@@ -371,12 +384,11 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                     name="caseStatus"
                     value={updateform.caseStatus || editCaseData.caseStatus}
                     onChange={(e) =>
-                      updatehandleInputChange("caseStatus", e.target.value)}
+                      updatehandleInputChange("caseStatus", e.target.value)
+                    }
                     className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                   >
-                    <option value="Pending">
-                      Pending
-                    </option>
+                    <option value="Pending">Pending</option>
                     <option value="Running">Running</option>
                     <option value="Completed">Completed</option>
                   </select>
@@ -389,7 +401,11 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                       name="transferToId"
                       value={updateform.transferToId || editCaseData.roleId.id}
                       onChange={(e) =>
-                        updatehandleInputChange("transferToId", parseInt(e.target.value))}
+                        updatehandleInputChange(
+                          "transferToId",
+                          parseInt(e.target.value)
+                        )
+                      }
                       className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                     >
                       <option value="">Select a Courts</option>
@@ -409,7 +425,11 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                       name="transferToId"
                       value={updateform.transferToId || editCaseData.roleId.id}
                       onChange={(e) =>
-                        updatehandleInputChange("transferToId", parseInt(e.target.value))}
+                        updatehandleInputChange(
+                          "transferToId",
+                          parseInt(e.target.value)
+                        )
+                      }
                       className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                     >
                       <option value="">Select a Courts</option>
@@ -446,8 +466,9 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
   return (
     <>
       <div
-        className={`w-full min-h-screen lg:h-screen bg-black bg-opacity-50 transition duration-150 ease-in-out z-50 fixed overflow-y-auto top-0 right-0 bottom-0 left-0 ${isOpen ? "block" : "hidden"
-          }`}
+        className={`w-full min-h-screen lg:h-screen bg-black bg-opacity-50 transition duration-150 ease-in-out z-50 fixed overflow-y-auto top-0 right-0 bottom-0 left-0 ${
+          isOpen ? "block" : "hidden"
+        }`}
       >
         <div className="relative lg:mx-auto md:mx-4 flex items-center justify-center lg:w-4/6 lg:h-screen py-2">
           <div className="h-auto relative rounded-xl bg-clip-border text-gray-700 shadow-lg bg-white p-4">
@@ -462,7 +483,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <input
                   value={form.DateFiled}
                   onChange={(e) =>
-                    handleInputChange("DateFiled", e.target.value)}
+                    handleInputChange("DateFiled", e.target.value)
+                  }
                   type="date"
                   name="DateFiled"
                   className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -473,7 +495,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <input
                   value={form.CnrNumber}
                   onChange={(e) =>
-                    handleInputChange("CnrNumber", e.target.value)}
+                    handleInputChange("CnrNumber", e.target.value)
+                  }
                   type="text"
                   name="CnrNumber"
                   className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -503,7 +526,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <input
                   value={form.Petitioner}
                   onChange={(e) =>
-                    handleInputChange("Petitioner", e.target.value)}
+                    handleInputChange("Petitioner", e.target.value)
+                  }
                   type="text"
                   name="Petitioner"
                   className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -514,7 +538,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <input
                   value={form.Defendant}
                   onChange={(e) =>
-                    handleInputChange("Defendant", e.target.value)}
+                    handleInputChange("Defendant", e.target.value)
+                  }
                   type="text"
                   name="Defendant"
                   className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -525,7 +550,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <input
                   value={form.JudgeName}
                   onChange={(e) =>
-                    handleInputChange("JudgeName", e.target.value)}
+                    handleInputChange("JudgeName", e.target.value)
+                  }
                   type="text"
                   name="JudgeName"
                   className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -536,7 +562,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <input
                   value={form.Description}
                   onChange={(e) =>
-                    handleInputChange("Description", e.target.value)}
+                    handleInputChange("Description", e.target.value)
+                  }
                   type="text"
                   name="Description"
                   className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -547,7 +574,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                 <input
                   value={form.Comments}
                   onChange={(e) =>
-                    handleInputChange("Comments", e.target.value)}
+                    handleInputChange("Comments", e.target.value)
+                  }
                   type="text"
                   name="Comments"
                   className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
@@ -631,6 +659,5 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
       </div>
     </>
   );
-
 };
 export default Addcase;

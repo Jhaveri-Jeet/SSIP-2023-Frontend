@@ -58,6 +58,32 @@ export const getAllUsers = async (userRoleId, districtId) => {
   }
 };
 
+export const getCourtsUsers = async (courtId) => {
+  try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios
+      .get(`${prefixUrl}/FetchUserAccCourt/${courtId}`,{
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // ------------------ All Apis for Role ------------------
 export const getAllRoles = async () => {
   try {

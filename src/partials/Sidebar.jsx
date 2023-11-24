@@ -285,6 +285,47 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 </NavLink>
               </li>
 
+               {/* Users */}
+               <li
+                className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
+                  pathname.includes("inbox") && "bg-slate-900"
+                }`}
+              >
+                <NavLink
+                  end
+                  to="/dashboard/users"
+                  className={`block text-slate-200 truncate transition duration-150 ${
+                    pathname.includes("inbox")
+                      ? "hover:text-slate-200"
+                      : "hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={16}
+                      height={16}
+                      fill="currentColor"
+                      className="bi bi-bank shrink-0 h-6 w-6"
+                      viewBox="0 0 16 16"
+                    >
+                      {" "}
+                      <path
+                        className={`fill-current ${
+                          pathname.includes("inbox")
+                            ? "text-indigo-600"
+                            : "text-slate-600"
+                        }`}
+                        d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"
+                      />{" "}
+                    </svg>
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Users
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
+
               {/* Courts */}
               {userRoleId == 2 && (
                 <li
