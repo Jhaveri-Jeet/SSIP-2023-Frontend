@@ -542,7 +542,6 @@ export const deleteCase = async (deleteCaseId) => {
   }
 };
 export const updateCase = async (data) => {
-  console.log("Data :", data);
   try {
     const accessToken = Cookies.get("access_token");
 
