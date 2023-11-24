@@ -11,18 +11,16 @@ const Login = () => {
   const [passwordHash, setPasswordHash] = useState(null);
   const [data, setData] = useState({
     username: "",
-    passwordHash: ""
+    passwordHash: "",
   });
 
-  const handleInputChange = (e) =>{
-    const {name,value} = e.target
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-    setData({...data,[name]:value})
-  }
+    setData({ ...data, [name]: value });
+  };
 
   const handleLogin = async () => {
- 
-
     console.log(data);
     if (await checkUser(data)) {
       location.href = "/dashboard";
