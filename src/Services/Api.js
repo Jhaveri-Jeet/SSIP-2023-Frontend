@@ -1560,3 +1560,48 @@ export const addWitness = async (formData) => {
     console.log(error);
   }
 };
+
+// ------------------ All Apis for GetAll Court For TransferTo ------------------
+export const getAllTransferHighCourts = async () => {
+  try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/FetchCourtsAccRole/3`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("all Courts",response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllTransferSupremeCourts = async () => {
+  try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/FetchCourtsAccRole/4`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("all Courts",response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
