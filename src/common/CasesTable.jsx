@@ -377,7 +377,7 @@ function CasesTable({
                               </svg>
                             </button>
                           </td>
-                          {(userCourtId == singleCase.courtId && userCourtId == singleCase.transferToId) && (
+                          {(userRoleId == singleCase.roleId || userCourtId == singleCase.transferToId) && (
                               <td className="p-2">
                                 <div className="inline-flex items-center">
                                   <div className="text-slate-800 dark:text-slate-100 ml-5">
