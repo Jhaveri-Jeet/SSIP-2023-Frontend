@@ -136,6 +136,7 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
         </main>
 
         {/* <Banner /> */}
+        
       </div>
     </div>
   );

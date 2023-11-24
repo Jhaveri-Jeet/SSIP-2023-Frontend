@@ -77,6 +77,56 @@ export const getCourtsUsers = async (courtId) => {
   }
 };
 
+export const checkPassword = async (data) => {
+  try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios
+      .put(`${prefixUrl}/CheckPassword`, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        return res;
+      });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePassword = async (data) => {
+  try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios
+      .put(`${prefixUrl}/UpdatePassword`, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        return res;
+      });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // ------------------ All Apis for Role ------------------
 export const getAllRoles = async () => {
   try {

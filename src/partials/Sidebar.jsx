@@ -243,7 +243,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </NavLink>
               </li>
-              
+
               {/* District Court */}
               <li
                 className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${

@@ -1,24 +1,28 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import Transition from "../utils/Transition";
 import { logout } from "../utils/Auth";
 import UserAvatar from "../images/user-avatar-32.png";
 import { getRole } from "../Services/Api";
 import { tokenData } from "../Services/Config";
+import {useAppState} from "../hooks/AppStateProvider";
 
 function DropdownProfile({ align }) {
+
+  const {isOpen , setIsOpen} = useAppState()
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [userRole, setUserRole] = useState(null)
+  const [userRole, setUserRole] = useState(null);
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
   useEffect(() => {
-    getUserRole()
-  }, [])
-  
+    getUserRole();
+  }, []);
+
   const getUserRole = async () => {
     setUserRole(await getRole(parseInt(tokenData.role)));
-  }
+  };
 
   // close on click outside
   useEffect(() => {
@@ -64,7 +68,7 @@ function DropdownProfile({ align }) {
         />
         <div className="flex items-center truncate">
           <span className="truncate ml-2 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">
-            { userRole }
+            {userRole}
           </span>
           <svg
             className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400"
@@ -94,15 +98,24 @@ function DropdownProfile({ align }) {
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-slate-700">
             <div className="font-medium text-slate-800 dark:text-slate-100">
-              { userRole }
+              {userRole}
             </div>
           </div>
           <ul>
-           
+            <li className="border-b border-slate-200 dark:border-slate-700">
+              <button
+                className="font-medium text-sm text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center py-1 px-3"
+                onClick={()=>setIsOpen(true)}
+              >
+                <div className="font-medium text-slate-800 dark:text-slate-100">
+                  Update Password
+                </div>
+              </button>
+            </li>
             <li>
               <button
                 className="font-medium text-sm text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center py-1 px-3"
-                onClick={ logout }
+                onClick={logout}
               >
                 Sign Out
               </button>
