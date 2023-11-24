@@ -1,8 +1,11 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useRef } from 'react'
 import { addHearing, updateHearing } from '../Services/Api';
 
 
 function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
+
+    const dateOfHearing = useRef(null);
+    const descriptionOfHearing = useRef(null);
 
     const [form, setForm] = useState({
         caseId: caseId,
@@ -10,6 +13,7 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
         hearingDetails: "",
 
     });
+
     const [updateform, setUpdateForm] = useState({
         id: editeHearing ? (editeHearing.id ? editeHearing.id : "") : "",
         caseId: editeHearing ? (editeHearing.caseId ? editeHearing.caseId : "") : "",
@@ -19,7 +23,6 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
 
     useEffect(() => {
 
-        console.log("editeHearing", editeHearing);
         if (editeHearing) {
             setUpdateForm({
                 id: editeHearing.id || "",
@@ -58,25 +61,33 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
             ...form,
             [name]: value,
         });
-        console.log(form);
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(e.target.textContent);
         if (e.target.textContent == "Add") {
             console.log(form);
-            const res = await addHearing(form);
-            console.log("Add response: " + res)
-
+            const dataToAdd = { ...form, ...caseId };
+            const res = await addHearing(dataToAdd);
+            console.log("data :",dataToAdd);
+            dateOfHearing.current.value = "";
+            descriptionOfHearing.current.value = "";
         }
         else if (e.target.textContent == "Update") {
             console.log(updateform);
             const res = await updateHearing(updateform)
-            console.log("update response: " + res)
-
         }
         onClose();
     };
+    
+    const modelClose = async () => {
+        if (!editeHearing) {
+            dateOfHearing.current.value = "";
+            descriptionOfHearing.current.value = "";
+        }
+        onClose();
+    };
+
     if (editeHearing) {
         return (
             <>
@@ -90,7 +101,7 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
                                         onChange={handleInputChange}
                                         type="hidden"
                                         name='caseId'
-                                        id='CaseId'
+                                        id='caseId'
                                         placeholder="CaseId"
                                         className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                                     />
@@ -127,7 +138,7 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
                                         Update
                                     </button>
                                     <button
-                                        onClick={onClose}
+                                        onClick={modelClose}
                                         className="bg-white text-[#10375e] font-bold  py-2 px-5 border border-gray-300 rounded focus:outline-none focus:ring-0"
                                     >
                                         Cancel
@@ -161,11 +172,11 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
                             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                                 <label htmlFor="HearingDate" className="block font-semibold mb-2">Hearing Date</label>
                                 <input
-                                    defaultValue={form.HearingDate}
+                                    ref={dateOfHearing}
                                     onChange={handleInputChange}
                                     type="date"
-                                    name='HearingDate'
-                                    id='HearingDate'
+                                    name='hearingDate'
+                                    id='hearingDate'
                                     placeholder="Hearing Date"
                                     className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                                 />
@@ -173,10 +184,10 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
                             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                                 <label htmlFor="HearingDetails" className="block font-semibold mb-2">Hearing Details</label>
                                 <textarea
-                                    defaultValue={form.HearingDetails}
+                                    ref={descriptionOfHearing}
                                     onChange={handleInputChange}
-                                    id='HearingDetails'
-                                    name='HearingDetails'
+                                    id='hearingDetails'
+                                    name='hearingDetails'
                                     placeholder="HearingDetails"
                                     className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                                 />
@@ -190,7 +201,7 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
                                     Add
                                 </button>
                                 <button
-                                    onClick={onClose}
+                                    onClick={modelClose}
                                     className="bg-white text-[#10375e] font-bold  py-2 px-5 border border-gray-300 rounded focus:outline-none focus:ring-0"
                                 >
                                     Cancel

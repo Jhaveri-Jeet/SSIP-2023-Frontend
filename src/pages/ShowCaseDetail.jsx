@@ -33,7 +33,6 @@ const ShowCaseDetail = () => {
 
   const get_evidences = async (caseId) => {
     const res = await getEvidences(caseId);
-    console.log(res);
     setEvidences(res);
   };
 
@@ -133,35 +132,35 @@ const ShowCaseDetail = () => {
 
             {(tokenData.role === caseData.roleId ||
               tokenData.role == caseData.transferToId) && (
-              <div className="options-menu">
-                <button
-                  type="button"
-                  onClick={handleButtonClick}
-                  className="flex items-center justify-center p-2 border border-gray-400 rounded"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                <div className="options-menu">
+                  <button
+                    type="button"
+                    onClick={handleButtonClick}
+                    className="flex items-center justify-center p-2 border border-gray-400 rounded"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                  </svg>
-                </button>
-              </div>
-            )}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              )}
           </div>
           <div className="flex justify-end relative">
             {showOptions && (
-              <div className="absolute right-0 bg-white shadow-md rounded-md mt-2 p-4">
+              <div className="absolute right-0 bg-white dark:border-slate-700 dark:bg-slate-900 text-slate-800 dark:text-slate-100 shadow-lg rounded-md mt-2 p-4">
                 <ul>
-                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2">
+                  <li className="my-2 block py-1 font-semibold text-gray-500 dark:text-slate-100 hover:text-black md:mx-2">
                     <button
                       className="cursor-pointer"
                       onClick={handleShowHearing}
@@ -169,7 +168,7 @@ const ShowCaseDetail = () => {
                       Add Hearing
                     </button>
                   </li>
-                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2">
+                  <li className="my-2 block py-1 font-semibold text-gray-500 dark:text-slate-100 hover:text-black md:mx-2">
                     <button
                       className="cursor-pointer"
                       onClick={handleShowEvidence}
@@ -177,7 +176,7 @@ const ShowCaseDetail = () => {
                       Add Evidence
                     </button>
                   </li>
-                  <li className="my-2 block border-b border-gray-100 py-1 font-semibold text-gray-500 hover:text-black md:mx-2">
+                  <li className="my-2 block py-1 font-semibold text-gray-500 dark:text-slate-100 hover:text-black md:mx-2">
                     <button
                       className="cursor-pointer"
                       onClick={handleShowWitness}

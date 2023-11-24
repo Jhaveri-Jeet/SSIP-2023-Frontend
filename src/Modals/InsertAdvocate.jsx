@@ -70,14 +70,12 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
     e.preventDefault();
     if (e.target.textContent == "Add") {
       const res = await addAdvocate(form);
-      if (res.status === 200) {
-        advocateName.current.value = "";
-        enrollmentNumber.current.value = "";
-        setForm({
-          name: "",
-          Enrollmentnumber: "",
-        });
-      }
+      advocateName.current.value = "";
+      enrollmentNumber.current.value = "";
+      setForm({
+        name: "",
+        Enrollmentnumber: "",
+      });
     } else if (e.target.textContent == "Update") {
       console.log(updateform);
       const res = await editAdvocateAPI(updateform);
@@ -89,11 +87,6 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
       });
     }
     onClose();
-    setForm({
-      id: "",
-      name: "",
-      Enrollmentnumber: "",
-    });
   };
 
   const modelClose = async () => {

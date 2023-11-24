@@ -1277,14 +1277,14 @@ export const updateHearing = async (data) => {
 export const addHearing = async (data) => {
   try {
     const accessToken = Cookies.get("access_token");
-
+    console.log("Hearing :",data);
     if (!accessToken) {
       console.error("Token not found.");
       return null;
     }
 
     const caseId = data.caseId;
-    const response = await axios.post(`${prefixUrl}/Hearing/${caseId}`, data, {
+    const response = await axios.post(`${prefixUrl}/Hearing`, data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
