@@ -3,11 +3,9 @@ import { prefixUrl } from "./Config";
 import Cookies from "js-cookie";
 
 // ------------------ All Apis for Login ------------------
-export const checkUser = async (userId, passwordHash) => {
+export const checkUser = async (data) => {
   try {
-    const response = await axios.get(
-      `${prefixUrl}/CheckUser/${userId}/${passwordHash}`
-    );
+    const response = await axios.post(`${prefixUrl}/CheckUser/`, data);
 
     const token = response.data.token;
     Cookies.set("access_token", token, { httpOnly: false });
@@ -20,7 +18,6 @@ export const checkUser = async (userId, passwordHash) => {
 
 // ------------------ All Apis for User ------------------
 export const createUser = async (data) => {
-  
   try {
     const accessToken = Cookies.get("access_token");
 
@@ -29,16 +26,12 @@ export const createUser = async (data) => {
       return null;
     }
 
-    const response = await axios.post(
-      `${prefixUrl}/users/`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(`${prefixUrl}/users/`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     console.log(response);
     return response;
   } catch (error) {
@@ -68,7 +61,7 @@ export const getCourtsUsers = async (courtId) => {
     }
 
     const response = await axios
-      .get(`${prefixUrl}/FetchUserAccCourt/${courtId}`,{
+      .get(`${prefixUrl}/FetchUserAccCourt/${courtId}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -529,8 +522,7 @@ export const addCase = async (data) => {
       return null;
     }
 
-    const response = await axios.post(
-      `${prefixUrl}/cases`, data, {
+    const response = await axios.post(`${prefixUrl}/cases`, data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
@@ -661,7 +653,6 @@ export const getAct = async (actId) => {
       },
     });
     return response.data;
-    
   } catch (error) {
     console.log(error);
   }
@@ -793,16 +784,12 @@ export const addCourt = async (data) => {
       return null;
     }
 
-    const response = await axios.post(
-      `${prefixUrl}/courts/`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(`${prefixUrl}/courts/`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     if (response.status === 200) {
       var courtId = response.data;
       var courtData = {
@@ -1002,16 +989,12 @@ export const addState = async (data) => {
     }
 
     console.log(data);
-    const response = await axios.post(
-      `${prefixUrl}/states/`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(`${prefixUrl}/states/`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -1029,15 +1012,12 @@ export const updateState = async (data) => {
 
     let id = data.id;
     console.log(data);
-    const response = await axios.put(
-      `${prefixUrl}/states/${id}`,data,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.put(`${prefixUrl}/states/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -1156,7 +1136,7 @@ export const deleteSection = async (deletesectionId) => {
 export const addSections = async (data) => {
   try {
     const accessToken = Cookies.get("access_token");
-    console.log("session data :",data);
+    console.log("session data :", data);
     if (!accessToken) {
       console.error("Token not found.");
       return null;
@@ -1303,7 +1283,7 @@ export const updateHearing = async (data) => {
 export const addHearing = async (data) => {
   try {
     const accessToken = Cookies.get("access_token");
-    console.log("Hearing :",data);
+    console.log("Hearing :", data);
     if (!accessToken) {
       console.error("Token not found.");
       return null;
@@ -1603,7 +1583,7 @@ export const getAllTransferHighCourts = async () => {
         "Content-Type": "application/json",
       },
     });
-    console.log("all Courts",response.data);
+    console.log("all Courts", response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -1625,7 +1605,7 @@ export const getAllTransferSupremeCourts = async () => {
         "Content-Type": "application/json",
       },
     });
-    console.log("all Courts",response.data);
+    console.log("all Courts", response.data);
     return response.data;
   } catch (error) {
     console.log(error);
