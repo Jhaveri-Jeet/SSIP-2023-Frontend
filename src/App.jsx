@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { getAllCases } from "./Services/Api";
 import "./css/style.css";
@@ -15,28 +15,31 @@ import Courts from "./pages/Courts";
 import Advocates from "./pages/Advocates";
 import Acts from "./pages/Acts";
 import CaseType from "./pages/CaseType";
-import EvidencePage from './pages/EvidencePage';
+import EvidencePage from "./pages/EvidencePage";
 import Cases from "./pages/Cases";
 import States from "./pages/States";
 import Sections from "./pages/Sections";
 import Districts from "./pages/Districts";
-import Demo from './pages/Demo';
+import Demo from "./pages/Demo";
 import { authenticate } from "./utils/Auth";
+import { UpdatePassword } from "./Modals/UpdatePassword";
+import {AppStateProvider, useAppState} from "./hooks/AppStateProvider";
 
 function App() {
-
   const location = useLocation();
   const [caseData, setCaseData] = useState([]);
 
-  const [currentScreen, setCurrentScreen] = useState("Dahsboard");
+  const [currentScreen, setCurrentScreen] = useState("Dashboard");
 
+  const { isOpen, setIsOpen } = useAppState();
+  
   useEffect(() => {
     authenticate();
     document.querySelector("html").style.scrollBehavior = "auto";
     window.scroll({ top: 0 });
     document.querySelector("html").style.scrollBehavior = "";
   }, [location.pathname]); // triggered on route change
-
+  
   useEffect(() => {
     async function fetchData() {
       const casesData = await getAllCases();
@@ -46,16 +49,11 @@ function App() {
     fetchData();
   }, []);
 
+
   return (
     <>
       <Routes>
-        <Route
-          exact 
-          path="/" 
-          element={
-            <Login />
-          }
-        />
+        <Route exact path="/" element={<Login />} />
         <Route
           exact
           path="/dashboard"
@@ -178,27 +176,13 @@ function App() {
             />
           }
         />
-        <Route 
-          exact
-          path="/dashboard/analytics"
-          element={
-            <Analytics />
-          }
-        />
+        <Route exact path="/dashboard/analytics" element={<Analytics />} />
         <Route
           exact
           path="/dashboard/showcasedetail/:caseid"
-          element={
-            <ShowCaseDetail />
-          }
+          element={<ShowCaseDetail />}
         />
-        <Route
-          exact
-          path="/dashboard/demo"
-          element={
-            <Demo />
-          }
-        />
+        <Route exact path="/dashboard/demo" element={<Demo />} />
         <Route
           exact
           path="/dashboard/sections"
@@ -210,6 +194,8 @@ function App() {
           }
         />
       </Routes>
+      <UpdatePassword isOpen={isOpen} setIsOpen={setIsOpen} />
+      
     </>
   );
 }
