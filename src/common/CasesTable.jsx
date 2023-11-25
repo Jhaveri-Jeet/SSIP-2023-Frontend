@@ -1097,7 +1097,7 @@ function CasesTable({
                             </td>
                             <td className="p-2">
                               <div className="flex justify-center  items-center">
-                                <div className="text-slate-800 dark:text-slate-100">
+                                {/* <div className="text-slate-800 dark:text-slate-100">
                                   <button
                                     onClick={() =>
                                       delete_Advocate(singleAdvocate.id)
@@ -1106,7 +1106,7 @@ function CasesTable({
                                   >
                                     <i className="m-2 fa-solid fa-trash"></i>
                                   </button>
-                                </div>
+                                </div> */}
                                 <div className="text-slate-800 dark:text-slate-100 ml-5">
                                   <button
                                     onClick={() => {
