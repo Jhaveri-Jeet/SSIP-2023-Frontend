@@ -158,7 +158,8 @@ useEffect(() => {
                       "role" : {
                         "id": e.target.value,
                         "role": e.target.options[e.target.selectedIndex].id,
-                      }
+                      },
+                      "roleId" : e.target.value
                     });
                   }
                 }
@@ -212,7 +213,8 @@ useEffect(() => {
                       "state" : {
                         "id": e.target.value,
                         "state": e.target.options[e.target.selectedIndex].id,
-                      }
+                      },
+                      "stateId" : e.target.value
                     });
                   }}
                   id="state"
@@ -239,7 +241,8 @@ useEffect(() => {
                       "district" : {
                         "id": e.target.value,
                         "district": e.target.options[e.target.selectedIndex].id,
-                      }
+                      },
+                      "districtId" : e.target.value
                     });
                   }}
                   id="district"
