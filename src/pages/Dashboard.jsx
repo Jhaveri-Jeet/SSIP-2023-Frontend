@@ -130,7 +130,7 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
               />
 
               <CasesTable
-                caseData={caseData}
+                // caseData={caseData}
                 tableName={"District Court Current Cases"}
                 cases={districtCourtCases}
               />
