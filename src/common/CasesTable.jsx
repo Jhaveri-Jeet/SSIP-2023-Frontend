@@ -611,9 +611,9 @@ function CasesTable({
                     <th className="p-2">
                       <div className="font-semibold text-center">Details</div>
                     </th>
-                    <th className="p-2">
+                    {/* <th className="p-2">
                       <div className="font-semibold text-center">Actions</div>
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 {/* Table body */}
@@ -633,7 +633,7 @@ function CasesTable({
                                 {HearingDetailsData.hearingDetails}
                               </div>
                             </td>
-                            <td className="p-2">
+                            {/* <td className="p-2">
                               <div className=" flex justify-center  items-center">
                                 <div className="text-slate-800 dark:text-slate-100 ">
                                   <button
@@ -645,18 +645,9 @@ function CasesTable({
                                     <i className="m-2 fa-solid fa-edit"></i>
                                   </button>
                                 </div>
-                                {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
-                                  <button
-                                    onClick={() =>
-                                      delete_Hearing(HearingDetailsData.id)
-                                    }
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold  rounded"
-                                  >
-                                    <i className="m-2 fa-solid fa-trash"></i>
-                                  </button>
-                                </div> */}
+                                
                               </div>
-                            </td>
+                            </td> */}
                           </tr>
                         );
                       })
