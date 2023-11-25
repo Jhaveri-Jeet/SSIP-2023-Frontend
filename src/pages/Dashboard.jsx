@@ -14,6 +14,7 @@ import {
   getAllDistrictCourtCases,
   getAllSupremeCourtCases,
 } from "../Services/Api";
+import { useModal } from "../hooks/ModalStateProvider";
 
 function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -24,6 +25,8 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
   const [highCourtCases, setHighCourtCases] = useState([]);
   const [districtCourtCases, setDistrictCourtCases] = useState([]);
   const [supremeCourtCases, setSupremeCourtCases] = useState([]);
+
+  const { isOpen } = useModal();
 
   const closeAddCaseModel = () => {
     setAddCaseOpen(false);
@@ -45,6 +48,14 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
     getAllDistrictCourtCasesFunction();
     getAllSupremeCourtCasesFunction();
   }, []);
+
+  useEffect(() => {
+    setCurrentScreen("Dashboard");
+    getAllCasesCountFunction();
+    getAllHighCourtCasesFunction();
+    getAllDistrictCourtCasesFunction();
+    getAllSupremeCourtCasesFunction();
+  }, [isOpen]);
 
   const getAllCasesCountFunction = async () => {
     setDistrictCourtCasesCount(await getAllDistrictCasesCount());
@@ -136,7 +147,6 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
         </main>
 
         {/* <Banner /> */}
-        
       </div>
     </div>
   );

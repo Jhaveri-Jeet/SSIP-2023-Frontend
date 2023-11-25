@@ -10,13 +10,13 @@ import CasesTable from "../common/CasesTable";
 import { cases } from "../constant";
 import Addcase from "../Modals/Addcase";
 import { getAllHighCourtCases } from "../Services/Api";
+import { useModal } from "../hooks/ModalStateProvider";
 
 const Cases = ({ currentScreen, setCurrentScreen }) => {
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [addCaseOpen, setAddCaseOpen] = useState(false);
   const [highCourtCases, setHighCourtCases] = useState([]);
-
+  const { isOpen } = useModal();
 
   const closeAddCaseModel = () => {
     setAddCaseOpen(false);
@@ -24,8 +24,8 @@ const Cases = ({ currentScreen, setCurrentScreen }) => {
 
   const getAllHighCourtCasesFunction = async () => {
     const res = await getAllHighCourtCases();
-    setHighCourtCases(res)
-  }
+    setHighCourtCases(res);
+  };
 
   useEffect(() => {
     setCurrentScreen("Cases");
@@ -35,7 +35,7 @@ const Cases = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("Cases");
     getAllHighCourtCasesFunction();
-  }, [addCaseOpen]);
+  }, [addCaseOpen,isOpen]);
 
   return (
     <div className="flex h-screen overflow-hidden">

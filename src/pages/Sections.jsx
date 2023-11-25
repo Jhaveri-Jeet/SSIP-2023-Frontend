@@ -4,6 +4,7 @@ import Header from "../partials/Header";
 import AddSections from "../Modals/AddSections";
 import CasesTable from "../common/CasesTable";
 import { getAllSections } from "../Services/Api";
+import { useModal } from "../hooks/ModalStateProvider";
 
 const Sections = ({ currentScreen, setCurrentScreen }) => {
 
@@ -11,6 +12,8 @@ const Sections = ({ currentScreen, setCurrentScreen }) => {
   const [sections, setSections] = useState([]);
   const [acts, setActs] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const {isOpen} = useModal()
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -33,7 +36,7 @@ const Sections = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("Sections");
     getAllSectionsData();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
   console.log(sections, acts);
   return (
     <div className="flex h-screen overflow-hidden">

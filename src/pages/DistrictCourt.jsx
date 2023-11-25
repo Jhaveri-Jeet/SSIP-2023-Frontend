@@ -13,6 +13,7 @@ import {
   getAllDistrictRunningCasesCount,
   getAllDistrictCompletedCasesCount,
 } from "../Services/Api";
+import { useModal } from "../hooks/ModalStateProvider";
 
 const DistrictCourt = ({
   caseData,
@@ -54,6 +55,8 @@ const DistrictCourt = ({
     setDistrictCompletedCourtCases(res);
   };
 
+  const {isOpen} = useModal()
+
   useEffect(() => {
     setCurrentScreen("District Court");
     getAllDistrictCourtCasesFunction();
@@ -68,7 +71,7 @@ const DistrictCourt = ({
     getAllDistrictPendingCourtCasesFunction();
     getAllDistrictCompletedCourtCasesFunction();
     getAllDistrictRunningCourtCasesFunction();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
 
   console.log("districtCompletedCourtCases :", districtCompletedCourtCases);
   return (

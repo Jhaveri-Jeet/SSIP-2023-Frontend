@@ -5,6 +5,7 @@ import InsertDistrict from "../Modals/InsertDistrict";
 import { getAllDistrict } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
+import { useModal } from "../hooks/ModalStateProvider";
 
 const Districts = ({ currentScreen, setCurrentScreen }) => {
   
@@ -14,6 +15,8 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
 
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const {isOpen} = useModal()
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -47,7 +50,7 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("Districts");
     getAllDistrictsData();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
 
   return (
     <div className="flex h-screen overflow-hidden">

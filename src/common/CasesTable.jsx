@@ -27,7 +27,6 @@ import {
   getSingleHearing,
   getSingleEvidence,
   getSingleWitness,
-  
 } from "../Services/Api";
 import { addWitness } from "../Services/Api";
 import AddCaseType from "../Modals/AddCaseType";
@@ -37,6 +36,7 @@ import InsertWitness from "../Modals/InsertWitness";
 import InsertEvidence from "../Modals/InsertEvidence";
 import InsertUsers from "../Modals/InsertUsers";
 import { prefixUrl, tokenData } from "../Services/Config";
+import { useModal } from "../hooks/ModalStateProvider";
 
 function CasesTable({
   tableName,
@@ -214,7 +214,7 @@ function CasesTable({
 
   const userRoleId = tokenData.role;
   const userCourtId = tokenData.courtId;
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen } = useModal();
 
   const openInNewTab = (url) => {
     window.open(url, "_blank", "noopener,noreferrer");
@@ -403,20 +403,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={casesearch}
-                    type="text"
-                    style={{maxWidth:'260px'}}
-                    name="Search"
-                    placeholder="Search"
-                    className="inputbox outline-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={casesearch}
+              type="text"
+              style={{ maxWidth: "260px" }}
+              name="Search"
+              placeholder="Search"
+              className="inputbox outline-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -567,14 +566,13 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                        />
                       </div>
                     </td>
                   </tr>
@@ -859,20 +857,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleCourtSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleCourtSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -941,18 +938,17 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1047,20 +1043,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleAdvocateSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleAdvocateSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1131,18 +1126,17 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1161,20 +1155,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleActsSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleActsSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1242,18 +1235,17 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1270,20 +1262,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleCaseTypeSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleCaseTypeSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1349,18 +1340,17 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1377,20 +1367,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleStatesSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleStatesSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1451,18 +1440,17 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1480,19 +1468,18 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleDistrictSearch}
-                    type="text"
-                    name="Search"
-                    placeholder="Search"
-                    className="inputbox outline-none w-56  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleDistrictSearch}
+              type="text"
+              name="Search"
+              placeholder="Search"
+              className="inputbox outline-none w-56  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1553,18 +1540,17 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1582,20 +1568,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleSectionSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleSectionSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1650,18 +1635,17 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>

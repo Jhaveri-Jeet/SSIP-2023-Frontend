@@ -24,7 +24,8 @@ import Districts from "./pages/Districts";
 import Demo from "./pages/Demo";
 import { authenticate } from "./utils/Auth";
 import { UpdatePassword } from "./Modals/UpdatePassword";
-import {AppStateProvider, useAppState} from "./hooks/AppStateProvider";
+import { AppStateProvider, useAppState } from "./hooks/AppStateProvider";
+import { ModalProvider } from "./hooks/ModalStateProvider";
 
 function App() {
   const location = useLocation();
@@ -33,14 +34,14 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState("Dashboard");
 
   const { isOpen, setIsOpen } = useAppState();
-  
+
   useEffect(() => {
     authenticate();
     document.querySelector("html").style.scrollBehavior = "auto";
     window.scroll({ top: 0 });
     document.querySelector("html").style.scrollBehavior = "";
   }, [location.pathname]); // triggered on route change
-  
+
   useEffect(() => {
     async function fetchData() {
       const casesData = await getAllCases();
@@ -50,163 +51,163 @@ function App() {
     fetchData();
   }, []);
 
-
   return (
     <>
-      <Routes>
-        <Route exact path="/" element={<Login />} />
-        <Route
-          exact
-          path="/dashboard"
-          element={
-            <Dashboard
-              caseData={caseData}
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/cases"
-          element={
-            <Cases
-              caseData={caseData}
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/highcourt"
-          element={
-            <HighCourt
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/districtcourt"
-          element={
-            <DistrictCourt
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/supremecourt"
-          element={
-            <SupremeCourt
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-         <Route
-          exact
-          path="/dashboard/users"
-          element={
-            <Users
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/courts"
-          element={
-            <Courts
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/advocates"
-          element={
-            <Advocates
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/acts"
-          element={
-            <Acts
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/Casetype"
-          element={
-            <CaseType
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/states"
-          element={
-            <States
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/districts"
-          element={
-            <Districts
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/dashboard/evidence"
-          element={
-            <EvidencePage
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-        <Route exact path="/dashboard/analytics" element={<Analytics />} />
-        <Route
-          exact
-          path="/dashboard/showcasedetail/:caseid"
-          element={<ShowCaseDetail />}
-        />
-        <Route exact path="/dashboard/demo" element={<Demo />} />
-        <Route
-          exact
-          path="/dashboard/sections"
-          element={
-            <Sections
-              currentScreen={currentScreen}
-              setCurrentScreen={setCurrentScreen}
-            />
-          }
-        />
-      </Routes>
+      <ModalProvider>
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route
+            exact
+            path="/dashboard"
+            element={
+              <Dashboard
+                caseData={caseData}
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/cases"
+            element={
+              <Cases
+                caseData={caseData}
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/highcourt"
+            element={
+              <HighCourt
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/districtcourt"
+            element={
+              <DistrictCourt
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/supremecourt"
+            element={
+              <SupremeCourt
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/users"
+            element={
+              <Users
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/courts"
+            element={
+              <Courts
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/advocates"
+            element={
+              <Advocates
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/acts"
+            element={
+              <Acts
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/Casetype"
+            element={
+              <CaseType
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/states"
+            element={
+              <States
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/districts"
+            element={
+              <Districts
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/dashboard/evidence"
+            element={
+              <EvidencePage
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+          <Route exact path="/dashboard/analytics" element={<Analytics />} />
+          <Route
+            exact
+            path="/dashboard/showcasedetail/:caseid"
+            element={<ShowCaseDetail />}
+          />
+          <Route exact path="/dashboard/demo" element={<Demo />} />
+          <Route
+            exact
+            path="/dashboard/sections"
+            element={
+              <Sections
+                currentScreen={currentScreen}
+                setCurrentScreen={setCurrentScreen}
+              />
+            }
+          />
+        </Routes>
+      </ModalProvider>
       <UpdatePassword isOpen={isOpen} setIsOpen={setIsOpen} />
-      
     </>
   );
 }

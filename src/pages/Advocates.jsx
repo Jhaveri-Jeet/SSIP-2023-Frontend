@@ -4,6 +4,7 @@ import Header from "../partials/Header";
 import InsertAdvocate from "../Modals/InsertAdvocate";
 import CasesTable from "../common/CasesTable";
 import { getAllAdvocates } from "../Services/Api";
+import { useModal } from "../hooks/ModalStateProvider";
 
 const Advocates = ({ currentScreen, setCurrentScreen }) => {
 
@@ -11,6 +12,8 @@ const Advocates = ({ currentScreen, setCurrentScreen }) => {
   const [advocates,setAdvocate] = useState([]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const {isOpen} = useModal()
+
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -33,7 +36,7 @@ const Advocates = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("Advocates");
     getAllAdvocatesData();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
  
 
   return (
