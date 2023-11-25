@@ -4,6 +4,7 @@ function InsertActs({ isOpen, onClose, editSingleAct }) {
     const actName = useRef(null);
     const actDescription = useRef(null);
 
+    console.log("first")
     const [form, setForm] = useState({
         name: "",
         Description: "",
