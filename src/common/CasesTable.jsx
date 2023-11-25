@@ -1477,8 +1477,9 @@ function CasesTable({
               onChange={handleDistrictSearch}
               type="text"
               name="Search"
+              style={{maxWidth:"260px"}}
               placeholder="Search"
-              className="inputbox outline-none w-56  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+              className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
             />
           </header>
           <div className="p-3">
