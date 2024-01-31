@@ -1,7 +1,7 @@
 
 import Cookies from "js-cookie";
 
-export const prefixUrl = "http://10.30.64.181:5000";
+export const prefixUrl = "http://localhost:5000";
 export const prefixUrlForMailAndSms = "http://10.30.64.180:8888";
 
 let tokenData = null;

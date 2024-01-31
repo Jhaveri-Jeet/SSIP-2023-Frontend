@@ -5,24 +5,15 @@ import InsertState from "../Modals/InsertState";
 import { getAllStates } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
-<<<<<<< HEAD
-import { authenticate } from "../utils/Auth";
-=======
 import { useModal } from "../hooks/ModalStateProvider";
->>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 const States = ({ currentScreen, setCurrentScreen }) => {
   authenticate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
-<<<<<<< HEAD
   const [States, setStates] = useState([]);
 
-=======
-  const [States,setStates] = useState([]);
-
-  const {isOpen} = useModal()
->>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
+  const { isOpen } = useModal();
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const openForm = () => {
@@ -57,7 +48,7 @@ const States = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("States");
     getAllStatesData();
-  }, [isFormOpen,isOpen]);
+  }, [isFormOpen, isOpen]);
 
   return (
     <div className="flex h-screen overflow-hidden">

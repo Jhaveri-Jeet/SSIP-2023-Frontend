@@ -12,11 +12,7 @@ import {
   getAllSupremeCasesCount,
   getCasesAccToCourt
 } from "../Services/Api";
-<<<<<<< HEAD
-import { authenticate } from "../utils/Auth";
-=======
 import { useModal } from "../hooks/ModalStateProvider";
->>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
   authenticate();
@@ -120,42 +116,20 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
                 casesNumber={supremeCourtCasesCount}
                 options={[{ name: "Option 1" }, { name: "Option 2" }]}
               />
-<<<<<<< HEAD
-              {userRoleId == 1 && (
-                <CasesTable
-                  caseData={caseData}
-                  tableName={"District Court Current Cases"}
-                  cases={courtCases}
-                />
-              )}
-              {userRoleId == 3 && (
-                <CasesTable
-                  tableName={"High Court Current Cases"}
-                  cases={courtCases}
-                />
-              )}
-              {userRoleId == 4 && (
-                <CasesTable
-                  tableName={"Supreme Court Current Cases"}
-                  cases={courtCases}
-                />
-              )}
-=======
 
               <CasesTable
                 // caseData={caseData}
                 tableName={"District Court Current Cases"}
-                cases={districtCourtCases}
+                cases={districtCourtCasesCount}
               />
               <CasesTable
                 tableName={"High Court Current Cases"}
-                cases={highCourtCases}
+                cases={highCourtCasesCount}
               />
               <CasesTable
                 tableName={"Supreme Court Current Cases"}
-                cases={supremeCourtCases}
+                cases={supremeCourtCasesCount}
               />
->>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
             </div>
           </div>
         </main>

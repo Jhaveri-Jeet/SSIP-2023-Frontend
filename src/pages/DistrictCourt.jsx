@@ -13,11 +13,7 @@ import {
   getAllDistrictRunningCasesCount,
   getAllDistrictCompletedCasesCount,
 } from "../Services/Api";
-<<<<<<< HEAD
-import { authenticate } from "../utils/Auth";
-=======
 import { useModal } from "../hooks/ModalStateProvider";
->>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 const DistrictCourt = ({ caseData, currentScreen, setCurrentScreen }) => {
   authenticate();

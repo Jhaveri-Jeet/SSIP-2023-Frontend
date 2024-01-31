@@ -5,59 +5,6 @@ import Header from "../partials/Header";
 import InsertActs from "../Modals/InsertActs";
 import CasesTable from "../common/CasesTable";
 import { getAllActs } from "../Services/Api";
-<<<<<<< HEAD
-import { authenticate } from "../utils/Auth";
-
-const Acts = ({ currentScreen, setCurrentScreen }) => {
-  authenticate();
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [acts, setActs] = useState([]);
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  const openForm = () => {
-    setIsFormOpen(true);
-  };
-
-  const closeForm = () => {
-    setIsFormOpen(false);
-  };
-
-  const getAllActsData = async () => {
-    const data = await getAllActs();
-    setActs(data);
-  };
-  useEffect(() => {
-    setCurrentScreen("Acts");
-    getAllActsData();
-  }, []);
-
-  useEffect(() => {
-    setCurrentScreen("Acts");
-    getAllActsData();
-  }, [acts]);
-
-  return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        currentScreen={currentScreen}
-        setCurrentScreen={setCurrentScreen}
-      />
-
-      {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        {/*  Site header */}
-        <Header
-          sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
-          currentScreen={currentScreen}
-          setCurrentScreen={setCurrentScreen}
-        />
-
-=======
 import { useModal } from "../hooks/ModalStateProvider";
 
 const Acts = ({ currentScreen, setCurrentScreen }) => {
@@ -80,7 +27,7 @@ const Acts = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("Acts");
     getAllActsData();
-  }, [isFormOpen,isOpen]);
+  }, [isFormOpen, isOpen]);
 
   useEffect(() => {
     setCurrentScreen("Acts");
@@ -107,7 +54,6 @@ const Acts = ({ currentScreen, setCurrentScreen }) => {
           setCurrentScreen={setCurrentScreen}
         />
 
->>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="sm:flex sm:justify-end sm:items-center mb-8">

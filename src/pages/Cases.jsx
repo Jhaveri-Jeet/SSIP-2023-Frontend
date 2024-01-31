@@ -10,16 +10,6 @@ import CasesTable from "../common/CasesTable";
 import { cases } from "../constant";
 import Addcase from "../Modals/Addcase";
 import { getAllHighCourtCases } from "../Services/Api";
-<<<<<<< HEAD
-import { authenticate } from "../utils/Auth";
-
-const Cases = ({ currentScreen, setCurrentScreen }) => {
-  authenticate();
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [addCaseOpen, setAddCaseOpen] = useState(false);
-  const [highCourtCases, setHighCourtCases] = useState([]);
-=======
 import { useModal } from "../hooks/ModalStateProvider";
 
 const Cases = ({ currentScreen, setCurrentScreen }) => {
@@ -27,7 +17,6 @@ const Cases = ({ currentScreen, setCurrentScreen }) => {
   const [addCaseOpen, setAddCaseOpen] = useState(false);
   const [highCourtCases, setHighCourtCases] = useState([]);
   const { isOpen } = useModal();
->>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
   const closeAddCaseModel = () => {
     setAddCaseOpen(false);

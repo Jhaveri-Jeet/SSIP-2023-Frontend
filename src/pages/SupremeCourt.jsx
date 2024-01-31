@@ -15,11 +15,7 @@ import {
 } from "../Services/Api";
 import Addcase from "../Modals/Addcase";
 import { tokenData } from "../Services/Config";
-<<<<<<< HEAD
-import { authenticate } from "../utils/Auth";
-=======
 import { useModal } from "../hooks/ModalStateProvider";
->>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
   authenticate();
