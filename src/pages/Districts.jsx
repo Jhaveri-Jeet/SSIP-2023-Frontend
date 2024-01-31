@@ -5,8 +5,12 @@ import InsertDistrict from "../Modals/InsertDistrict";
 import { getAllDistrict } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
+<<<<<<< HEAD
 import axios from "axios";
 import { authenticate } from "../utils/Auth";
+=======
+import { useModal } from "../hooks/ModalStateProvider";
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 const Districts = ({ currentScreen, setCurrentScreen }) => {
   authenticate();
@@ -16,6 +20,8 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
   const [districts, setDistricts] = useState([]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const {isOpen} = useModal()
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -49,7 +55,7 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("Districts");
     getAllDistrictsData();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
 
   return (
     <div className="flex h-screen overflow-hidden">

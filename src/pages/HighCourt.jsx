@@ -15,7 +15,11 @@ import {
   getAllPendingHighCasesCount,
 } from "../Services/Api";
 import { tokenData } from "../Services/Config";
+<<<<<<< HEAD
 import { authenticate } from "../utils/Auth";
+=======
+import { useModal } from "../hooks/ModalStateProvider";
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 const HighCourt = ({ currentScreen, setCurrentScreen }) => {
   authenticate();
@@ -28,6 +32,8 @@ const HighCourt = ({ currentScreen, setCurrentScreen }) => {
     useState(0);
   const [highCourtCases, setHighCourtCases] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const {isOpen} = useModal()
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -46,7 +52,7 @@ const HighCourt = ({ currentScreen, setCurrentScreen }) => {
     setCurrentScreen("High Court");
     getAllHighCourtCasesFunction();
     getAllCasesCountFunction();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
 
   const getAllCasesCountFunction = async () => {
     setCompletedHighCourtCasesCount(await getAllCompletedHighCasesCount());

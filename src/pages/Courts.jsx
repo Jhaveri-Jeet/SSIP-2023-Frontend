@@ -4,7 +4,11 @@ import Header from "../partials/Header";
 import InsertCourt from "../Modals/InsertCourt";
 import CasesTable from "../common/CasesTable";
 import { getAllCourts } from "../Services/Api";
+<<<<<<< HEAD
 import { authenticate } from "../utils/Auth";
+=======
+import { useModal } from "../hooks/ModalStateProvider";
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 const Courts = ({ currentScreen, setCurrentScreen }) => {
   authenticate();
@@ -14,6 +18,9 @@ const Courts = ({ currentScreen, setCurrentScreen }) => {
   const [courts, setCourts] = useState([]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const {isOpen} = useModal()
+
   const [formData, setFormData] = useState({
     Courtname: "",
     Statename: "",
@@ -52,7 +59,7 @@ const Courts = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("Courts");
     getAllCourtsData();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
 
   return (
     <div className="flex h-screen overflow-hidden">

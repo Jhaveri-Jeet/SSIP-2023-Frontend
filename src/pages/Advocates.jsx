@@ -4,7 +4,11 @@ import Header from "../partials/Header";
 import InsertAdvocate from "../Modals/InsertAdvocate";
 import CasesTable from "../common/CasesTable";
 import { getAllAdvocates } from "../Services/Api";
+<<<<<<< HEAD
 import { authenticate } from "../utils/Auth";
+=======
+import { useModal } from "../hooks/ModalStateProvider";
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 const Advocates = ({ currentScreen, setCurrentScreen }) => {
   authenticate();
@@ -13,6 +17,8 @@ const Advocates = ({ currentScreen, setCurrentScreen }) => {
   const [advocates, setAdvocate] = useState([]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const {isOpen} = useModal()
+
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -35,7 +41,12 @@ const Advocates = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("Advocates");
     getAllAdvocatesData();
+<<<<<<< HEAD
   }, [isFormOpen]);
+=======
+  }, [isFormOpen,isOpen]);
+ 
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
   return (
     <div className="flex h-screen overflow-hidden">

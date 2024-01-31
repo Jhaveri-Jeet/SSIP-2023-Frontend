@@ -12,7 +12,11 @@ import {
   getAllSupremeCasesCount,
   getCasesAccToCourt
 } from "../Services/Api";
+<<<<<<< HEAD
 import { authenticate } from "../utils/Auth";
+=======
+import { useModal } from "../hooks/ModalStateProvider";
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
   authenticate();
@@ -22,6 +26,8 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
   const [districtCourtCasesCount, setDistrictCourtCasesCount] = useState(0);
   const [supremeCourtCasesCount, setSupremeCourtCasesCount] = useState(0);
   const [courtCases, setCourtCases] = useState([]);
+
+  const { isOpen } = useModal();
 
   const closeAddCaseModel = () => {
     setAddCaseOpen(false);
@@ -39,6 +45,14 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
     getAllCasesCountFunction();
     getAllCourtCases(userCourtId);
   }, []);
+
+  useEffect(() => {
+    setCurrentScreen("Dashboard");
+    getAllCasesCountFunction();
+    getAllHighCourtCasesFunction();
+    getAllDistrictCourtCasesFunction();
+    getAllSupremeCourtCasesFunction();
+  }, [isOpen]);
 
   const getAllCasesCountFunction = async () => {
     setDistrictCourtCasesCount(await getAllDistrictCasesCount());
@@ -106,6 +120,7 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
                 casesNumber={supremeCourtCasesCount}
                 options={[{ name: "Option 1" }, { name: "Option 2" }]}
               />
+<<<<<<< HEAD
               {userRoleId == 1 && (
                 <CasesTable
                   caseData={caseData}
@@ -125,6 +140,22 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
                   cases={courtCases}
                 />
               )}
+=======
+
+              <CasesTable
+                // caseData={caseData}
+                tableName={"District Court Current Cases"}
+                cases={districtCourtCases}
+              />
+              <CasesTable
+                tableName={"High Court Current Cases"}
+                cases={highCourtCases}
+              />
+              <CasesTable
+                tableName={"Supreme Court Current Cases"}
+                cases={supremeCourtCases}
+              />
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
             </div>
           </div>
         </main>

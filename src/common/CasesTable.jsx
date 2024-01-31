@@ -36,6 +36,7 @@ import InsertWitness from "../Modals/InsertWitness";
 import InsertEvidence from "../Modals/InsertEvidence";
 import InsertUsers from "../Modals/InsertUsers";
 import { prefixUrl, tokenData } from "../Services/Config";
+import { useModal } from "../hooks/ModalStateProvider";
 
 function CasesTable({
   tableName,
@@ -225,7 +226,7 @@ function CasesTable({
 
   const userRoleId = tokenData.role;
   const userCourtId = tokenData.courtId;
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen } = useModal();
 
   const openInNewTab = (url) => {
     window.open(url, "_blank", "noopener,noreferrer");
@@ -577,10 +578,13 @@ function CasesTable({
                           currentPage={currentPage}
                           totalPages={TotalPage}
                           onPageChange={onPageChange}
+<<<<<<< HEAD
                           pageSize={PageSize}
                           onPageSizeChange={(event) =>
                             changepagesize(event, cases, setFilteredCases)
                           }
+=======
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
                         />
                       </div>
                     </td>
@@ -599,6 +603,7 @@ function CasesTable({
     );
   }
   if (HearingDetail) {
+<<<<<<< HEAD
     console.log("yufhehfhefherfher :",HearingDetail)
     console.log("role ID   :",HearingDetail.roleId)
     if (HearingDetail.roleId == 1) {
@@ -678,6 +683,72 @@ function CasesTable({
                   </tbody>
                 </table>
               </div>
+=======
+    return (
+      <>
+        <div className=" col-span-full xl:col-span-12  bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+            <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+              {tableName}
+            </h2>
+          </header>
+          <div className="p-3">
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="table-auto w-full dark:text-slate-300">
+                {/* Table header */}
+                <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                  <tr>
+                    <th className="p-2">
+                      <div className="font-semibold text-center">Date</div>
+                    </th>
+                    <th className="p-2">
+                      <div className="font-semibold text-center">Details</div>
+                    </th>
+                    {/* <th className="p-2">
+                      <div className="font-semibold text-center">Actions</div>
+                    </th> */}
+                  </tr>
+                </thead>
+                {/* Table body */}
+
+                <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                  {HearingDetail
+                    ? HearingDetail.map((HearingDetailsData, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="p-2">
+                              <div className="text-center text-emerald-500">
+                                {HearingDetailsData.hearingDate}
+                              </div>
+                            </td>
+                            <td className="p-2">
+                              <div className="text-center">
+                                {HearingDetailsData.hearingDetails}
+                              </div>
+                            </td>
+                            {/* <td className="p-2">
+                              <div className=" flex justify-center  items-center">
+                                <div className="text-slate-800 dark:text-slate-100 ">
+                                  <button
+                                    onClick={() => {
+                                      edit_Hearing(HearingDetailsData.id);
+                                    }}
+                                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold  rounded"
+                                  >
+                                    <i className="m-2 fa-solid fa-edit"></i>
+                                  </button>
+                                </div>
+                                
+                              </div>
+                            </td> */}
+                          </tr>
+                        );
+                      })
+                    : null}
+                </tbody>
+              </table>
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
             </div>
           </div>
 
@@ -1494,10 +1565,13 @@ function CasesTable({
                           currentPage={currentPage}
                           totalPages={TotalPage}
                           onPageChange={onPageChange}
+<<<<<<< HEAD
                           pageSize={PageSize}
                           onPageSizeChange={(event) =>
                             changepagesize(event, Courts, setFilteredCourts)
                           }
+=======
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
                         />
                       </div>
                     </td>
@@ -1686,6 +1760,7 @@ function CasesTable({
                           currentPage={currentPage}
                           totalPages={TotalPage}
                           onPageChange={onPageChange}
+<<<<<<< HEAD
                           pageSize={PageSize}
                           onPageSizeChange={(event) =>
                             changepagesize(
@@ -1694,6 +1769,8 @@ function CasesTable({
                               setFilteredAdvocates
                             )
                           }
+=======
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
                         />
                       </div>
                     </td>
@@ -1803,10 +1880,13 @@ function CasesTable({
                           currentPage={currentPage}
                           totalPages={TotalPage}
                           onPageChange={onPageChange}
+<<<<<<< HEAD
                           pageSize={PageSize}
                           onPageSizeChange={(event) =>
                             changepagesize(event, Acts, setFilteredActs)
                           }
+=======
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
                         />
                       </div>
                     </td>
@@ -1912,10 +1992,13 @@ function CasesTable({
                           currentPage={currentPage}
                           totalPages={TotalPage}
                           onPageChange={onPageChange}
+<<<<<<< HEAD
                           pageSize={PageSize}
                           onPageSizeChange={(event) =>
                             changepagesize(event, CaseType, setFilteredCasetype)
                           }
+=======
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
                         />
                       </div>
                     </td>
@@ -2016,10 +2099,13 @@ function CasesTable({
                           currentPage={currentPage}
                           totalPages={TotalPage}
                           onPageChange={onPageChange}
+<<<<<<< HEAD
                           pageSize={PageSize}
                           onPageSizeChange={(event) =>
                             changepagesize(event, States, setFilteredStates)
                           }
+=======
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
                         />
                       </div>
                     </td>
@@ -2051,9 +2137,15 @@ function CasesTable({
               onChange={handleDistrictSearch}
               type="text"
               name="Search"
+<<<<<<< HEAD
               placeholder="Search"
               style={{ maxWidth: "260px" }}
               className="inputbox outline-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+=======
+              style={{maxWidth:"260px"}}
+              placeholder="Search"
+              className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
             />
           </header>
           <div className="p-3">
@@ -2121,6 +2213,7 @@ function CasesTable({
                           currentPage={currentPage}
                           totalPages={TotalPage}
                           onPageChange={onPageChange}
+<<<<<<< HEAD
                           pageSize={PageSize}
                           onPageSizeChange={(event) =>
                             changepagesize(
@@ -2129,6 +2222,8 @@ function CasesTable({
                               setFilteredDistricts
                             )
                           }
+=======
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
                         />
                       </div>
                     </td>
@@ -2224,10 +2319,13 @@ function CasesTable({
                           currentPage={currentPage}
                           totalPages={TotalPage}
                           onPageChange={onPageChange}
+<<<<<<< HEAD
                           pageSize={PageSize}
                           onPageSizeChange={(event) =>
                             changepagesize(event, sections, setFilteredSection)
                           }
+=======
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
                         />
                       </div>
                     </td>

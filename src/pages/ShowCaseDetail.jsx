@@ -13,6 +13,7 @@ import {
   getallEvidences,
   getWitnesses,
 } from "../Services/Api";
+import { useModal } from "../hooks/ModalStateProvider";
 
 const ShowCaseDetail = () => {
   const { caseid } = useParams();
@@ -24,6 +25,8 @@ const ShowCaseDetail = () => {
   const [isHearingOpen, setIsHearingOpen] = useState(false);
   const [isEvidenceOpen, setIsEvidenceOpen] = useState(false);
   const [isWitnessOpen, setIsWitnessOpen] = useState(false);
+
+  const {isOpen} = useModal()
 
   const get_hearing = async (caseId) => {
     const res = await getHearing(caseId);
@@ -88,7 +91,7 @@ const ShowCaseDetail = () => {
   }, []);
   useEffect(() => {
     getAllDataFroHearingEvidenceAndWitness();
-  }, [isEvidenceOpen, isWitnessOpen, isHearingOpen]);
+  }, [isEvidenceOpen, isWitnessOpen, isHearingOpen, isOpen]);
 
   // return (
   //   <>

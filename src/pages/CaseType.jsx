@@ -4,16 +4,27 @@ import Header from "../partials/Header";
 import AddCaseType from "../Modals/AddCaseType";
 import CasesTable from "../common/CasesTable";
 import { getAllCaseType } from "../Services/Api";
+<<<<<<< HEAD
 import { authenticate } from "../utils/Auth";
 
 const CaseType = ({ currentScreen, setCurrentScreen }) => {
   authenticate();
 
+=======
+import { useModal } from "../hooks/ModalStateProvider";
+
+const CaseType = ({ currentScreen, setCurrentScreen }) => {
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const [caseType, setCaseType] = useState([]);
+<<<<<<< HEAD
+=======
+
+  const { isOpen } = useModal();
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -34,7 +45,7 @@ const CaseType = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("CaseType");
     getAllCaseTypeData();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
 
   return (
     <div className="flex h-screen overflow-hidden">

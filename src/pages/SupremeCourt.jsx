@@ -15,7 +15,11 @@ import {
 } from "../Services/Api";
 import Addcase from "../Modals/Addcase";
 import { tokenData } from "../Services/Config";
+<<<<<<< HEAD
 import { authenticate } from "../utils/Auth";
+=======
+import { useModal } from "../hooks/ModalStateProvider";
+>>>>>>> 1adee70cf056466b813cf4ac23c6f9ec4ffe68bb
 
 const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
   authenticate();
@@ -28,6 +32,8 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
     useState(0);
   const [supremeCourtCases, setSupremeCourtCases] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const {isOpen} = useModal()
 
   const openForm = () => {
     setIsFormOpen(true);
@@ -47,7 +53,7 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
     setCurrentScreen("Supreme Court");
     getAllSupremeCourtCasesFunction();
     getAllCasesCountFunction();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
 
   const getAllCasesCountFunction = async () => {
     setCompletedSupremeCourtCasesCount(

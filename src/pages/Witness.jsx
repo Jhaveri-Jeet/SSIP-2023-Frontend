@@ -4,12 +4,15 @@ import Header from "../partials/Header";
 import {WitnessData  } from "../constant";
 import CasesTable from "../common/CasesTable";
 import InsertWitness from "../Modals/InsertWitness";
+import { useModal } from "../hooks/ModalStateProvider";
 
 export default function Witness({ currentScreen, setCurrentScreen }) {
  
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const [isFormOpen, setIsFormOpen] = useState(false);
+
+    const {isOpen} = useModal()
 
     const openForm = () => {
         setIsFormOpen(true);

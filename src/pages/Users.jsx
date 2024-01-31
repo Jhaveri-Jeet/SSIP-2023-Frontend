@@ -6,6 +6,7 @@ import CasesTable from "../common/CasesTable";
 import { getAllCourts, getCourtsUsers } from "../Services/Api";
 import { tokenData } from "../Services/Config";
 import InsertUsers from "../Modals/InsertUsers";
+import { useModal } from "../hooks/ModalStateProvider";
 
 const Users = ({ currentScreen, setCurrentScreen }) => {
 
@@ -13,6 +14,7 @@ const Users = ({ currentScreen, setCurrentScreen }) => {
   const [bannerOpen, setBannerOpen] = useState(false);
   const [users, setUsers] = useState([]);
 
+  const {isOpen} = useModal();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({
     UserName: "",
@@ -53,7 +55,7 @@ const Users = ({ currentScreen, setCurrentScreen }) => {
   useEffect(() => {
     setCurrentScreen("Users");
     getAllUsersData();
-  }, [isFormOpen]);
+  }, [isFormOpen,isOpen]);
 
   return (
     <div className="flex h-screen overflow-hidden">
