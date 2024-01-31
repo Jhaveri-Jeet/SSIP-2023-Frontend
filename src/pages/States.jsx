@@ -5,13 +5,13 @@ import InsertState from "../Modals/InsertState";
 import { getAllStates } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
+import { authenticate } from "../utils/Auth";
 
 const States = ({ currentScreen, setCurrentScreen }) => {
-  
+  authenticate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
-  const [States,setStates] = useState([]);
-
+  const [States, setStates] = useState([]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -38,7 +38,7 @@ const States = ({ currentScreen, setCurrentScreen }) => {
     const data = await getAllStates();
     setStates(data);
   };
-  
+
   useEffect(() => {
     setCurrentScreen("States");
     getAllStatesData();
@@ -93,11 +93,14 @@ const States = ({ currentScreen, setCurrentScreen }) => {
               getAllStatesData={getAllStatesData}
             />
             <div className="grid grid-cols-12 gap-6">
-              <CasesTable getAllStatesData={getAllStatesData} States={States} tableName={"States Lists"} />
+              <CasesTable
+                getAllStatesData={getAllStatesData}
+                States={States}
+                tableName={"States Lists"}
+              />
             </div>
           </div>
         </main>
-
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import {
 } from "../Services/Api";
 
 const Addcase = ({ isOpen, onClose, editCaseData }) => {
-  const userRoleId = tokenData.role;
+  const userRoleId = parseInt(tokenData.role);
   const userCourtId = parseInt(tokenData.courtId);
   const userLoginRoleId = 1;
   const userLoginHighRoleId = 3;
@@ -22,7 +22,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
   const [acts, setActs] = useState([]);
 
   const [form, setForm] = useState({
-    DateFiled: "",
+    // DateFiled: "",
     CnrNumber: "",
     Petitioner: "",
     Defendant: "",
@@ -34,6 +34,8 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
     AttorneyId: "",
     AdvocateId: "",
     ActId: "",
+    PetitionerNumber: "",
+    PetitionerEmail: "",
     CourtId: userCourtId,
     CaseTypeId: "",
     RoleId: userRoleId,
@@ -148,8 +150,9 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await addCase(form);
+console.log(form);
     setForm({
-      DateFiled: "",
+      // DateFiled: "",
       CnrNumber: "",
       Petitioner: "",
       Defendant: "",
@@ -480,7 +483,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
               </h1>
             </div>
             <div className="grid grid-cols-1 gap-1 md:gap-5 md:grid-cols-3 mt-1 dark:text-gray-800">
-              <div>
+              {/* <div>
                 <label>DateFiled</label>
                 <input
                   value={form.DateFiled}
@@ -491,7 +494,7 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   name="DateFiled"
                   className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                 />
-              </div>
+              </div> */}
               <div>
                 <label>CnrNumber</label>
                 <input
@@ -583,7 +586,30 @@ const Addcase = ({ isOpen, onClose, editCaseData }) => {
                   className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
                 />
               </div>
-
+              <div>
+                <label>Pettioner Number</label>
+                <input
+                  value={form.PetitionerNumber}
+                  onChange={(e) =>
+                    handleInputChange("PetitionerNumber", e.target.value)
+                  }
+                  type="text"
+                  name="PetitionerNumber"
+                  className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div>
+                <label>Pettioner Email</label>
+                <input
+                  value={form.PetitionerEmail}
+                  onChange={(e) =>
+                    handleInputChange("PetitionerEmail", e.target.value)
+                  }
+                  type="email"
+                  name="PetitionerEmail"
+                  className="w-full border border-gray-300 text-gray-900 mt-1 md:mt-3 p-2 rounded-lg focus:outline-none focus:shadow-outline"
+                />
+              </div>
               <div>
                 <label>Act Name</label>
                 <select

@@ -10,13 +10,14 @@ import CasesTable from "../common/CasesTable";
 import { cases } from "../constant";
 import Addcase from "../Modals/Addcase";
 import { getAllHighCourtCases } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
 const Cases = ({ currentScreen, setCurrentScreen }) => {
+  authenticate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [addCaseOpen, setAddCaseOpen] = useState(false);
   const [highCourtCases, setHighCourtCases] = useState([]);
-
 
   const closeAddCaseModel = () => {
     setAddCaseOpen(false);
@@ -24,8 +25,8 @@ const Cases = ({ currentScreen, setCurrentScreen }) => {
 
   const getAllHighCourtCasesFunction = async () => {
     const res = await getAllHighCourtCases();
-    setHighCourtCases(res)
-  }
+    setHighCourtCases(res);
+  };
 
   useEffect(() => {
     setCurrentScreen("Cases");

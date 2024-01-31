@@ -13,13 +13,10 @@ import {
   getAllDistrictRunningCasesCount,
   getAllDistrictCompletedCasesCount,
 } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
-const DistrictCourt = ({
-  caseData,
-  currentScreen,
-  setCurrentScreen,
-}) => {
-
+const DistrictCourt = ({ caseData, currentScreen, setCurrentScreen }) => {
+  authenticate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [districtCourtCases, setDistrictCourtCases] = useState("");
   const [districtPendingCourtCases, setDistrictPendingCourtCases] =
@@ -97,9 +94,9 @@ const DistrictCourt = ({
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 {/* Filter button */}
-                <FilterButton />
+                {/* <FilterButton /> */}
                 {/* Datepicker built with flatpickr */}
-                <Datepicker />
+                {/* <Datepicker /> */}
                 {/* Add view button */}
                 {tokenData.role == 1 && (
                   <button

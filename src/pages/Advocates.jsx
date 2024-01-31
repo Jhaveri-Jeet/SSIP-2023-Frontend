@@ -4,11 +4,13 @@ import Header from "../partials/Header";
 import InsertAdvocate from "../Modals/InsertAdvocate";
 import CasesTable from "../common/CasesTable";
 import { getAllAdvocates } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
 const Advocates = ({ currentScreen, setCurrentScreen }) => {
+  authenticate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [advocates,setAdvocate] = useState([]);
+  const [advocates, setAdvocate] = useState([]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -34,7 +36,6 @@ const Advocates = ({ currentScreen, setCurrentScreen }) => {
     setCurrentScreen("Advocates");
     getAllAdvocatesData();
   }, [isFormOpen]);
- 
 
   return (
     <div className="flex h-screen overflow-hidden">

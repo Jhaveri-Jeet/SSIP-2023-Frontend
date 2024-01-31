@@ -1,13 +1,13 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { addHearing, updateHearing } from '../Services/Api';
-
+import {tokenData} from '../Services/Config'
 
 function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
-
     const dateOfHearing = useRef(null);
     const descriptionOfHearing = useRef(null);
 
     const [form, setForm] = useState({
+        roleId:tokenData.role,
         caseId: caseId,
         hearingDate: "",
         hearingDetails: "",
@@ -19,7 +19,31 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
         caseId: editeHearing ? (editeHearing.caseId ? editeHearing.caseId : "") : "",
         hearingDate: editeHearing ? (editeHearing.hearingDate ? editeHearing.hearingDate : "") : "",
         hearingDetails: editeHearing ? (editeHearing.hearingDetails ? editeHearing.HearingDetails : "") : "",
+        roleId:tokenData.role,
     });
+
+
+    useEffect(() => {
+        const dtToday = new Date();
+    
+        let month = dtToday.getMonth() + 1;
+        let day = dtToday.getDate();
+        const year = dtToday.getFullYear();
+    
+        if (month < 10) {
+          month = '0' + month.toString();
+        }
+        if (day < 10) {
+          day = '0' + day.toString();
+        }
+    
+        const maxDate = year + '-' + month + '-' + day;
+    
+        // or instead:
+        // const maxDate = dtToday.toISOString().substr(0, 10);
+    
+        document.getElementById('txtDate').min = maxDate;
+      }, []); 
 
     useEffect(() => {
 
@@ -33,7 +57,7 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
             console.log(updateform);
         } else {
             setForm({
-
+                roleId:tokenData.role,
                 caseId: caseId,
                 hearingDate: "",
                 hearingDetails: "",
@@ -69,9 +93,38 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
             console.log(form);
             const dataToAdd = { ...form, ...caseId };
             const res = await addHearing(dataToAdd);
-            console.log("data :",dataToAdd);
+            // console.log("data :",dataToAdd);
+            
+            if(res.status == 200){
+                
+                const dataForSingleCase = await getCaseDetails(parseInt(caseid));
+
+                console.log(dataForSingleCase)
+
+                // let advocateEmail = dataForSingleCase.Advocate.Email;
+
+                const dataForMail = {
+                    dateOfHearing: dataofHearing.current.value,
+                    subject : `Hearing Date`, 
+                    body: `Your Case No.${dataForSingleCase.cnrNumber} next hearing Date: ${dataofHearing.current.value}`,
+                    to : [dataForSingleCase.Advocate.Email,dataForSingleCase.PetitionerEmail,dataForSingleCase.DefendantEmail,dataForSingleCase.Attorney.Email]
+                }
+                
+                const responseForMail = await sendMailForHearing(dataForMail);
+
+                const dataForSms = {
+                    HearingDate:dataofHearing.current.value,
+                    Message:`Your Case No.${dataForSingleCase.cnrNumber} next hearing Date: ${dataofHearing.current.value}`,
+                    to : [dataForSingleCase.Advocate.Number,dataForSingleCase.PetitionerNumber,dataForSingleCase.DefendantNumber,dataForSingleCase.Attorney.Number]
+                };
+                
+                const responseForSms = await sendSmsForHearing(dataForSms);
+
+            }
             dateOfHearing.current.value = "";
             descriptionOfHearing.current.value = "";
+            
+
         }
         else if (e.target.textContent == "Update") {
             console.log(updateform);
@@ -113,7 +166,7 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
                                         onChange={handleInputChange}
                                         type="date"
                                         name='hearingDate'
-                                        id='hearingDate'
+                                        id='txtDate'
                                         placeholder="Hearing Date"
                                         className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                                     />
@@ -176,7 +229,7 @@ function InsertHearing({ isOpen, onClose, editeHearing, caseId }) {
                                     onChange={handleInputChange}
                                     type="date"
                                     name='hearingDate'
-                                    id='hearingDate'
+                                    id='txtDate'
                                     placeholder="Hearing Date"
                                     className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                                 />

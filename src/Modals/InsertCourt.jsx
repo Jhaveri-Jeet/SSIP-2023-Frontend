@@ -61,12 +61,6 @@ useEffect(() => {
     DistrictId: "",
   });
 
-  const [updateSelectedValues, setUpdateSelectedValues] = useState({
-      RoleId: "",
-      StateId: "",
-      DistrictId: "",
-    });
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm({
@@ -87,12 +81,6 @@ useEffect(() => {
       [name]: value,
     });
   };
-  const updatehandleSelectChange = (name, value) => {
-    setUpdateSelectedValues({
-      ...selectedValues,
-      [name]: value,
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,6 +90,14 @@ useEffect(() => {
     else if(e.target.textContent === "Add") {
       const res = await addCourt(form)
     }
+    setForm({
+      name: "",
+      identificationNumber:"",
+      fullAddress: "",
+      RoleId: "",
+      StateId: "",
+      DistrictId: "",
+    });
     await getAllCourtsData();
     onClose();
   };
@@ -157,19 +153,19 @@ useEffect(() => {
                 <select
                   value={updateform.roleId}
                   onChange={(e) =>{
-                    updatehandleSelectChange("RoleId", e.target.value)
                     setUpdateForm({
                       ...updateform,
                       "role" : {
                         "id": e.target.value,
                         "role": e.target.options[e.target.selectedIndex].id,
-                      }
+                      },
+                      "roleId" : e.target.value
                     });
                   }
                 }
                   id="roleId"
                   name="roleId"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
                   <option value="" disabled>Select Court Type</option>
                   {userDataList.map((user) => (
@@ -184,12 +180,12 @@ useEffect(() => {
                   Court Name:
                 </label>
                 <input
-                  defaultValue={updateform.name}
+                  value={updateform.name}
                   onChange={updatehandleInputChange}
                   type="text"
                   name="name"
                   placeholder="Court Name"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
@@ -197,12 +193,12 @@ useEffect(() => {
                   Identification Number:
                 </label>
                 <input
-                  defaultValue={updateform.identificationNumber}
+                  value={updateform.identificationNumber}
                   onChange={updatehandleInputChange}
                   type="text"
                   name="identificationNumber"
                   placeholder="identificationNumber"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
@@ -212,18 +208,18 @@ useEffect(() => {
                 <select
                   value={updateform.stateId}
                   onChange={(e) => {
-                    updatehandleSelectChange("StateId", e.target.value)
                     setUpdateForm({
                       ...updateform,
                       "state" : {
                         "id": e.target.value,
                         "state": e.target.options[e.target.selectedIndex].id,
-                      }
+                      },
+                      "stateId" : e.target.value
                     });
                   }}
                   id="state"
                   name="stateId"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
                   <option value="" disabled>select state</option>
                   {stateDataList.map((state) => (
@@ -240,18 +236,18 @@ useEffect(() => {
                 <select
                   value={updateform.districtId}
                   onChange={(e) => {
-                    updatehandleSelectChange("DistrictId", e.target.value)
                     setUpdateForm({
                       ...updateform,
                       "district" : {
                         "id": e.target.value,
                         "district": e.target.options[e.target.selectedIndex].id,
-                      }
+                      },
+                      "districtId" : e.target.value
                     });
                   }}
                   id="district"
                   name="districtId"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
                   <option value="" disabled>Select a district</option>
                   {districtDataList.map((district) => (
@@ -266,12 +262,12 @@ useEffect(() => {
                   fullAddress
                 </label>
                 <input
-                  defaultValue={updateform.fullAddress}
+                  value={updateform.fullAddress}
                   onChange={updatehandleInputChange}
                   type="text"
                   name="fullAddress"
                   placeholder="fullAddress"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
@@ -303,19 +299,19 @@ useEffect(() => {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <div className="relative transform overflow-hidden rounded-lg bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-2xl">
-          <div className="h-full relative rounded-xl bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 bg-clip-border shadow-lg">
+        <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[22rem] sm:w-full sm:max-w-2xl">
+          <div className="h-full relative rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
             <div className="grid grid-cols-1 gap-1 md:gap-5 md:grid-cols-3">
             <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
                 <label htmlFor="district" className="block font-semibold mb-2">
                   Select Court Type:
                 </label>
                 <select
-                  defaultValue={form.RoleId}
+                  value={form.RoleId}
                   onChange={handleInputChange}
                   id="roleId"
                   name="RoleId"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
                   <option value="" disabled selected>Select Court Type</option>
                   {userDataList.map((user) => (
@@ -330,12 +326,12 @@ useEffect(() => {
                   Court Name:
                 </label>
                 <input
-                  defaultValue={form.name}
+                  value={form.name}
                   onChange={handleInputChange}
                   type="text"
                   name="name"
                   placeholder="Court Name"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
@@ -343,12 +339,12 @@ useEffect(() => {
                   Identification Number:
                 </label>
                 <input
-                  defaultValue={form.identificationNumber}
+                  value={form.identificationNumber}
                   onChange={handleInputChange}
                   type="text"
                   name="identificationNumber"
                   placeholder="identificationNumber"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
@@ -356,11 +352,11 @@ useEffect(() => {
                   Select State:
                 </label>
                 <select
-                  defaultValue={form.StateId}
+                  value={form.StateId}
                   onChange={handleInputChange}
                   id="state"
                   name="StateId"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
                   <option value="" disabled selected>select state</option>
                   {stateDataList.map((state) => (
@@ -375,11 +371,11 @@ useEffect(() => {
                   Select District:
                 </label>
                 <select
-                  defaultValue={form.DistrictId}
+                  value={form.DistrictId}
                   onChange={handleInputChange}
                   id="district"
                   name="DistrictId"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 >
                   <option value="" disabled selected>Select a district</option>
                   {districtDataList.map((district) => (
@@ -394,24 +390,24 @@ useEffect(() => {
                   fullAddress
                 </label>
                 <input
-                  defaultValue={form.fullAddress}
+                  value={form.fullAddress}
                   onChange={handleInputChange}
                   type="text"
                   name="fullAddress"
                   placeholder="fullAddress"
-                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                  className="pl-2 inputbox outline-none border-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>
               <div className="flex justify-end items-center p-4 space-x-2  rounded-b">
                 <button
                   onClick={handleSubmit}
-                  className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-0"
+                  className="bg-[#10375e] hover:bg-[#185490] text-white font-semibold hover:text-white py-2 px-4 border  rounded focus:outline-none focus:ring-0"
                 >
                   Add
                 </button>
                 <button
                   onClick={onClose}
-                  className="bg-white text-[#10375e] font-bold  py-2 px-5 border border-gray-300 rounded focus:outline-none focus:ring-0"
+                  className="bg-white text-[#10375e] font-bold  py-2 px-5 border hover:border-[#10375e] rounded focus:outline-none focus:ring-0"
                 >
                   Cancel
                 </button>

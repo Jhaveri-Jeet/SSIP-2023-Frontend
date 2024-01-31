@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
 import Cookies from "js-cookie";
-
+import {tokenData} from '../Services/Config'
 function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
 
   const formData = new FormData();
@@ -22,6 +22,8 @@ function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
     formData.append("caseId", caseId)
     formData.append("witnessName", witnessName.current.value);
     formData.append("file", witnessImage.current.files[0]);
+    formData.append("roleId",tockenData.role);
+
     console.log(formData);
     if (e.target.textContent == "Add") {
       const accessToken = Cookies.get("access_token");
@@ -39,7 +41,10 @@ function InsertWitness({ isOpen, onClose, editeEvidence, caseId }) {
             Authorization: `Bearer ${accessToken}`,
           },
         }
-      );
+      ).then(()=>{
+        witnessName.current.value = "";
+        witnessImage.current.value = "";
+      });
     } else if (e.target.textContent == "Update") {
       const res = await updateEvidence(updateform);
     }

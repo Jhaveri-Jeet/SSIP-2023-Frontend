@@ -15,9 +15,10 @@ import {
   getAllPendingHighCasesCount,
 } from "../Services/Api";
 import { tokenData } from "../Services/Config";
+import { authenticate } from "../utils/Auth";
 
 const HighCourt = ({ currentScreen, setCurrentScreen }) => {
-
+  authenticate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pendingHighCourtCasesCount, setPendingHighCourtCasesCount] =
     useState(0);
@@ -78,8 +79,8 @@ const HighCourt = ({ currentScreen, setCurrentScreen }) => {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="sm:flex sm:justify-end sm:items-center mb-8">
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                <FilterButton />
-                <Datepicker />
+                {/* <FilterButton />
+                <Datepicker /> */}
                 {tokenData.role == 3 && (
                   <button
                     className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
@@ -119,7 +120,6 @@ const HighCourt = ({ currentScreen, setCurrentScreen }) => {
                 cases={highCourtCases}
                 tableName={"High Court Current Cases"}
               />
-             
             </div>
           </div>
         </main>

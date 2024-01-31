@@ -4,14 +4,16 @@ import Header from "../partials/Header";
 import AddCaseType from "../Modals/AddCaseType";
 import CasesTable from "../common/CasesTable";
 import { getAllCaseType } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
 const CaseType = ({ currentScreen, setCurrentScreen }) => {
+  authenticate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const [caseType,setCaseType] = useState([]);
+  const [caseType, setCaseType] = useState([]);
 
   const openForm = () => {
     setIsFormOpen(true);

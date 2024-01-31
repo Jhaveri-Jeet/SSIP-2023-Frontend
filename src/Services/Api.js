@@ -152,6 +152,27 @@ export const getRole = async (userRoleId) => {
 };
 
 // ------------------ All Apis for Case ------------------
+export const getCasesAccToCourt = async (courtId) => {
+  try {
+    const accessToken = Cookies.get("access_token");
+
+    if (!accessToken) {
+      console.error("Token not found.");
+      return null;
+    }
+
+    const response = await axios.get(`${prefixUrl}/FetchCasesIncludingTransferedAccCourt/${courtId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Error ouccur in api call", error);
+  }
+}
+
 export const getCaseDetails = async (id) => {
   try {
     const accessToken = Cookies.get("access_token");
@@ -1232,8 +1253,6 @@ export const getHearing = async (caseId) => {
       console.error("Token not found.");
       return null;
     }
-
-    console.log(caseId);
     const response = await axios.get(`${prefixUrl}/HearingAccCase/${caseId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -1254,8 +1273,6 @@ export const getSingleHearing = async (caseId) => {
       console.error("Token not found.");
       return null;
     }
-
-    console.log(caseId);
     const response = await axios.get(`${prefixUrl}/Hearing/${caseId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -1345,6 +1362,7 @@ export const addHearing = async (data) => {
         "Content-Type": "application/json",
       },
     });
+    
     return response.data;
   } catch (error) {
     console.log(error);
@@ -1654,9 +1672,32 @@ export const getAllTransferSupremeCourts = async () => {
         "Content-Type": "application/json",
       },
     });
-    console.log("all Courts", response.data);
+    // console.log("all Courts", response.data);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
+
+// ------------------ All Apis For Sending Mail And Sms On Hearing------------------
+
+export const sendMailForHearing = async (data) =>{
+  try {
+    const response = await axios.post(`${prefixUrlForMailAndSms}/api/email`,data).then((response) =>{
+      console.log("first")
+    return response;
+    })
+  } catch (error) {
+    console.log("error in calling mail api", error);
+  }
+}
+
+export const sendSmsForHearing = async (data) =>{
+  try {
+    const response = await axios.post(`${prefixUrlForMailAndSma}/api/sms`,data).then((response) =>{
+    return response;
+    })
+  } catch (error) {
+    console.log("error in calling mail api", error);
+  }
+}

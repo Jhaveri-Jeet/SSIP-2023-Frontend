@@ -10,25 +10,24 @@ import {
   getAllHighCasesCount,
   getAllDistrictCasesCount,
   getAllSupremeCasesCount,
-  getAllHighCourtCases,
-  getAllDistrictCourtCases,
-  getAllSupremeCourtCases,
+  getCasesAccToCourt
 } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
 function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
+  authenticate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [addCaseOpen, setAddCaseOpen] = useState(false);
   const [highCourtCasesCount, setHighCourtCasesCount] = useState(0);
   const [districtCourtCasesCount, setDistrictCourtCasesCount] = useState(0);
   const [supremeCourtCasesCount, setSupremeCourtCasesCount] = useState(0);
-  const [highCourtCases, setHighCourtCases] = useState([]);
-  const [districtCourtCases, setDistrictCourtCases] = useState([]);
-  const [supremeCourtCases, setSupremeCourtCases] = useState([]);
+  const [courtCases, setCourtCases] = useState([]);
 
   const closeAddCaseModel = () => {
     setAddCaseOpen(false);
   };
-
+  const userCourtId = tokenData.courtId;
+  const userRoleId = tokenData.role;
   useEffect(() => {
     const accessToken = Cookies.get("access_token");
 
@@ -36,14 +35,9 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
       console.error("Token not found.");
       return null;
     }
-
-    console.log(tokenData);
-
     setCurrentScreen("Dashboard");
     getAllCasesCountFunction();
-    getAllHighCourtCasesFunction();
-    getAllDistrictCourtCasesFunction();
-    getAllSupremeCourtCasesFunction();
+    getAllCourtCases(userCourtId);
   }, []);
 
   const getAllCasesCountFunction = async () => {
@@ -52,19 +46,11 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
     setSupremeCourtCasesCount(await getAllSupremeCasesCount());
   };
 
-  const getAllHighCourtCasesFunction = async () => {
-    const res = await getAllHighCourtCases();
-    setHighCourtCases(res);
-  };
-
-  const getAllDistrictCourtCasesFunction = async () => {
-    const res = await getAllDistrictCourtCases();
-    setDistrictCourtCases(res);
-  };
-
-  const getAllSupremeCourtCasesFunction = async () => {
-    const res = await getAllSupremeCourtCases();
-    setSupremeCourtCases(res);
+  
+  const getAllCourtCases = async (courtId) => {
+    const res = await getCasesAccToCourt(courtId);
+    console.log(res)
+    setCourtCases(res);
   };
 
   return (
@@ -101,42 +87,49 @@ function Dashboard({ caseData, currentScreen, setCurrentScreen }) {
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
               <CasesCard
+                location="districtcourt"
                 mainTitle={"District Court Cases"}
                 casesNumber={districtCourtCasesCount}
                 options={[{ name: "Option 1" }, { name: "Option 2" }]}
               />
 
               <CasesCard
+                location="highcourt"
                 mainTitle={"High Court Cases"}
                 casesNumber={highCourtCasesCount}
                 options={[{ name: "Option 1" }, { name: "Option 2" }]}
               />
 
               <CasesCard
+                location="supremecourt"
                 mainTitle={"Supreme Court Cases"}
                 casesNumber={supremeCourtCasesCount}
                 options={[{ name: "Option 1" }, { name: "Option 2" }]}
               />
-
-              <CasesTable
-                caseData={caseData}
-                tableName={"District Court Current Cases"}
-                cases={districtCourtCases}
-              />
-              <CasesTable
-                tableName={"High Court Current Cases"}
-                cases={highCourtCases}
-              />
-              <CasesTable
-                tableName={"Supreme Court Current Cases"}
-                cases={supremeCourtCases}
-              />
+              {userRoleId == 1 && (
+                <CasesTable
+                  caseData={caseData}
+                  tableName={"District Court Current Cases"}
+                  cases={courtCases}
+                />
+              )}
+              {userRoleId == 3 && (
+                <CasesTable
+                  tableName={"High Court Current Cases"}
+                  cases={courtCases}
+                />
+              )}
+              {userRoleId == 4 && (
+                <CasesTable
+                  tableName={"Supreme Court Current Cases"}
+                  cases={courtCases}
+                />
+              )}
             </div>
           </div>
         </main>
 
         {/* <Banner /> */}
-        
       </div>
     </div>
   );

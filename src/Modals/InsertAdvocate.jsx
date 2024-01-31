@@ -5,10 +5,14 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
 
   const advocateName = useRef(null);
   const enrollmentNumber = useRef(null);
+  const number = useRef(null);
+  const email = useRef(null);
 
   const [form, setForm] = useState({
     name: "",
     Enrollmentnumber: "",
+    number: "",
+    email: ""
   });
 
   const [updateform, setUpdateForm] = useState({
@@ -27,6 +31,16 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
         ? editAdvocateData.enrollmentNumber
         : ""
       : "",
+    number: editAdvocateData
+      ? editAdvocateData.number
+        ? editAdvocateData.number
+        : ""
+      : "",
+    email: editAdvocateData
+      ? editAdvocateData.email
+        ? editAdvocateData.email
+        : ""
+      : "",
   });
 
   useEffect(() => {
@@ -35,12 +49,16 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
         id: editAdvocateData.id || "",
         name: editAdvocateData.name || "",
         Enrollmentnumber: editAdvocateData.enrollmentNumber || "",
+        number: editAdvocateData.number || "",
+        email: editAdvocateData.email || "",
       });
       //   console.log(updateform);
     } else {
       setForm({
         name: "",
         Enrollmentnumber: "",
+        number: "",
+        email: ""
       });
 
       // Clear the updateform when there's no editAdvocateData
@@ -48,6 +66,8 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
         id: "",
         name: "",
         Enrollmentnumber: "",
+        number: "",
+        email: "",
       });
     }
   }, [editAdvocateData]);
@@ -75,6 +95,8 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
       setForm({
         name: "",
         Enrollmentnumber: "",
+        number: "",
+        email: ""
       });
     } else if (e.target.textContent == "Update") {
       console.log(updateform);
@@ -84,6 +106,8 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
         id: "",
         name: "",
         Enrollmentnumber: "",
+        number: "",
+        email: ""
       });
     }
     onClose();
@@ -189,6 +213,32 @@ function InsertAdvocate({ isOpen, onClose, editAdvocateData }) {
                   type="number"
                   name="Enrollmentnumber"
                   placeholder="Enrollment number"
+                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                />
+              </div>
+              <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
+                <label htmlFor="district" className="block font-semibold mb-2">
+                  Phone Number:
+                </label>
+                <input
+                  ref={number}
+                  onChange={handleInputChange}
+                  type="number"
+                  name="number"
+                  placeholder="Phone Number"
+                  className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+                />
+              </div>
+              <div className="items-center justify-between p-4 rounded-t dark:border-gray-600">
+                <label htmlFor="district" className="block font-semibold mb-2">
+                  Email Address:
+                </label>
+                <input
+                  ref={email}
+                  onChange={handleInputChange}
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
                   className="pl-2 inputbox outline-none bg-white dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
                 />
               </div>

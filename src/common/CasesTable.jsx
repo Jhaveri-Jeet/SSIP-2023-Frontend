@@ -27,7 +27,6 @@ import {
   getSingleHearing,
   getSingleEvidence,
   getSingleWitness,
-  
 } from "../Services/Api";
 import { addWitness } from "../Services/Api";
 import AddCaseType from "../Modals/AddCaseType";
@@ -73,7 +72,19 @@ function CasesTable({
   const [currentPage, setCurrentPage] = useState(1);
   const [PageSize, setPageSize] = useState(10); // Number pagesize
   const [TotalPage, setTotalPage] = useState(0);
+  const changepagesize = async (event, data, setStateFunction) => {
+    const selectedPageSize = event.target.value;
+    setPageSize(parseInt(selectedPageSize));
+    const indexOfLastCase = currentPage * selectedPageSize;
+    const indexOfFirstCase = indexOfLastCase - selectedPageSize;
+    const totalPages = Math.ceil(data.length / selectedPageSize);
+    setTotalPage(totalPages);
+    console.log(data);
+    const currentdata = data.slice(indexOfFirstCase, indexOfLastCase);
+    console.log(PageSize, selectedPageSize);
 
+    setStateFunction(currentdata);
+  };
   const handlePagination = (data) => {
     if (data) {
       const indexOfLastCase = currentPage * PageSize;
@@ -403,20 +414,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={casesearch}
-                    type="text"
-                    style={{maxWidth:'260px'}}
-                    name="Search"
-                    placeholder="Search"
-                    className="inputbox outline-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={casesearch}
+              type="text"
+              style={{ maxWidth: "260px" }}
+              name="Search"
+              placeholder="Search"
+              className="inputbox outline-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -469,12 +479,6 @@ function CasesTable({
                 <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
                   {filteredCases
                     ? filteredCases.map((singleCase) => {
-                        // console.log(
-                        //   "edit",
-                        //   userRoleId,
-                        //   singleCase.roleId,
-                        //   singleCase.transferToId
-                        // );
                         return (
                           <tr key={singleCase.id}>
                             <td className="p-2">
@@ -567,14 +571,17 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                          pageSize={PageSize}
+                          onPageSizeChange={(event) =>
+                            changepagesize(event, cases, setFilteredCases)
+                          }
+                        />
                       </div>
                     </td>
                   </tr>
@@ -592,287 +599,827 @@ function CasesTable({
     );
   }
   if (HearingDetail) {
-    return (
-      <>
-        <div className=" col-span-full xl:col-span-12  bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
-            <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
-              {tableName}
-            </h2>
-          </header>
-          <div className="p-3">
-            {/* Table */}
-            <div className="overflow-x-auto">
-              <table className="table-auto w-full dark:text-slate-300">
-                {/* Table header */}
-                <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
-                  <tr>
-                    <th className="p-2">
-                      <div className="font-semibold text-center">Date</div>
-                    </th>
-                    <th className="p-2">
-                      <div className="font-semibold text-center">Details</div>
-                    </th>
-                    <th className="p-2">
-                      <div className="font-semibold text-center">Actions</div>
-                    </th>
-                  </tr>
-                </thead>
-                {/* Table body */}
+    console.log("yufhehfhefherfher :",HearingDetail)
+    console.log("role ID   :",HearingDetail.roleId)
+    if (HearingDetail.roleId == 1) {
+      return (
+        <>
+          <div className=" col-span-full xl:col-span-12  bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+              <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+                {tableName}
+              </h2>
+            </header>
+            <div className="p-3">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="table-auto w-full dark:text-slate-300">
+                  {/* Table header */}
+                  <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                    <tr>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Date</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Details</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Actions</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  {/* Table body */}
 
-                <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {HearingDetail
-                    ? HearingDetail.map((HearingDetailsData, index) => {
-                        return (
-                          <tr key={index}>
-                            <td className="p-2">
-                              <div className="text-center text-emerald-500">
-                                {HearingDetailsData.hearingDate}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <div className="text-center">
-                                {HearingDetailsData.hearingDetails}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <div className=" flex justify-center  items-center">
-                                <div className="text-slate-800 dark:text-slate-100 ">
-                                  <button
-                                    onClick={() => {
-                                      edit_Hearing(HearingDetailsData.id);
-                                    }}
-                                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold  rounded"
-                                  >
-                                    <i className="m-2 fa-solid fa-edit"></i>
-                                  </button>
-                                </div>
-                                {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
-                                  <button
-                                    onClick={() =>
-                                      delete_Hearing(HearingDetailsData.id)
-                                    }
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold  rounded"
-                                  >
-                                    <i className="m-2 fa-solid fa-trash"></i>
-                                  </button>
-                                </div> */}
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    : null}
-                </tbody>
-              </table>
+                  <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                    {HearingDetail
+                      ? HearingDetail.filter(({ roleId }) => (roleId == 1)).map(
+                          (HearingDetailsData, index) => {
+                            return (
+                              <tr key={index}>
+                                <td className="p-2">
+                                  <div className="text-center text-emerald-500">
+                                    {HearingDetailsData.hearingDate}
+                                  </div>
+                                </td>
+                                <td className="p-2">
+                                  <div className="text-center">
+                                    {HearingDetailsData.hearingDetails}
+                                  </div>
+                                </td>
+                                <td className="p-2">
+                                  <div className=" flex justify-center  items-center">
+                                    <div className="text-slate-800 dark:text-slate-100 ">
+                                      <button
+                                        onClick={() => {
+                                          edit_Hearing(HearingDetailsData.id);
+                                        }}
+                                        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold  rounded"
+                                      >
+                                        <i className="m-2 fa-solid fa-edit"></i>
+                                      </button>
+                                    </div>
+                                    {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                    <button
+                                      onClick={() =>
+                                        delete_Hearing(HearingDetailsData.id)
+                                      }
+                                      className="bg-red-500 hover:bg-red-700 text-white font-bold  rounded"
+                                    >
+                                      <i className="m-2 fa-solid fa-trash"></i>
+                                    </button>
+                                  </div> */}
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )
+                      : null}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
 
-        <InsertHearing
-          editeHearing={editHearing}
-          isOpen={isOpen}
-          onClose={closeHearingModel}
-          caseId={CaseId}
-        />
-        {/* <InsertHearing
-          isOpen={isHearingOpen}
-          onClose={closeHearingModel}
-          caseId={CaseId}
-        /> */}
-      </>
-    );
+          <InsertHearing
+            editeHearing={editHearing}
+            isOpen={isOpen}
+            onClose={closeHearingModel}
+            caseId={CaseId}
+          />
+          {/* <InsertHearing
+            isOpen={isHearingOpen}
+            onClose={closeHearingModel}
+            caseId={CaseId}
+          /> */}
+        </>
+      );
+    }
+    if (HearingDetail.roleId == 3) {
+      return (
+        <>
+          <div className=" col-span-full xl:col-span-12  bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+              <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+                {tableName}
+              </h2>
+            </header>
+            <div className="p-3">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="table-auto w-full dark:text-slate-300">
+                  {/* Table header */}
+                  <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                    <tr>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Date</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Details</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Actions</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  {/* Table body */}
+
+                  <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                    {HearingDetail
+                      ? HearingDetail.filter(({ roleId }) => (roleId == 3)).map((HearingDetailsData, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="p-2">
+                                <div className="text-center text-emerald-500">
+                                  {HearingDetailsData.hearingDate}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <div className="text-center">
+                                  {HearingDetailsData.hearingDetails}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <div className=" flex justify-center  items-center">
+                                  <div className="text-slate-800 dark:text-slate-100 ">
+                                    <button
+                                      onClick={() => {
+                                        edit_Hearing(HearingDetailsData.id);
+                                      }}
+                                      className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold  rounded"
+                                    >
+                                      <i className="m-2 fa-solid fa-edit"></i>
+                                    </button>
+                                  </div>
+                                  {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                    <button
+                                      onClick={() =>
+                                        delete_Hearing(HearingDetailsData.id)
+                                      }
+                                      className="bg-red-500 hover:bg-red-700 text-white font-bold  rounded"
+                                    >
+                                      <i className="m-2 fa-solid fa-trash"></i>
+                                    </button>
+                                  </div> */}
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <InsertHearing
+            editeHearing={editHearing}
+            isOpen={isOpen}
+            onClose={closeHearingModel}
+            caseId={CaseId}
+          />
+          {/* <InsertHearing
+            isOpen={isHearingOpen}
+            onClose={closeHearingModel}
+            caseId={CaseId}
+          /> */}
+        </>
+      );
+    }
+    if (HearingDetail.roleId == 4) {
+      return (
+        <>
+          <div className=" col-span-full xl:col-span-12  bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+              <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+                {tableName}
+              </h2>
+            </header>
+            <div className="p-3">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="table-auto w-full dark:text-slate-300">
+                  {/* Table header */}
+                  <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                    <tr>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Date</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Details</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Actions</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  {/* Table body */}
+
+                  <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                    {HearingDetail
+                      ? HearingDetail.filter(({ roleId }) => (roleId == 4)).map((HearingDetailsData, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="p-2">
+                                <div className="text-center text-emerald-500">
+                                  {HearingDetailsData.hearingDate}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <div className="text-center">
+                                  {HearingDetailsData.hearingDetails}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <div className=" flex justify-center  items-center">
+                                  <div className="text-slate-800 dark:text-slate-100 ">
+                                    <button
+                                      onClick={() => {
+                                        edit_Hearing(HearingDetailsData.id);
+                                      }}
+                                      className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold  rounded"
+                                    >
+                                      <i className="m-2 fa-solid fa-edit"></i>
+                                    </button>
+                                  </div>
+                                  {/* <div className="text-slate-800 dark:text-slate-100 ml-5">
+                                    <button
+                                      onClick={() =>
+                                        delete_Hearing(HearingDetailsData.id)
+                                      }
+                                      className="bg-red-500 hover:bg-red-700 text-white font-bold  rounded"
+                                    >
+                                      <i className="m-2 fa-solid fa-trash"></i>
+                                    </button>
+                                  </div> */}
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <InsertHearing
+            editeHearing={editHearing}
+            isOpen={isOpen}
+            onClose={closeHearingModel}
+            caseId={CaseId}
+          />
+          {/* <InsertHearing
+            isOpen={isHearingOpen}
+            onClose={closeHearingModel}
+            caseId={CaseId}
+          /> */}
+        </>
+      );
+    }
   }
   if (Evidence) {
-    return (
-      <>
-        <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
-            <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
-              {tableName}
-            </h2>
-          </header>
-          <div className="p-3">
-            {/* Table */}
-            <div className="overflow-x-auto">
-              <table className="table-auto w-full dark:text-slate-300">
-                {/* Table header */}
-                <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
-                  <tr>
-                    <th className="p-2">
-                      <div className="font-semibold text-center">
-                        Description
-                      </div>
-                    </th>
-                    <th className="p-2">
-                      <div className="font-semibold text-center">Image</div>
-                    </th>
-                    {/* <th className="p-2">
-                      <div className="font-semibold text-center">Actions</div>
-                    </th> */}
-                  </tr>
-                </thead>
-                {/* Table body */}
+    if (Evidence.roleId == 1) {
+      //District 
+      return (
+        <>
+          <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+              <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+                {tableName}
+              </h2>
+            </header>
+            <div className="p-3">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="table-auto w-full dark:text-slate-300">
+                  {/* Table header */}
+                  <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                    <tr>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">
+                          Description
+                        </div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Image</div>
+                      </th>
+                      {/* <th className="p-2">
+                        <div className="font-semibold text-center">Actions</div>
+                      </th> */}
+                    </tr>
+                  </thead>
+                  {/* Table body */}
 
-                <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {Evidence
-                    ? Evidence.map((Evidencedata) => {
-                        return (
-                          <tr key={Evidencedata.Id}>
-                            <td className="p-2">
-                              <div className="text-center text-emerald-500">
-                                {Evidencedata.evidenceDescription}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <button
-                                className="flex justify-center text-center"
-                                style={{ width: "100%" }}
-                                onClick={() =>
-                                  openInNewTab(
-                                    `${prefixUrl}/EvidenceImages/${Evidencedata.evidenceImageName}`
-                                  )
-                                }
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width={20}
-                                  fill="currentColor"
-                                  className="bi bi-eye"
-                                  viewBox="0 0 16 16"
+                  <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                    {Evidence
+                      ? Evidence.filter(({ roleId }) => (roleId === 1)).map((Evidencedata) => {
+                          return (
+                            <tr key={Evidencedata.Id}>
+                              <td className="p-2">
+                                <div className="text-center text-emerald-500">
+                                  {Evidencedata.evidenceDescription}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <button
+                                  className="flex justify-center text-center"
+                                  style={{ width: "100%" }}
+                                  onClick={() =>
+                                    openInNewTab(
+                                      `${prefixUrl}/EvidenceImages/${Evidencedata.evidenceImageName}`
+                                    )
+                                  }
                                 >
-                                  {" "}
-                                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
-                                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
-                                </svg>
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    : null}
-                </tbody>
-              </table>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={20}
+                                    fill="currentColor"
+                                    className="bi bi-eye"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    {" "}
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
-        <InsertEvidence
-          editeHearing={editWitness}
-          isOpen={isOpen}
-          onClose={closeEvidenceModel}
-          caseId={CaseId}
-        />
-        {/* <InsertEvidence
-          isOpen={isEvidenceOpen}
-          onClose={closeEvidenceModel}
-          caseId={CaseId}
-        /> */}
-      </>
-    );
+          <InsertEvidence
+            editeHearing={editWitness}
+            isOpen={isOpen}
+            onClose={closeEvidenceModel}
+            caseId={CaseId}
+          />
+          {/* <InsertEvidence
+            isOpen={isEvidenceOpen}
+            onClose={closeEvidenceModel}
+            caseId={CaseId}
+          /> */}
+        </>
+      );
+    }
+    if (Evidence.roleId == 3) {
+      //high
+      return (
+        <>
+          <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+              <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+                {tableName}
+              </h2>
+            </header>
+            <div className="p-3">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="table-auto w-full dark:text-slate-300">
+                  {/* Table header */}
+                  <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                    <tr>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">
+                          Description
+                        </div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Image</div>
+                      </th>
+                      {/* <th className="p-2">
+                        <div className="font-semibold text-center">Actions</div>
+                      </th> */}
+                    </tr>
+                  </thead>
+                  {/* Table body */}
+
+                  <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                    {Evidence
+                      ? Evidence.filter(({ roleId }) => (roleId === 3)).map((Evidencedata) => {
+                          return (
+                            <tr key={Evidencedata.Id}>
+                              <td className="p-2">
+                                <div className="text-center text-emerald-500">
+                                  {Evidencedata.evidenceDescription}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <button
+                                  className="flex justify-center text-center"
+                                  style={{ width: "100%" }}
+                                  onClick={() =>
+                                    openInNewTab(
+                                      `${prefixUrl}/EvidenceImages/${Evidencedata.evidenceImageName}`
+                                    )
+                                  }
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={20}
+                                    fill="currentColor"
+                                    className="bi bi-eye"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    {" "}
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <InsertEvidence
+            editeHearing={editWitness}
+            isOpen={isOpen}
+            onClose={closeEvidenceModel}
+            caseId={CaseId}
+          />
+          {/* <InsertEvidence
+            isOpen={isEvidenceOpen}
+            onClose={closeEvidenceModel}
+            caseId={CaseId}
+          /> */}
+        </>
+      );
+    }
+    if (Evidence.roleId == 4) {
+      // supem
+      return (
+        <>
+          <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+              <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+                {tableName}
+              </h2>
+            </header>
+            <div className="p-3">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="table-auto w-full dark:text-slate-300">
+                  {/* Table header */}
+                  <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                    <tr>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">
+                          Description
+                        </div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Image</div>
+                      </th>
+                      {/* <th className="p-2">
+                        <div className="font-semibold text-center">Actions</div>
+                      </th> */}
+                    </tr>
+                  </thead>
+                  {/* Table body */}
+
+                  <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                    {Evidence
+                      ? Evidence.filter(({ roleId }) => (roleId === 4)).map((Evidencedata) => {
+                          return (
+                            <tr key={Evidencedata.Id}>
+                              <td className="p-2">
+                                <div className="text-center text-emerald-500">
+                                  {Evidencedata.evidenceDescription}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <button
+                                  className="flex justify-center text-center"
+                                  style={{ width: "100%" }}
+                                  onClick={() =>
+                                    openInNewTab(
+                                      `${prefixUrl}/EvidenceImages/${Evidencedata.evidenceImageName}`
+                                    )
+                                  }
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={20}
+                                    fill="currentColor"
+                                    className="bi bi-eye"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    {" "}
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <InsertEvidence
+            editeHearing={editWitness}
+            isOpen={isOpen}
+            onClose={closeEvidenceModel}
+            caseId={CaseId}
+          />
+          {/* <InsertEvidence
+            isOpen={isEvidenceOpen}
+            onClose={closeEvidenceModel}
+            caseId={CaseId}
+          /> */}
+        </>
+      );
+    }
   }
   if (Witness) {
-    return (
-      <>
-        <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-          <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
-            <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
-              {tableName}
-            </h2>
-          </header>
-          <div className="p-3">
-            {/* Table */}
-            <div className="overflow-x-auto">
-              <table className="table-auto w-full dark:text-slate-300">
-                {/* Table header */}
-                <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
-                  <tr>
-                    <th className="p-2">
-                      <div className="font-semibold text-center">Name</div>
-                    </th>
-                    <th className="p-2">
-                      <div className="font-semibold text-center">Image</div>
-                    </th>
-                    {/* <th className="p-2">
-                      <div className="font-semibold text-center">Actions</div>
-                    </th> */}
-                  </tr>
-                </thead>
-                {/* Table body */}
+    if (Witness.roleId == 1) {
+      return (
+        <>
+          <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+              <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+                {tableName}
+              </h2>
+            </header>
+            <div className="p-3">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="table-auto w-full dark:text-slate-300">
+                  {/* Table header */}
+                  <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                    <tr>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Name</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Image</div>
+                      </th>
+                      {/* <th className="p-2">
+                        <div className="font-semibold text-center">Actions</div>
+                      </th> */}
+                    </tr>
+                  </thead>
+                  {/* Table body */}
 
-                <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
-                  {Witness
-                    ? Witness.map((singleWitness) => {
-                        return (
-                          <tr key={singleWitness.Id}>
-                            <td className="p-2">
-                              <div className="text-center text-emerald-500">
-                                {singleWitness.witnessName}
-                              </div>
-                            </td>
-                            <td className="p-2">
-                              <button
-                                className="flex justify-center text-center"
-                                style={{ width: "100%" }}
-                                onClick={() =>
-                                  openInNewTab(
-                                    `${prefixUrl}/WitnessImages/${singleWitness.witnessImage}`
-                                  )
-                                }
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width={20}
-                                  fill="currentColor"
-                                  className="bi bi-eye"
-                                  viewBox="0 0 16 16"
+                  <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                    {Witness
+                      ? Witness.filter(({ roleId }) => (roleId === 1)).map((singleWitness) => {
+                          return (
+                            <tr key={singleWitness.Id}>
+                              <td className="p-2">
+                                <div className="text-center text-emerald-500">
+                                  {singleWitness.witnessName}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <button
+                                  className="flex justify-center text-center"
+                                  style={{ width: "100%" }}
+                                  onClick={() =>
+                                    openInNewTab(
+                                      `${prefixUrl}/WitnessImages/${singleWitness.witnessImage}`
+                                    )
+                                  }
                                 >
-                                  {" "}
-                                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
-                                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
-                                </svg>
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    : null}
-                </tbody>
-              </table>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={20}
+                                    fill="currentColor"
+                                    className="bi bi-eye"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    {" "}
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
-        <InsertWitness
-          editeHearing={editWitness}
-          isOpen={isOpen}
-          onClose={closeWitnessModel}
-          caseId={CaseId}
-        />
-        {/* <InsertWitness
-          isOpen={isWitnessOpen}
-          onClose={closeWitnessModel}
-          caseId={CaseId}
-        /> */}
-      </>
-    );
+          <InsertWitness
+            editeHearing={editWitness}
+            isOpen={isOpen}
+            onClose={closeWitnessModel}
+            caseId={CaseId}
+          />
+          {/* <InsertWitness
+            isOpen={isWitnessOpen}
+            onClose={closeWitnessModel}
+            caseId={CaseId}
+          /> */}
+        </>
+      );
+    }
+    if (Witness.roleId == 3) {
+      return (
+        <>
+          <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+              <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+                {tableName}
+              </h2>
+            </header>
+            <div className="p-3">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="table-auto w-full dark:text-slate-300">
+                  {/* Table header */}
+                  <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                    <tr>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Name</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Image</div>
+                      </th>
+                      {/* <th className="p-2">
+                        <div className="font-semibold text-center">Actions</div>
+                      </th> */}
+                    </tr>
+                  </thead>
+                  {/* Table body */}
+
+                  <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                    {Witness
+                      ? Witness.filter(({ roleId }) => (roleId === 3)).map((singleWitness) => {
+                          return (
+                            <tr key={singleWitness.Id}>
+                              <td className="p-2">
+                                <div className="text-center text-emerald-500">
+                                  {singleWitness.witnessName}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <button
+                                  className="flex justify-center text-center"
+                                  style={{ width: "100%" }}
+                                  onClick={() =>
+                                    openInNewTab(
+                                      `${prefixUrl}/WitnessImages/${singleWitness.witnessImage}`
+                                    )
+                                  }
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={20}
+                                    fill="currentColor"
+                                    className="bi bi-eye"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    {" "}
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <InsertWitness
+            editeHearing={editWitness}
+            isOpen={isOpen}
+            onClose={closeWitnessModel}
+            caseId={CaseId}
+          />
+          {/* <InsertWitness
+            isOpen={isWitnessOpen}
+            onClose={closeWitnessModel}
+            caseId={CaseId}
+          /> */}
+        </>
+      );
+    }
+    if (Witness.roleId == 4) {
+      return (
+        <>
+          <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+            <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between ">
+              <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-100 align-middle ">
+                {tableName}
+              </h2>
+            </header>
+            <div className="p-3">
+              {/* Table */}
+              <div className="overflow-x-auto">
+                <table className="table-auto w-full dark:text-slate-300">
+                  {/* Table header */}
+                  <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+                    <tr>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Name</div>
+                      </th>
+                      <th className="p-2">
+                        <div className="font-semibold text-center">Image</div>
+                      </th>
+                      {/* <th className="p-2">
+                        <div className="font-semibold text-center">Actions</div>
+                      </th> */}
+                    </tr>
+                  </thead>
+                  {/* Table body */}
+
+                  <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+                    {Witness
+                      ? Witness.filter(({ roleId }) => (roleId === 4)).map((singleWitness) => {
+                          return (
+                            <tr key={singleWitness.Id}>
+                              <td className="p-2">
+                                <div className="text-center text-emerald-500">
+                                  {singleWitness.witnessName}
+                                </div>
+                              </td>
+                              <td className="p-2">
+                                <button
+                                  className="flex justify-center text-center"
+                                  style={{ width: "100%" }}
+                                  onClick={() =>
+                                    openInNewTab(
+                                      `${prefixUrl}/WitnessImages/${singleWitness.witnessImage}`
+                                    )
+                                  }
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={20}
+                                    fill="currentColor"
+                                    className="bi bi-eye"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    {" "}
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />{" "}
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />{" "}
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : null}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <InsertWitness
+            editeHearing={editWitness}
+            isOpen={isOpen}
+            onClose={closeWitnessModel}
+            caseId={CaseId}
+          />
+          {/* <InsertWitness
+            isOpen={isWitnessOpen}
+            onClose={closeWitnessModel}
+            caseId={CaseId}
+          /> */}
+        </>
+      );
+    }
   }
   if (Courts) {
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleCourtSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleCourtSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -941,18 +1488,21 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                          pageSize={PageSize}
+                          onPageSizeChange={(event) =>
+                            changepagesize(event, Courts, setFilteredCourts)
+                          }
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1047,20 +1597,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleAdvocateSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleAdvocateSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1102,7 +1651,7 @@ function CasesTable({
                             </td>
                             <td className="p-2">
                               <div className="flex justify-center  items-center">
-                                <div className="text-slate-800 dark:text-slate-100">
+                                {/* <div className="text-slate-800 dark:text-slate-100">
                                   <button
                                     onClick={() =>
                                       delete_Advocate(singleAdvocate.id)
@@ -1111,7 +1660,7 @@ function CasesTable({
                                   >
                                     <i className="m-2 fa-solid fa-trash"></i>
                                   </button>
-                                </div>
+                                </div> */}
                                 <div className="text-slate-800 dark:text-slate-100 ml-5">
                                   <button
                                     onClick={() => {
@@ -1131,18 +1680,25 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                          pageSize={PageSize}
+                          onPageSizeChange={(event) =>
+                            changepagesize(
+                              event,
+                              Advocates,
+                              setFilteredAdvocates
+                            )
+                          }
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1161,20 +1717,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleActsSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleActsSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1242,18 +1797,21 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                          pageSize={PageSize}
+                          onPageSizeChange={(event) =>
+                            changepagesize(event, Acts, setFilteredActs)
+                          }
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1270,20 +1828,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleCaseTypeSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleCaseTypeSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1349,18 +1906,21 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                          pageSize={PageSize}
+                          onPageSizeChange={(event) =>
+                            changepagesize(event, CaseType, setFilteredCasetype)
+                          }
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1377,20 +1937,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleStatesSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleStatesSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1451,18 +2010,21 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                          pageSize={PageSize}
+                          onPageSizeChange={(event) =>
+                            changepagesize(event, States, setFilteredStates)
+                          }
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1480,19 +2042,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleDistrictSearch}
-                    type="text"
-                    name="Search"
-                    placeholder="Search"
-                    className="inputbox outline-none w-56  text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleDistrictSearch}
+              type="text"
+              name="Search"
+              placeholder="Search"
+              style={{ maxWidth: "260px" }}
+              className="inputbox outline-none text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1553,18 +2115,25 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                          pageSize={PageSize}
+                          onPageSizeChange={(event) =>
+                            changepagesize(
+                              event,
+                              Districts,
+                              setFilteredDistricts
+                            )
+                          }
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -1582,20 +2151,19 @@ function CasesTable({
     return (
       <>
         <div className="col-span-full xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-        <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
+          <header className="items-center justify-between  px-5 flex py-4 border-b border-slate-100 dark:border-slate-700">
             <h2 className="font-semibold text-slate-800 dark:text-slate-100">
               {tableName}
             </h2>
-            
-                  <input
-                    onChange={handleSectionSearch}
-                    type="text"
-                    name="Search"
-                    style={{maxWidth:'260px'}}
-                    placeholder="Search"
-                    className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
-                  />
-               
+
+            <input
+              onChange={handleSectionSearch}
+              type="text"
+              name="Search"
+              style={{ maxWidth: "260px" }}
+              placeholder="Search"
+              className="inputbox outline-none   text-gray-900 text-sm rounded-lg block w-full focus:outline-none focus:border-none"
+            />
           </header>
           <div className="p-3">
             {/* Table */}
@@ -1650,18 +2218,21 @@ function CasesTable({
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={12}  >
+                    <td colSpan={12}>
                       <div className="w-full flex justify-end">
-
-                      <CustomPagination
-                        currentPage={currentPage}
-                        totalPages={TotalPage}
-                        onPageChange={onPageChange}
-                      />
+                        <CustomPagination
+                          currentPage={currentPage}
+                          totalPages={TotalPage}
+                          onPageChange={onPageChange}
+                          pageSize={PageSize}
+                          onPageSizeChange={(event) =>
+                            changepagesize(event, sections, setFilteredSection)
+                          }
+                        />
                       </div>
                     </td>
                   </tr>
-                  </tfoot>
+                </tfoot>
               </table>
             </div>
           </div>

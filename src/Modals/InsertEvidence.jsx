@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { prefixUrl } from "../Services/Config";
 import Cookies from "js-cookie";
-
+import { tokenData } from "../Services/Config";
 function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
   const formData = new FormData();
 
@@ -21,6 +21,8 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
     formData.append("caseId", caseId);
     formData.append("EvidenceDescription", evidenceDescription.current.value);
     formData.append("file", evidenceImage.current.files[0]);
+    formData.append("roleId", tokenData.role);
+
     console.log(formData);
     if (e.target.textContent == "Add") {
       const accessToken = Cookies.get("access_token");
@@ -30,12 +32,16 @@ function InsertEvidence({ isOpen, onClose, editeEvidence, caseId }) {
         return null;
       }
 
-      const response = await axios.post(`${prefixUrl}/Evidences`, formData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log("Add response: " + response.data);
+      const response = await axios
+        .post(`${prefixUrl}/Evidences`, formData, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(() => {
+          evidenceDescription.current.value = "";
+          evidenceImage.current.value = "";
+        });
     } else if (e.target.textContent == "Update") {
       const res = await updateEvidence(updateform);
       console.log("update response: " + res);

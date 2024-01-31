@@ -15,13 +15,17 @@ import {
 } from "../Services/Api";
 import Addcase from "../Modals/Addcase";
 import { tokenData } from "../Services/Config";
+import { authenticate } from "../utils/Auth";
 
 const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
-
+  authenticate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] = useState(0);
-  const [runningSupremeCourtCasesCount, setRunningSupremeCourtCasesCount] = useState(0);
-  const [completedSupremeCourtCasesCount, setCompletedSupremeCourtCasesCount] = useState(0);
+  const [pendingSupremeCourtCasesCount, setPendingSupremeCourtCasesCount] =
+    useState(0);
+  const [runningSupremeCourtCasesCount, setRunningSupremeCourtCasesCount] =
+    useState(0);
+  const [completedSupremeCourtCasesCount, setCompletedSupremeCourtCasesCount] =
+    useState(0);
   const [supremeCourtCases, setSupremeCourtCases] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -46,7 +50,9 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
   }, [isFormOpen]);
 
   const getAllCasesCountFunction = async () => {
-    setCompletedSupremeCourtCasesCount(await getAllCompletedSupremeCasesCount());
+    setCompletedSupremeCourtCasesCount(
+      await getAllCompletedSupremeCasesCount()
+    );
     setRunningSupremeCourtCasesCount(await getAllRunningSupremeCasesCount());
     setPendingSupremeCourtCasesCount(await getAllPendingSupremeCasesCount());
   };
@@ -54,7 +60,7 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
   const getAllSupremeCourtCasesFunction = async () => {
     const res = await getAllSupremeCourtCases();
     setSupremeCourtCases(res);
-    console.log("res", res)
+    console.log("res", res);
   };
 
   return (
@@ -81,8 +87,8 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="sm:flex sm:justify-end sm:items-center mb-8">
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                <FilterButton />
-                <Datepicker />
+                {/* <FilterButton />
+                <Datepicker /> */}
                 {tokenData.role == 4 && (
                   <button
                     className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
@@ -120,7 +126,6 @@ const SupremeCourt = ({ currentScreen, setCurrentScreen }) => {
                 cases={supremeCourtCases}
                 tableName={"Supreme Court Current Cases"}
               />
-
             </div>
           </div>
         </main>

@@ -4,8 +4,10 @@ import Header from "../partials/Header";
 import InsertCourt from "../Modals/InsertCourt";
 import CasesTable from "../common/CasesTable";
 import { getAllCourts } from "../Services/Api";
+import { authenticate } from "../utils/Auth";
 
 const Courts = ({ currentScreen, setCurrentScreen }) => {
+  authenticate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);

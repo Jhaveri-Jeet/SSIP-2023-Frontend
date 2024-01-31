@@ -1,6 +1,8 @@
 import React from "react";
+import { authenticate } from "../utils/Auth";
 
-const CaseDetails = ({singleCase}) => {
+const CaseDetails = ({ singleCase }) => {
+  authenticate();
 
   return (
     <>

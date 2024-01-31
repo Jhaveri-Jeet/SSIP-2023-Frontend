@@ -3,10 +3,10 @@
 
 import React, { useState, useEffect } from 'react';
 
-const CustomPagination = ({ currentPage, totalPages, onPageChange }) => {
+const CustomPagination = ({ currentPage, totalPages, onPageChange,onPageSizeChange,pageSize=10 }) => {
   const maxVisiblePages = 5;
   const [firstVisiblePage, setFirstVisiblePage] = useState(1);
-
+  
   useEffect(() => {
     if (currentPage > firstVisiblePage + maxVisiblePages - 1) {
       setFirstVisiblePage(currentPage - maxVisiblePages + 1);
@@ -51,6 +51,17 @@ const CustomPagination = ({ currentPage, totalPages, onPageChange }) => {
   );
 
   return (
+    <div className='flex justify-between items-center w-full'>
+    
+      <select  onChange={onPageSizeChange} value={pageSize} className="pl-2 mt-3 inputbox  text-gray-900 text-sm rounded-lg block w-20 focus:outline-none focus:border-none">
+
+<option value="5" >5</option>
+<option value="10" >10</option>
+<option value="15">15</option>
+<option value="20">20</option>
+<option value="25">25</option>
+</select>
+    
     <div className="flex items-center justify-center mt-4">
       <button
         onClick={() => onPageChange(currentPage - 1)}
@@ -69,6 +80,7 @@ const CustomPagination = ({ currentPage, totalPages, onPageChange }) => {
       >
         Next
       </button>
+    </div>
     </div>
   );
 };

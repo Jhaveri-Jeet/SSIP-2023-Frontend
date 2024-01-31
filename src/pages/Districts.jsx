@@ -5,13 +5,15 @@ import InsertDistrict from "../Modals/InsertDistrict";
 import { getAllDistrict } from "../Services/Api";
 import CasesTable from "../common/CasesTable";
 import Banner from "../partials/Banner";
+import axios from "axios";
+import { authenticate } from "../utils/Auth";
 
 const Districts = ({ currentScreen, setCurrentScreen }) => {
-  
+  authenticate();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(false);
-  const [districts,setDistricts] = useState([]);
-
+  const [districts, setDistricts] = useState([]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -38,7 +40,7 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
     const data = await getAllDistrict();
     setDistricts(data);
   };
-  
+
   useEffect(() => {
     setCurrentScreen("Districts");
     getAllDistrictsData();
@@ -93,11 +95,14 @@ const Districts = ({ currentScreen, setCurrentScreen }) => {
               getAllDistrictsData={getAllDistrictsData}
             />
             <div className="grid grid-cols-12 gap-6">
-              <CasesTable getAllDistrictsData={getAllDistrictsData} Districts={districts} tableName={"Districts Lists"} />
+              <CasesTable
+                getAllDistrictsData={getAllDistrictsData}
+                Districts={districts}
+                tableName={"Districts Lists"}
+              />
             </div>
           </div>
         </main>
-
       </div>
     </div>
   );
